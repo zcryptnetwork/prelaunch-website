@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE
+.vscode/
+.idea/
+
+# Editor backups
+*.swp
+*~
+*.bak
+
+# Local serve output
+.cache/
+node_modules/
