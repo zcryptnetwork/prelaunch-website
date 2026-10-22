@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=5">
+  <link rel="stylesheet" href="site.css?v=6">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -64,7 +64,7 @@
             <a class="btn btn-solid" href="#real">Watch a real payment</a>
             <a class="btn btn-line" id="hero-download" href="#wallet">Get the wallet</a>
           </div>
-          <p class="hero-fine reveal" style="--d:6">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy.</p>
+          <p class="hero-fine reveal" style="--d:6">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy. The wallet is a v0.1 alpha.</p>
         </div>
 
         <!-- DEMO: a looping illustration of one payment -->
@@ -75,6 +75,7 @@
               <button role="tab" data-go="2"><i></i><span>Send</span></button>
               <button role="tab" data-go="3"><i></i><span>Claim</span></button>
               <button role="tab" data-go="4"><i></i><span>Chain</span></button>
+              <button role="tab" data-go="5" hidden><i></i><span>Real</span></button>
             </div>
 
             <div class="stage s1">
@@ -126,6 +127,11 @@
                 </div>
               </div>
               <p class="cap">The chain saw a valid payment happen. That is all it saw.</p>
+            </div>
+
+            <div class="stage s5">
+              <video id="demo-video" class="win vid" src="media/payment.mp4" muted playsinline loop preload="metadata"></video>
+              <p class="cap">A real recording: two wallets on zcrypt-1, one file, one claim.</p>
             </div>
           </div>
           <p class="demo-note mono">Illustration of one payment. Not a wallet recording. <a href="#real">See a real one ↓</a></p>
@@ -186,8 +192,8 @@
       <article class="chapter" data-formation="4">
         <div class="ch-body">
           <span class="ch-num mono">04</span>
-          <h2>Make your<br><em>own coin.</em></h2>
-          <p>Pick a name, a precision, and a supply. From then on your coin is sent, traded, and handed over as a file exactly like ZCRYPT, with exactly the same privacy. On the chain, a payment in your coin and a payment in ZCRYPT look identical.</p>
+          <h2>That file can hold<br><em>your own coin, too.</em></h2>
+          <p>Pick a name, a precision, and a supply, and you have a currency. From then on it is sent, traded, and handed over as a file exactly like ZCRYPT, with exactly the same privacy, and nobody has to list it anywhere. On the chain, a payment in your coin and a payment in ZCRYPT look identical.</p>
           <p class="ch-foot mono">Minting more needs a signature from the coin's authority, which can be split across several people.</p>
         </div>
       </article>
@@ -275,7 +281,7 @@
           </article>
           <article>
             <h3>Honest about the edges</h3>
-            <p>Staking, trade escrows, and the Bitcoin bridge are public by design. The proofs cover the money rules, not every line of the system. Everything that is and isn't private, and is and isn't proven, is written down in plain language.</p>
+            <p>Staking, trade escrows, and the Bitcoin bridge are public by design. The proofs cover the money rules, not every line of the system, and there has been no outside audit yet. Everything that is and isn't private, and is and isn't proven, is written down in plain language.</p>
           </article>
         </div>
       </div>
@@ -286,9 +292,9 @@
       <div class="wrap">
         <div class="wallet-panel">
           <div class="wallet-copy">
-            <p class="section-label"><span>Free · open source</span> macOS · Windows · Linux</p>
+            <p class="section-label"><span>v0.1 alpha</span> Free · open source · macOS · Windows · Linux</p>
             <h2 class="h-lg">Get the wallet.<br>Two minutes to your first payment.</h2>
-            <p class="dek">The button picks the right download for your computer. Check the file against SHA256SUMS before you open it, the way you'd check any money software.</p>
+            <p class="dek">This is early software on a young network. The button picks the right download for your computer. Check the file against SHA256SUMS before you open it, the way you'd check any money software.</p>
             <div class="dl-row">
               <a class="btn btn-solid" id="dl-button" href="https://github.com/echelonlabsresearch/ZCrypt/releases">Download</a>
               <a class="btn btn-line" href="docs/#first-session">Walk me through it</a>
@@ -404,16 +410,27 @@
     var demo = document.getElementById("demo");
     if (demo) {
       var tabs = Array.prototype.slice.call(demo.querySelectorAll("[data-go]"));
-      var stage = 1, timer = null, paused = false;
+      var stage = 1, timer = null, paused = false, stages = 4;
+      var vid = document.getElementById("demo-video");
       var period = matchMedia("(prefers-reduced-motion: reduce)").matches ? 6000 : 4200;
       function go(n) {
         stage = n;
         demo.setAttribute("data-stage", String(n));
         tabs.forEach(function (t) { t.setAttribute("aria-selected", t.dataset.go === String(n) ? "true" : "false"); });
         demo.style.setProperty("--period", period + "ms");
+        if (vid) { if (n === 5) { vid.currentTime = 0; vid.play().catch(function () {}); } else { vid.pause(); } }
       }
-      function arm() { clearInterval(timer); timer = setInterval(function () { if (!paused) go(stage % 4 + 1); }, period); }
+      function arm() { clearInterval(timer); timer = setInterval(function () { if (!paused) go(stage % stages + 1); }, period); }
       tabs.forEach(function (t) { t.addEventListener("click", function () { go(Number(t.dataset.go)); arm(); }); });
+      // Tapping the thing you would tap in real life moves the story on.
+      demo.querySelectorAll(".s1 .press, .s2 .bubble.right, .s3 .drop").forEach(function (el) {
+        el.addEventListener("click", function () { go(stage % stages + 1); arm(); });
+      });
+      var realTab = demo.querySelector('[data-go="5"]');
+      if (vid && realTab) {
+        vid.addEventListener("loadedmetadata", function () { realTab.hidden = false; stages = 5; demo.classList.add("has-real"); });
+        vid.addEventListener("error", function () { realTab.hidden = true; });
+      }
       demo.addEventListener("pointerenter", function () { paused = true; });
       demo.addEventListener("pointerleave", function () { paused = false; });
       go(1); arm();

@@ -144,6 +144,10 @@ header.top nav a:hover { color: var(--text); background: rgba(255,255,255,.04); 
 }
 .demo-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 12px 12px 0; }
 .demo-tabs button { position: relative; appearance: none; background: none; border: 0; padding: 10px 6px 12px; color: var(--faint); font: 500 .74rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: flex; flex-direction: column; gap: 9px; align-items: stretch; }
+.demo.has-real .demo-tabs { grid-template-columns: repeat(5, 1fr); }
+.demo-tabs button[hidden] { display: none; }
+.vid { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #000; }
+.s1 .press, .s2 .bubble.right, .s3 .drop { cursor: pointer; }
 .demo-tabs button i { display: block; height: 2px; border-radius: 2px; background: var(--line-2); overflow: hidden; position: relative; }
 .demo-tabs button i::after { content: ""; position: absolute; inset: 0; background: var(--cyan); transform: scaleX(0); transform-origin: left; }
 .demo-tabs button[aria-selected="true"] { color: var(--text); }
@@ -151,7 +155,7 @@ header.top nav a:hover { color: var(--text); background: rgba(255,255,255,.04); 
 .demo:hover .demo-tabs button[aria-selected="true"] i::after { animation-play-state: paused; }
 @keyframes fill { to { transform: scaleX(1); } }
 .stage { display: none; padding: 18px 18px 20px; }
-.demo[data-stage="1"] .s1, .demo[data-stage="2"] .s2, .demo[data-stage="3"] .s3, .demo[data-stage="4"] .s4 { display: block; animation: stagein .6s var(--ease) both; }
+.demo[data-stage="1"] .s1, .demo[data-stage="2"] .s2, .demo[data-stage="3"] .s3, .demo[data-stage="4"] .s4, .demo[data-stage="5"] .s5 { display: block; animation: stagein .6s var(--ease) both; }
 @keyframes stagein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .win { border: 1px solid var(--line); border-radius: 14px; background: rgba(4,7,10,.6); overflow: hidden; min-height: 236px; }
 .win-bar { display: flex; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: .72rem; color: var(--muted); }
