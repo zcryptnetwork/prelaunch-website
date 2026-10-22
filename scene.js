@@ -162,7 +162,9 @@ geo.setAttribute("aRand", new THREE.BufferAttribute(rnd, 1));
 geo.setAttribute("aDir", new THREE.BufferAttribute(dir, 3));
 
 const uniforms = {
-  uProgress: { value: 0 },
+  uFrom: { value: 0 },
+  uTo: { value: 0 },
+  uMix: { value: 0 },
   uTime: { value: 0 },
   uSize: { value: narrow ? 2.4 : 2.1 },
   uDpr: { value: Math.min(devicePixelRatio || 1, 2) },
@@ -179,18 +181,20 @@ const material = new THREE.ShaderMaterial({
   vertexShader: `
     attribute vec3 aP1, aP2, aP3, aP4, aP5, aDir;
     attribute float aRand;
-    uniform float uProgress, uTime, uSize, uDpr;
+    uniform float uFrom, uTo, uMix, uTime, uSize, uDpr;
     varying float vR, vA;
+    vec3 pick(float i) {
+      if (i < 0.5) return position;
+      if (i < 1.5) return aP1;
+      if (i < 2.5) return aP2;
+      if (i < 3.5) return aP3;
+      if (i < 4.5) return aP4;
+      return aP5;
+    }
     void main() {
-      float p = clamp(uProgress, 0.0, 4.999);
-      float fi = floor(p);
-      float f = p - fi;
-      vec3 a, b;
-      if (fi < 0.5)      { a = position; b = aP1; }
-      else if (fi < 1.5) { a = aP1; b = aP2; }
-      else if (fi < 2.5) { a = aP2; b = aP3; }
-      else if (fi < 3.5) { a = aP3; b = aP4; }
-      else               { a = aP4; b = aP5; }
+      vec3 a = pick(uFrom);
+      vec3 b = pick(uTo);
+      float f = uMix;
       float t = smoothstep(0.0, 1.0, clamp((f - aRand * 0.3) / 0.7, 0.0, 1.0));
       vec3 pos = mix(a, b, t) + aDir * sin(t * 3.14159) * (0.3 + 0.6 * aRand);
       pos += 0.018 * vec3(
@@ -255,26 +259,33 @@ addEventListener("resize", layout);
 
 // Scroll drives the morph. Each chapter owns one formation.
 const chapters = Array.from(document.querySelectorAll("[data-formation]"));
+const sequence = [0].concat(chapters.map((c) => Number(c.dataset.formation)));
 const state = { target: 0, current: 0, fadeTarget: 1, fade: 1, spin: 0 };
 
+// A scalar position along the sequence: 0 is the hero, k is chapter k. Between two
+// stops the field morphs during the last 60% of the gap.
 function updateFromScroll() {
   const vh = innerHeight;
   const mid = vh * 0.5;
   let target = 0;
-  for (let i = 0; i < chapters.length; i++) {
-    const r = chapters[i].getBoundingClientRect();
-    const f = Number(chapters[i].dataset.formation);
-    if (i === 0 && r.top > mid) { target = f; break; }
-    const next = chapters[i + 1];
-    if (!next) { target = f; break; }
-    const rn = next.getBoundingClientRect();
-    if (rn.top > mid) {
-      // between chapter i and i+1: morph during the last 60% of the gap
-      const span = rn.top - r.top;
-      const k = Math.min(1, Math.max(0, (mid - r.top) / span));
-      const m = Math.min(1, Math.max(0, (k - 0.4) / 0.6));
-      target = f + (Number(next.dataset.formation) - f) * m;
-      break;
+  const first = chapters[0] && chapters[0].getBoundingClientRect();
+  if (!first) { state.target = 0; }
+  else if (first.top > mid) {
+    const k = Math.min(1, Math.max(0, (vh * 1.1 - first.top) / (vh * 0.6)));
+    target = k;
+  } else {
+    target = chapters.length;
+    for (let i = 0; i < chapters.length; i++) {
+      const r = chapters[i].getBoundingClientRect();
+      const next = chapters[i + 1];
+      if (!next) { target = i + 1; break; }
+      const rn = next.getBoundingClientRect();
+      if (rn.top > mid) {
+        const span = rn.top - r.top;
+        const k = Math.min(1, Math.max(0, (mid - r.top) / span));
+        target = i + 1 + Math.min(1, Math.max(0, (k - 0.4) / 0.6));
+        break;
+      }
     }
   }
   state.target = target;
@@ -304,12 +315,16 @@ function tick() {
   const t = clock.elapsedTime;
   state.current += (state.target - state.current) * Math.min(1, dt * 4.5);
   state.fade += (state.fadeTarget - state.fade) * Math.min(1, dt * 6);
-  uniforms.uProgress.value = state.current;
+  const idx = Math.min(sequence.length - 2, Math.floor(state.current));
+  uniforms.uFrom.value = sequence[idx];
+  uniforms.uTo.value = sequence[Math.min(sequence.length - 1, idx + 1)];
+  uniforms.uMix.value = Math.min(1, Math.max(0, state.current - idx));
   uniforms.uFade.value = state.fade;
   uniforms.uTime.value = reduced ? 0 : t;
   mx += (tx - mx) * dt * 3; my += (ty - my) * dt * 3;
   // The pool turns continuously. Every later formation holds its designed angle and breathes.
-  const poolness = Math.max(0, 1 - state.current);
+  const showing = uniforms.uMix.value < 0.5 ? uniforms.uFrom.value : uniforms.uTo.value;
+  const poolness = showing === 0 ? 1 : 0;
   state.spin += dt * 0.12 * poolness;
   if (poolness < 1) {
     const TAU = Math.PI * 2;
@@ -317,7 +332,7 @@ function tick() {
     state.spin = m + ((m > Math.PI ? TAU : 0) - m) * Math.min(1, dt * 2.5);
   }
   group.rotation.y = state.spin + (reduced ? 0 : Math.sin(t * 0.35) * 0.1) + mx * 0.12;
-  group.rotation.x = my * 0.08 + Math.sin(state.current * 1.3) * 0.08;
+  group.rotation.x = my * 0.08 + Math.sin(state.current * 1.3) * 0.06;
   camera.position.x = mx * 0.15;
   camera.position.y = -my * 0.1;
   camera.lookAt(0, group.position.y * 0.5, 0);
