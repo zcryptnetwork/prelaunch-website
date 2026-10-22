@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- ZCrypt favicon: cyan Z on near-black rounded square -->
-  <!-- Matches wallet palette: bg #0a0e1a, accent #00ffff -->
-  <rect width="64" height="64" rx="12" ry="12" fill="#0a0e1a"/>
+  <!-- ZCrypt favicon: explorer cyan on explorer black -->
+  <rect width="64" height="64" rx="12" ry="12" fill="#070a0e"/>
   <polygon points="12,14 52,14 52,23 24,41 52,41 52,50 12,50 12,41 40,23 12,23"
-           fill="#00ffff"/>
+           fill="#2dd4e8"/>
 </svg>
