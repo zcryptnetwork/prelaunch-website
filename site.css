@@ -109,10 +109,10 @@ header.top nav a:hover { color: var(--text); background: rgba(255,255,255,.04); 
   min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
   padding: 150px var(--gutter) 90px; position: relative;
 }
-.hero-inner { max-width: 760px; }
+.hero-inner { max-width: 700px; }
 .kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 30px; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .kicker .sep { width: 18px; height: 1px; background: var(--line-2); }
-.display { margin: 0; font-weight: 400; letter-spacing: -0.045em; line-height: .92; font-size: clamp(3.4rem, 10.5vw, 9.6rem); color: var(--text); }
+.display { margin: 0; font-weight: 400; letter-spacing: -0.045em; line-height: .92; font-size: clamp(3.2rem, 8vw, 7.6rem); color: var(--text); }
 .display .line { display: block; overflow: hidden; padding-bottom: .06em; }
 .display .line > span { display: inline-block; }
 .display em { font-size: 1.06em; letter-spacing: -0.03em; }
@@ -174,7 +174,7 @@ h2, h3 { color: var(--text); font-weight: 400; letter-spacing: -0.03em; margin: 
 .bearer .h { color: var(--text); }
 
 .program { list-style: none; counter-reset: p; margin: 26px 0 0; padding: 0; display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: rgba(7,11,16,.6); max-width: 380px; }
-.program li { counter-increment: p; padding: 9px 14px; font-size: .78rem; color: var(--text); border-top: 1px solid var(--line); display: flex; gap: 14px; }
+.program li { counter-increment: p; padding: 9px 14px; font-size: .8rem; font-family: var(--sans); color: var(--text); border-top: 1px solid var(--line); display: flex; gap: 14px; }
 .program li:first-child { border-top: 0; }
 .program li::before { content: counter(p, decimal-leading-zero); color: var(--faint); }
 .program li:last-child { color: var(--cyan); }
@@ -186,10 +186,10 @@ h2, h3 { color: var(--text); font-weight: 400; letter-spacing: -0.03em; margin: 
 .two { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 60px; align-items: start; opacity: 0; transform: translateY(20px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
 .two.in { opacity: 1; transform: none; }
 .record { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line-2); }
-.record li { display: grid; grid-template-columns: 1.1fr auto; gap: 4px 18px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: .86rem; align-items: baseline; }
-.record li span { color: var(--muted); }
+.record li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 18px; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: .86rem; align-items: baseline; }
+.record li span { color: var(--text); font-family: var(--sans); font-size: .95rem; }
 .record li b { color: var(--text); font-weight: 500; text-align: right; }
-.record li i { grid-column: 1 / -1; font-style: normal; color: var(--faint); font-size: .76rem; }
+.record li i { grid-column: 1 / -1; font-style: normal; color: var(--muted); font-size: .8rem; font-family: var(--sans); }
 .record li.none span { color: var(--cyan); }
 .record li.none b { color: var(--cyan); }
 
@@ -199,7 +199,7 @@ h2, h3 { color: var(--text); font-weight: 400; letter-spacing: -0.03em; margin: 
 .num { padding: 34px 28px 30px; border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); display: flex; flex-direction: column; gap: 10px; opacity: 0; transform: translateY(14px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
 .num.in { opacity: 1; transform: none; }
 .num b { font-weight: 300; font-size: clamp(2.6rem, 4.4vw, 4rem); color: var(--text); letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
-.num b small { font-size: .38em; color: var(--cyan); margin-left: 6px; letter-spacing: 0; font-family: var(--mono); }
+.num b small { font-size: .34em; color: var(--cyan); margin-left: 6px; letter-spacing: 0; font-family: var(--mono); }
 .num > span { color: var(--muted); font-size: .9rem; }
 
 /* ---------- pillars ---------- */

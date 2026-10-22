@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ZCrypt — Cash is a file</title>
-  <meta name="description" content="ZCrypt is a shielded proof-of-stake chain with no transparent side. Issue an asset into the same pool as ZCRYPT, exchange it inside the protocol, and hand someone the result as a file.">
+  <title>ZCrypt — Send money like a photo</title>
+  <meta name="description" content="ZCrypt is a private blockchain where a payment is a small file. Send it in a chat, by email, on paper. Whoever opens it first gets paid. No addresses, no exchange, nobody watching.">
   <meta name="theme-color" content="#04070a">
-  <meta property="og:title" content="ZCrypt — Cash is a file">
-  <meta property="og:description" content="Forward it. The first open spends it. A shielded chain with in-protocol issuance, swaps, and bearer files, built from hash functions and lattices.">
+  <meta property="og:title" content="ZCrypt — Send money like a photo">
+  <meta property="og:description" content="A private blockchain where money is a file. Drop it in a chat. Whoever opens it first gets paid. Nobody else sees a thing.">
   <meta property="og:url" content="https://zcrypt.network">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=2">
+  <link rel="stylesheet" href="site.css?v=4">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -33,7 +33,7 @@
       <span>ZCrypt</span>
     </a>
     <nav aria-label="Primary">
-      <a href="#chapters">Protocol</a>
+      <a href="#chapters">Why ZCrypt</a>
       <a href="#numbers">Numbers</a>
       <a href="#wallet">Wallet</a>
       <a href="docs/">Developers</a>
@@ -51,21 +51,21 @@
     <section class="hero">
       <div class="hero-inner">
         <p class="kicker reveal" style="--d:0">
-          <span>Shielded proof-of-stake</span><span class="sep"></span><span>No transparent side</span><span class="sep"></span><span>Hash and lattice</span>
+          <span>Private by default</span><span class="sep"></span><span>No exchange needed</span><span class="sep"></span><span>Quantum-safe</span>
         </p>
         <h1 class="display">
-          <span class="line reveal" style="--d:1"><span>Cash is</span></span>
-          <span class="line reveal" style="--d:2"><span><em>a file.</em></span></span>
+          <span class="line reveal" style="--d:1"><span>Send money</span></span>
+          <span class="line reveal" style="--d:2"><span><em>like a photo.</em></span></span>
         </h1>
-        <p class="sub reveal" style="--d:3">Forward it. The first open spends it.</p>
-        <p class="lead reveal" style="--d:4">ZCrypt is a shielded chain you can use without a centralized exchange. Every coin of every asset sits in one pool. Anyone can issue an asset into it, exchange it inside the protocol, and hand the result to someone as a text file. The chain never learns who paid, which asset moved, or how much.</p>
+        <p class="sub reveal" style="--d:3">Drop it in a chat. Whoever opens it first gets paid.</p>
+        <p class="lead reveal" style="--d:4">ZCrypt is a private blockchain where a payment is a small file. Text it, email it, put it on a USB stick or a piece of paper. No addresses, no exchange, nobody watching. Make your own coin and trade it the same way.</p>
         <div class="actions reveal" style="--d:5">
-          <a class="btn btn-solid" id="hero-download" href="#wallet">Download the wallet</a>
-          <a class="btn btn-line" href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Read the paper <span class="mono">PDF</span></a>
-          <a class="btn btn-text" href="https://explorer.zcrypt.network">Open the explorer →</a>
+          <a class="btn btn-solid" id="hero-download" href="#wallet">Get the wallet</a>
+          <a class="btn btn-line" href="#chapters">See how it works</a>
+          <a class="btn btn-text" href="https://explorer.zcrypt.network">Watch it live →</a>
         </div>
       </div>
-      <a class="scroll-hint reveal" style="--d:6" href="#chapters" aria-label="Scroll to the protocol">
+      <a class="scroll-hint reveal" style="--d:6" href="#chapters" aria-label="Scroll to learn more">
         <span>Scroll</span><i></i>
       </a>
     </section>
@@ -73,102 +73,102 @@
     <!-- LIVE STRIP -->
     <section class="strip" aria-label="Chain status">
       <div class="strip-inner">
-        <div class="cell"><span class="k">Chain</span><span class="v mono">zcrypt-1</span></div>
-        <div class="cell"><span class="k">Height</span><span class="v mono" id="st-height">—</span></div>
+        <div class="cell"><span class="k">Network</span><span class="v mono">zcrypt-1 · live</span></div>
+        <div class="cell"><span class="k">Blocks so far</span><span class="v mono" id="st-height">—</span></div>
         <div class="cell"><span class="k">Last block</span><span class="v mono" id="st-age">—</span></div>
-        <div class="cell"><span class="k">Block time</span><span class="v mono">1 s</span></div>
-        <div class="cell"><span class="k">Supply cap</span><span class="v mono">21,000,000</span></div>
-        <div class="cell"><span class="k">Fee burned</span><span class="v mono">0.01</span></div>
+        <div class="cell"><span class="k">New block every</span><span class="v mono">1 s</span></div>
+        <div class="cell"><span class="k">Coins, ever</span><span class="v mono">21,000,000</span></div>
+        <div class="cell"><span class="k">Fee per payment</span><span class="v mono">0.01</span></div>
         <div class="cell"><span class="k">Validators</span><span class="v mono" id="st-vals">—</span></div>
       </div>
     </section>
 
-    <!-- CHAPTERS: each chapter owns a formation of the particle field -->
+    <!-- CHAPTERS -->
     <section class="chapters" id="chapters">
-      <p class="section-label"><span>01 — 06</span> What the chain is</p>
+      <p class="section-label"><span>01 — 06</span> Why this is different</p>
 
       <article class="chapter" data-formation="0">
         <div class="ch-body">
           <span class="ch-num mono">01</span>
-          <h2>One pool.<br>Every coin, every asset.</h2>
-          <p>There is no transparent transfer. A coin exists only as a hiding commitment in one global pool, and it moves by one shielded spend. Nobody can opt out of privacy on a transfer, so nobody fragments the anonymity set. An asset you issue sits in the same pool as ZCRYPT, under the same proofs and the same rules.</p>
-          <p class="ch-foot mono">A zBTC transfer and a ZCRYPT transfer are indistinguishable on the wire.</p>
+          <h2>Nobody can see<br>your money.</h2>
+          <p>On most blockchains every balance and every payment is public forever. On ZCrypt nothing is. Not as an option you switch on. Always. Your coins sit in one giant crowd with everyone else's, and a payment cannot be picked out of that crowd.</p>
+          <p class="ch-foot mono">Who paid, who got paid, how much, which coin: none of it is on the chain.</p>
         </div>
       </article>
 
       <article class="chapter" data-formation="1">
         <div class="ch-body">
           <span class="ch-num mono">02</span>
-          <h2>A spend hides among<br><em>every coin ever made.</em></h2>
-          <p>Most privacy coins sample decoys: your spend hides in a ring of eleven or sixteen, and intersection analysis erodes that over time. ZCrypt does not sample. The spend circuit carries a Merkle path from the spent commitment to a recent root of the global tree, so the anonymity set of every spend is the whole history of the pool.</p>
-          <p class="ch-foot mono">A one-input spend is padded with a phantom coin. Arity is invisible.</p>
+          <h2>Hide in the whole crowd,<br><em>not a small one.</em></h2>
+          <p>Other privacy coins hide you among a handful of decoys, and over time patterns leak through. On ZCrypt every payment hides among every coin that has ever existed. The crowd only gets bigger, and it never thins out.</p>
+          <p class="ch-foot mono">Even the number of coins you spent is hidden.</p>
         </div>
       </article>
 
       <article class="chapter" data-formation="2">
         <div class="ch-body">
           <span class="ch-num mono">03</span>
-          <h2>A bearer coin<br>is a text file.</h2>
-          <p>Send it the way you send a photo. The receiver drops it on their wallet and the value is credited. No address, no prior balance: the file carries the fee that spends it. The chain learns that two coins exist and, later, that someone swept them. It does not learn who handed the file to whom.</p>
+          <h2>Cash is<br>a file.</h2>
+          <p>A payment is a tiny text file. Send it on WhatsApp, email, AirDrop, or print it out. The first person to open it in their wallet gets the money. No address. No account. They don't even need to own any coins yet.</p>
           <div class="bearer" aria-label="A bearer file">
             <div class="bearer-bar"><span></span><span></span><span></span><b>zcrypt-bearer.txt</b></div>
             <pre><span class="c">zcrypt-bearer/1</span>
 <span class="k">coin</span> <span class="h">zcb1q8f3l…m7d2kx0v</span>
 <span class="k">gas</span>  <span class="h">zcb1zr9ap…4hqn6te8</span></pre>
           </div>
-          <p class="ch-foot mono">The file is the money until it is claimed. The first sweep takes it.</p>
+          <p class="ch-foot mono">It works like cash. First one to the bank cashes it. Delete your copy after you send it.</p>
         </div>
       </article>
 
       <article class="chapter" data-formation="3">
         <div class="ch-body">
           <span class="ch-num mono">04</span>
-          <h2>The exchange<br>is the chain.</h2>
-          <p>Two people agree on a trade. Each locks what they offer, under one shared secret. Revealing the secret settles both sides together; if the clock runs out, each side takes its own coins back. One side can be ZCRYPT, the other any asset anyone has issued. No order book to host, no router, no listing that can be pulled.</p>
-          <p class="ch-foot mono">Bitcoin comes in as zBTC through an in-consensus SPV light client.</p>
+          <h2>Trade without<br>an exchange.</h2>
+          <p>No company has to list your coin, and no company can freeze it or pull the plug. Two people agree on a trade, both lock in what they're offering, and it settles for both at the same moment or not at all. Swap ZCRYPT for any coin on the chain. Bring Bitcoin in, too.</p>
+          <p class="ch-foot mono">Find your counterparty anywhere. The trade itself never leaves ZCrypt.</p>
         </div>
       </article>
 
       <article class="chapter" data-formation="4">
         <div class="ch-body">
           <span class="ch-num mono">05</span>
-          <h2>Built to outlive<br><em>the quantum computer.</em></h2>
-          <p>A spend is not a signature. It is knowledge of a secret, proved inside a STARK: hash functions all the way down, no trusted setup, no elliptic curve under the coin. Notes are encrypted to ML-KEM-768 keys, so a ciphertext recorded today stays closed later. Issuance authorities sign with ML-DSA.</p>
-          <p class="ch-foot mono">Zero signatures in the value layer. Poseidon2 over BabyBear.</p>
+          <h2>Still private when<br><em>quantum computers arrive.</em></h2>
+          <p>Most blockchains rest on math that quantum computers are expected to break. ZCrypt's money doesn't. It is built on the new generation of cryptography that governments are switching to right now. A payment you make today stays secret decades from now.</p>
+          <p class="ch-foot mono">No signatures anywhere near your coins. Nothing for a quantum computer to crack.</p>
         </div>
       </article>
 
       <article class="chapter" data-formation="5">
         <div class="ch-body">
           <span class="ch-num mono">06</span>
-          <h2>Hidden payments.<br>A public rulebook.</h2>
-          <p>Every kind of transaction has one short program. The shielded payment's is seven lines, and the proof is a proof that this program passed. The wallet runs the plain program before it broadcasts and refuses to send if it disagrees with the circuit. The no-inflation rule is a theorem in Lean, accepted with no holes.</p>
+          <h2>Don't trust us.<br>Check it.</h2>
+          <p>Private money needs public rules. Every payment carries proof that it passed seven simple checks, and you can watch those checks on any transaction in the explorer. The rule that says nobody can print money out of thin air isn't a promise from a team. A computer has proven it.</p>
           <ol class="program mono" aria-label="The seven checks">
-            <li>CHECK_RANGE</li><li>CHECK_SINGLE_ASSET</li><li>CHECK_CONSERVATION</li><li>COMPUTE_NULLIFIERS</li><li>COMPUTE_OUTPUTS</li><li>CHECK_MEMBERSHIP</li><li>HALT</li>
+            <li>Amounts are real</li><li>One coin type per payment</li><li>Nothing created, nothing lost</li><li>Spent coins are spent</li><li>New coins match</li><li>Every coin came from the pool</li><li>Done</li>
           </ol>
-          <p class="ch-foot mono">Open any transaction in the explorer and you get the program, step by step.</p>
+          <p class="ch-foot mono">Open any transaction in the explorer and watch the checks run.</p>
         </div>
       </article>
     </section>
 
     <div id="scene-end"></div>
 
-    <!-- WHAT AN OBSERVER SEES -->
+    <!-- WHAT THE WORLD SEES -->
     <section class="observer" id="observer">
       <div class="wrap two">
         <div>
-          <p class="section-label"><span>Privacy</span> What a stranger sees</p>
-          <h2 class="h-lg">A transfer publishes<br>exactly this. <em>Nothing else.</em></h2>
-          <p class="dek">Paste any transfer into the explorer. It renders every byte and names what is missing, because the strongest privacy claim is one you can check.</p>
+          <p class="section-label"><span>Privacy</span> What the world sees when you pay</p>
+          <h2 class="h-lg">A payment leaves this on the chain. <em>Nothing else.</em></h2>
+          <p class="dek">Don't take our word for it. Paste any payment into the explorer and it shows every byte that is there, and names what isn't.</p>
         </div>
         <ul class="record mono">
-          <li><span>nullifiers</span><b>4</b><i>two per transaction, phantoms included</i></li>
-          <li><span>commitments</span><b>4</b><i>fresh, hiding</i></li>
-          <li><span>anchor</span><b>1 root</b><i>recent block boundary</i></li>
-          <li><span>notes</span><b>4</b><i>ML-KEM-768, fixed size, padded</i></li>
-          <li><span>proof</span><b>2 × STARK</b><i>gas note + main</i></li>
-          <li><span>fee</span><b>0.01 ZCRYPT</b><i>burned, no choice to fingerprint</i></li>
-          <li class="none"><span>sender · recipient · amount · asset</span><b>—</b><i>not present</i></li>
+          <li><span>a proof the rules were followed</span><b>yes</b><i>anyone can check it, nobody can read it</i></li>
+          <li><span>scrambled codes for the coins spent</span><b>4</b><i>so a coin can never be spent twice</i></li>
+          <li><span>new hidden coins</span><b>4</b><i>sealed, same size every time</i></li>
+          <li><span>fee</span><b>0.01 ZCRYPT</b><i>always the same, so it can't identify you</i></li>
+          <li class="none"><span>who sent it</span><b>—</b><i>not there</i></li>
+          <li class="none"><span>who received it</span><b>—</b><i>not there</i></li>
+          <li class="none"><span>how much · which coin</span><b>—</b><i>not there</i></li>
         </ul>
       </div>
     </section>
@@ -176,14 +176,14 @@
     <!-- NUMBERS -->
     <section class="numbers" id="numbers">
       <div class="wrap">
-        <p class="section-label"><span>Measured</span> Apple M3 Max, release build, 112 FRI queries</p>
+        <p class="section-label"><span>By the numbers</span> Measured on a laptop, not a server farm</p>
         <div class="num-grid">
-          <div class="num"><b><span data-count="107.4" data-dec="1">0</span><small>ms</small></b><span>to build a private payment proof</span></div>
-          <div class="num"><b><span data-count="10.4" data-dec="1">0</span><small>ms</small></b><span>for a validator core to verify it</span></div>
-          <div class="num"><b><span data-count="1015">0</span><small>KB</small></b><span>per proof, identical for 1-in and 2-in</span></div>
-          <div class="num"><b><span data-count="21">0</span><small>M</small></b><span>ZCRYPT, then no more. Burns take it lower.</span></div>
-          <div class="num"><b><span data-count="1">0</span><small>s</small></b><span>block time, BFT, instant finality</span></div>
-          <div class="num"><b><span data-count="0">0</span></b><span>signatures in the value layer</span></div>
+          <div class="num"><b><span data-count="0.1" data-dec="1">0</span><small>s</small></b><span>to build a private payment on your own computer</span></div>
+          <div class="num"><b><span data-count="0.01" data-dec="2">0</span><small>s</small></b><span>for the network to check it</span></div>
+          <div class="num"><b><span data-count="1">0</span><small>s</small></b><span>per block. Final the moment it lands.</span></div>
+          <div class="num"><b><span data-count="21">0</span><small>M</small></b><span>coins, ever. Fees are burned, so the number only goes down.</span></div>
+          <div class="num"><b><span data-count="100">0</span><small>%</small></b><span>of payments are private. There is no public mode.</span></div>
+          <div class="num"><b><span data-count="0">0</span></b><span>companies between you and your money</span></div>
         </div>
       </div>
     </section>
@@ -193,16 +193,16 @@
       <div class="wrap">
         <div class="pillar-grid">
           <article>
-            <h3>Issue an asset into the pool</h3>
-            <p>Register a ticker, a precision, and a supply cap. From then on the asset is minted, sent, swapped, and turned into a bearer file under the same rules as ZCRYPT. The identifier sits inside the coin, hidden. Minting more needs an ML-DSA authorization over that exact mint.</p>
+            <h3>Make your own coin</h3>
+            <p>Pick a name, a supply, and go. Your coin gets the same privacy as ZCRYPT itself: send it, trade it, or hand it to someone as a file. On the chain it looks exactly like every other payment. Nobody can tell what moved.</p>
           </article>
           <article>
-            <h3>Selective disclosure, not backdoors</h3>
-            <p>A view key is the decryption key with no spend secret. Hand it to an auditor and they see the value, blind, and asset of each incoming coin on one address class. They cannot spend, cannot see whether a coin was later spent, and cannot see stealth, change, or bearer activity.</p>
+            <h3>Show your accountant. Only your accountant.</h3>
+            <p>You can give someone a view-only key that reveals what came into one of your addresses, and nothing more. They can't spend. They can't see what you did next. You can revoke it any time by moving on.</p>
           </article>
           <article>
-            <h3>Machine-checked conservation</h3>
-            <p>A payment the rules accept never pays out more than it took in, and the field arithmetic inside the proof cannot wrap into a new coin. Both are theorems in Lean. The boundary of what is and is not proved is written down with the proofs.</p>
+            <h3>Proven, not promised</h3>
+            <p>Hidden money is only as good as its rules. The rule that nothing can be created out of thin air has been checked line by line by a proof assistant. Where the proofs stop is written down too, in plain language.</p>
           </article>
         </div>
       </div>
@@ -213,43 +213,43 @@
       <div class="wrap">
         <div class="wallet-panel">
           <div class="wallet-copy">
-            <p class="section-label"><span>Desktop wallet</span> macOS · Windows · Linux</p>
-            <h2 class="h-lg">Download the file<br>for this computer.</h2>
-            <p class="dek">The button reads the public GitHub release and picks the installer for the system you are on. Compare every file with SHA256SUMS before you open it.</p>
+            <p class="section-label"><span>Free · open source</span> macOS · Windows · Linux</p>
+            <h2 class="h-lg">Get the wallet.<br>Two minutes to your first payment.</h2>
+            <p class="dek">The button picks the right download for your computer. Check the file against SHA256SUMS before you open it, the way you'd check any money software.</p>
             <div class="dl-row">
               <a class="btn btn-solid" id="dl-button" href="https://github.com/echelonlabsresearch/ZCrypt/releases">Download</a>
-              <a class="btn btn-line" href="docs/#first-session">First session</a>
+              <a class="btn btn-line" href="docs/#first-session">Walk me through it</a>
             </div>
-            <p id="dl-status" class="mono">Checking the public release.</p>
+            <p id="dl-status" class="mono">Checking the latest release.</p>
             <ul class="asset-list mono" id="dl-others"></ul>
           </div>
           <ol class="steps">
-            <li><span class="mono">1</span><div><b>Install and open the wallet.</b> Mac: open the disk image. Windows: run the setup. Linux: mark the AppImage executable, or install the deb.</div></li>
-            <li><span class="mono">2</span><div><b>Point it at the live chain.</b> Settings → Consensus Node → <code>https://rpc.zcrypt.network</code>. The first node you connect defines the chain your signatures bind to.</div></li>
-            <li><span class="mono">3</span><div><b>Tor is on by default.</b> The wallet will not talk to the node unless a Tor daemon is on <code>127.0.0.1:9050</code>. Turn it off for a first session on a clear network.</div></li>
-            <li><span class="mono">4</span><div><b>Receive needs no prior balance.</b> Someone pays you or sends a bearer file, and Refresh credits the coins. Spending inside the pool burns 0.01 ZCRYPT as gas.</div></li>
+            <li><span class="mono">1</span><div><b>Install it.</b> Mac: open the disk image. Windows: run the setup. Linux: use the AppImage or the deb.</div></li>
+            <li><span class="mono">2</span><div><b>Connect to the network.</b> Settings → Consensus Node → <code>https://rpc.zcrypt.network</code>.</div></li>
+            <li><span class="mono">3</span><div><b>Tor is on by default.</b> If you don't run Tor, switch it off in Settings for your first session.</div></li>
+            <li><span class="mono">4</span><div><b>Get paid with nothing in your wallet.</b> Someone sends you coins or a bearer file, you hit Refresh, and it's yours. Each payment you send costs 0.01 ZCRYPT.</div></li>
           </ol>
         </div>
-        <p class="fine">Mac images are Developer ID signed, notarized, and stapled. The Windows installer is not Authenticode-signed, so SmartScreen can warn. Source build instructions are in the <a href="docs/#wallet-source">developer docs</a>.</p>
+        <p class="fine">Mac builds are signed and notarized by Apple. The Windows installer is not yet signed, so SmartScreen may warn you. Want to build it yourself? The <a href="docs/#wallet-source">developer docs</a> show how.</p>
       </div>
     </section>
 
     <!-- READ NEXT -->
     <section class="next" id="next">
       <div class="wrap">
-        <p class="section-label"><span>Go further</span> Read the primary sources</p>
+        <p class="section-label"><span>Go deeper</span> For the curious and the technical</p>
         <div class="next-grid">
           <a class="card" href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">
-            <span class="mono">Paper · v9.4</span><strong>Cash Is a File</strong><p>The system as built: coins, the transfer, the VM, consensus, assets, the bridge, and what is not proved.</p>
+            <span class="mono">The paper</span><strong>Cash Is a File</strong><p>Everything above, with the math. How the coins, the proofs, the trades, and the Bitcoin bridge actually work.</p>
           </a>
           <a class="card" href="https://explorer.zcrypt.network">
-            <span class="mono">Explorer</span><strong>Watch the chain</strong><p>Every transaction, the program it ran, the checks it passed, and none of the private fields.</p>
+            <span class="mono">Explorer</span><strong>Watch the chain live</strong><p>Every payment as it happens, the checks it passed, and proof that the private parts aren't there.</p>
           </a>
           <a class="card" href="docs/">
-            <span class="mono">Developers</span><strong>Run a node</strong><p>A local playground in minutes, or join zcrypt-1 as a validator.</p>
+            <span class="mono">Developers</span><strong>Run a node</strong><p>Spin up a local network in minutes, or help secure zcrypt-1 as a validator.</p>
           </a>
           <a class="card" href="https://github.com/echelonlabsresearch/ZCrypt">
-            <span class="mono">Source · MIT</span><strong>Read the code</strong><p>Chain, wallet, explorer, the Lean proofs, and the formal verification scope.</p>
+            <span class="mono">Source · MIT</span><strong>Read the code</strong><p>Chain, wallet, explorer, and the machine-checked proofs. All of it open.</p>
           </a>
         </div>
       </div>
@@ -260,15 +260,15 @@
     <div class="wrap foot-inner">
       <div class="foot-brand">
         <span class="brand"><span>ZCrypt</span></span>
-        <p>A shielded chain with one pool, in-protocol issuance and exchange, and a bearer coin that is a file.</p>
+        <p>A private blockchain where money is a file. No addresses, no exchange, nobody watching.</p>
       </div>
       <div class="foot-cols">
         <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="docs/">Run a node</a></div>
-        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">Privacy model</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a></div>
         <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
       </div>
     </div>
-    <div class="wrap foot-base mono"><span>© Echelon Labs · MIT</span><span>chain id zcrypt-1</span></div>
+    <div class="wrap foot-base mono"><span>© Echelon Labs · MIT</span><span>network zcrypt-1</span></div>
   </footer>
 
   <script type="module" src="scene.js"></script>

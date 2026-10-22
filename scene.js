@@ -243,9 +243,11 @@ function layout() {
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   const isNarrow = w < 860;
-  group.position.x = isNarrow ? 0 : 1.25;
+  // Desktop: centre the object in the empty right half of the viewport, whatever the aspect.
+  const halfW = Math.tan((camera.fov * Math.PI) / 360) * camera.position.z * camera.aspect;
+  group.position.x = isNarrow ? 0 : Math.min(2.9, halfW * 0.5);
   group.position.y = isNarrow ? 0.9 : 0;
-  const s = isNarrow ? Math.min(1, w / 520) : Math.min(1.05, w / 1500);
+  const s = isNarrow ? Math.min(1, w / 520) : Math.min(1.1, w / 1500);
   group.scale.setScalar(s);
 }
 layout();
@@ -318,7 +320,7 @@ function tick() {
   group.rotation.x = my * 0.08 + Math.sin(state.current * 1.3) * 0.08;
   camera.position.x = mx * 0.15;
   camera.position.y = -my * 0.1;
-  camera.lookAt(group.position.x, group.position.y, 0);
+  camera.lookAt(0, group.position.y * 0.5, 0);
   renderer.render(scene, camera);
 }
 tick();
