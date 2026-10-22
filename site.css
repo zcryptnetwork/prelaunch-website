@@ -146,6 +146,15 @@ header.top nav a:hover { color: var(--text); background: rgba(255,255,255,.04); 
 .demo-tabs button { position: relative; appearance: none; background: none; border: 0; padding: 10px 6px 12px; color: var(--faint); font: 500 .74rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; display: flex; flex-direction: column; gap: 9px; align-items: stretch; }
 .demo.has-real .demo-tabs { grid-template-columns: repeat(5, 1fr); }
 .demo-tabs button[hidden] { display: none; }
+.demo-tabs.three { grid-template-columns: repeat(3, 1fr); }
+.demo-sm { margin-top: 28px; max-width: 460px; }
+.demo-sm .win { min-height: 0; }
+.field.two-up { flex-direction: row; gap: 28px; }
+.field.two-up span { display: flex; flex-direction: column; gap: 4px; }
+.cmp .row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; }
+.cmp .row.head { border-top: 0; padding-bottom: 4px; }
+.cmp .row.head b { background: none; color: var(--muted); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; }
+.cmp .row b { min-width: 64px; text-align: center; }
 .vid { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #000; }
 .s1 .press, .s2 .bubble.right, .s3 .drop { cursor: pointer; }
 .demo-tabs button i { display: block; height: 2px; border-radius: 2px; background: var(--line-2); overflow: hidden; position: relative; }

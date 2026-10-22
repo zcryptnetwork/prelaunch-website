@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=6">
+  <link rel="stylesheet" href="site.css?v=7">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -143,12 +143,12 @@
     <section class="strip" aria-label="Chain status">
       <div class="strip-inner">
         <div class="cell"><span class="k">Network</span><span class="v mono">zcrypt-1 · live</span></div>
-        <div class="cell"><span class="k">Blocks so far</span><span class="v mono" id="st-height">—</span></div>
-        <div class="cell"><span class="k">Last block</span><span class="v mono" id="st-age">—</span></div>
+        <div class="cell" hidden><span class="k">Blocks so far</span><span class="v mono" id="st-height">—</span></div>
+        <div class="cell" hidden><span class="k">Last block</span><span class="v mono" id="st-age">—</span></div>
         <div class="cell"><span class="k">New block every</span><span class="v mono">1 s</span></div>
         <div class="cell"><span class="k">Coins, ever</span><span class="v mono">21,000,000</span></div>
         <div class="cell"><span class="k">Fee per payment</span><span class="v mono">0.01</span></div>
-        <div class="cell"><span class="k">Validators</span><span class="v mono" id="st-vals">—</span></div>
+        <div class="cell" hidden><span class="k">Validators</span><span class="v mono" id="st-vals">—</span></div>
       </div>
     </section>
 
@@ -194,7 +194,52 @@
           <span class="ch-num mono">04</span>
           <h2>That file can hold<br><em>your own coin, too.</em></h2>
           <p>Pick a name, a precision, and a supply, and you have a currency. From then on it is sent, traded, and handed over as a file exactly like ZCRYPT, with exactly the same privacy, and nobody has to list it anywhere. On the chain, a payment in your coin and a payment in ZCRYPT look identical.</p>
-          <p class="ch-foot mono">Minting more needs a signature from the coin's authority, which can be split across several people.</p>
+          <div class="demo demo-sm" id="demo-coin" data-stage="1" aria-label="Making and sending your own coin, in three steps">
+            <div class="demo-tabs three" role="tablist">
+              <button role="tab" data-go="1" aria-selected="true"><i></i><span>Create</span></button>
+              <button role="tab" data-go="2"><i></i><span>Send</span></button>
+              <button role="tab" data-go="3"><i></i><span>Chain</span></button>
+            </div>
+            <div class="stage s1">
+              <div class="win">
+                <div class="win-bar"><span class="who">Ana</span><span class="where">New coin</span></div>
+                <div class="win-body">
+                  <div class="field"><label>Name</label><b class="type">CAFÉ</b></div>
+                  <div class="field two-up"><span><label>Decimals</label><b>2</b></span><span><label>Supply, ever</label><b>10,000</b></span></div>
+                  <div class="press">Register</div>
+                  <div class="chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 7l2 2 3-3.5" stroke="currentColor" stroke-width="1.2"/></svg>CAFÉ is live <small>one block</small></div>
+                </div>
+              </div>
+              <p class="cap">Ana invents a coin. No listing, no permission, no contract to deploy.</p>
+            </div>
+            <div class="stage s2">
+              <div class="win">
+                <div class="win-bar"><span class="who">Ana</span><span class="where">Send</span></div>
+                <div class="win-body">
+                  <div class="field"><label>Amount</label><b class="type">250 CAFÉ</b></div>
+                  <div class="field"><label>How</label><b>Bearer coin <small>a file, no address</small></b></div>
+                  <div class="press">Write the file</div>
+                  <div class="chip"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 1.5h5l3 3V12.5H3z" stroke="currentColor" stroke-width="1.2"/><path d="M8 1.5v3h3" stroke="currentColor" stroke-width="1.2"/></svg>zcrypt-bearer.txt <small>1 KB</small></div>
+                </div>
+              </div>
+              <p class="cap">Same file, same chat, same claim. Her coin travels exactly like ZCRYPT.</p>
+            </div>
+            <div class="stage s3">
+              <div class="win">
+                <div class="win-bar"><span class="who">Explorer</span><span class="where">two payments, side by side</span></div>
+                <div class="win-body rows cmp">
+                  <div class="row head"><span></span><b>ZCRYPT</b><b>CAFÉ</b></div>
+                  <div class="row ok"><span>Proof</span><b>verified</b><b>verified</b></div>
+                  <div class="row ok"><span>Fee</span><b>0.01</b><b>0.01</b></div>
+                  <div class="row no"><span>Which coin</span><b>hidden</b><b>hidden</b></div>
+                  <div class="row no"><span>Amount</span><b>hidden</b><b>hidden</b></div>
+                  <div class="row no"><span>Who</span><b>hidden</b><b>hidden</b></div>
+                </div>
+              </div>
+              <p class="cap">The chain cannot tell a CAFÉ payment from a ZCRYPT payment. Neither can anyone else.</p>
+            </div>
+          </div>
+          <p class="ch-foot mono">Illustration. Minting more CAFÉ later needs a signature from the coin's authority, which can be split across several people.</p>
         </div>
       </article>
 
@@ -232,7 +277,7 @@
           <dl class="txfacts mono">
             <div><dt>transaction</dt><dd id="tx-hash" title="2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88">2558392D…09F0C88</dd></div>
             <div><dt>in block</dt><dd id="tx-height">11,680</dd></div>
-            <div><dt>when</dt><dd id="tx-when">—</dd></div>
+            <div><dt>when</dt><dd id="tx-when">22 Oct 2026</dd></div>
             <div><dt>size on chain</dt><dd id="tx-size">3.9 MB</dd></div>
           </dl>
           <div class="actions">
@@ -257,11 +302,11 @@
       <div class="wrap">
         <p class="section-label"><span>By the numbers</span> Measured on a laptop, not a server farm</p>
         <div class="num-grid">
-          <div class="num"><b><span data-count="0.1" data-dec="1">0</span><small>s</small></b><span>to build a private payment on your own computer</span></div>
-          <div class="num"><b><span data-count="0.01" data-dec="2">0</span><small>s</small></b><span>for the network to check it</span></div>
-          <div class="num"><b><span data-count="1">0</span><small>s</small></b><span>per block. Final the moment it lands.</span></div>
-          <div class="num"><b><span data-count="21">0</span><small>M</small></b><span>coins, ever. Fees are burned, so the number only goes down.</span></div>
-          <div class="num"><b><span data-count="100">0</span><small>%</small></b><span>of payments are private. There is no public mode.</span></div>
+          <div class="num"><b><span data-count="0.1" data-dec="1">0.1</span><small>s</small></b><span>to build a private payment on your own computer</span></div>
+          <div class="num"><b><span data-count="0.01" data-dec="2">0.01</span><small>s</small></b><span>for the network to check it</span></div>
+          <div class="num"><b><span data-count="1">1</span><small>s</small></b><span>per block. Final the moment it lands.</span></div>
+          <div class="num"><b><span data-count="21">21</span><small>M</small></b><span>coins, ever. Fees are burned, so the number only goes down.</span></div>
+          <div class="num"><b><span data-count="100">100</span><small>%</small></b><span>of payments are private. There is no public mode.</span></div>
           <div class="num"><b><span data-count="0">0</span></b><span>companies between you and your money</span></div>
         </div>
       </div>
@@ -406,35 +451,33 @@
     }
     poll(); setInterval(poll, 5000); setInterval(age, 1000);
 
-    // The hero demo: four stages, auto-advancing, click a tab to jump.
-    var demo = document.getElementById("demo");
-    if (demo) {
+    // Demos: stages auto-advance, tabs jump, tapping the obvious thing moves on.
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    Array.prototype.forEach.call(document.querySelectorAll(".demo"), function (demo) {
       var tabs = Array.prototype.slice.call(demo.querySelectorAll("[data-go]"));
-      var stage = 1, timer = null, paused = false, stages = 4;
-      var vid = document.getElementById("demo-video");
-      var period = matchMedia("(prefers-reduced-motion: reduce)").matches ? 6000 : 4200;
+      var stage = 1, timer = null, paused = false;
+      var period = reduced ? 6000 : 4200;
+      var vid = demo.querySelector("video");
+      function count() { return tabs.filter(function (t) { return !t.hidden; }).length; }
       function go(n) {
         stage = n;
         demo.setAttribute("data-stage", String(n));
         tabs.forEach(function (t) { t.setAttribute("aria-selected", t.dataset.go === String(n) ? "true" : "false"); });
         demo.style.setProperty("--period", period + "ms");
-        if (vid) { if (n === 5) { vid.currentTime = 0; vid.play().catch(function () {}); } else { vid.pause(); } }
+        if (vid) { if (tabs[n - 1] && tabs[n - 1].dataset.go === "5") { vid.currentTime = 0; vid.play().catch(function () {}); } else { vid.pause(); } }
       }
-      function arm() { clearInterval(timer); timer = setInterval(function () { if (!paused) go(stage % stages + 1); }, period); }
+      function arm() { clearInterval(timer); timer = setInterval(function () { if (!paused) go(stage % count() + 1); }, period); }
       tabs.forEach(function (t) { t.addEventListener("click", function () { go(Number(t.dataset.go)); arm(); }); });
-      // Tapping the thing you would tap in real life moves the story on.
-      demo.querySelectorAll(".s1 .press, .s2 .bubble.right, .s3 .drop").forEach(function (el) {
-        el.addEventListener("click", function () { go(stage % stages + 1); arm(); });
+      demo.querySelectorAll(".press, .bubble.right, .drop").forEach(function (el) {
+        el.addEventListener("click", function () { go(stage % count() + 1); arm(); });
       });
       var realTab = demo.querySelector('[data-go="5"]');
       if (vid && realTab) {
-        vid.addEventListener("loadedmetadata", function () { realTab.hidden = false; stages = 5; demo.classList.add("has-real"); });
+        vid.addEventListener("loadedmetadata", function () { realTab.hidden = false; demo.classList.add("has-real"); });
         vid.addEventListener("error", function () { realTab.hidden = true; });
       }
-      demo.addEventListener("pointerenter", function () { paused = true; });
-      demo.addEventListener("pointerleave", function () { paused = false; });
       go(1); arm();
-    }
+    });
 
     // The real payment: read the transaction and its block from the public node.
     var TX = "2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88";
