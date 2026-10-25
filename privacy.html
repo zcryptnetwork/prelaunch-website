@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZCrypt Wallet — Privacy Policy</title>
+  <meta name="description" content="Privacy policy for the ZCrypt Wallet app. The app collects no personal data.">
+  <meta name="theme-color" content="#06080f">
+  <meta property="og:title" content="ZCrypt Wallet — Privacy Policy">
+  <meta property="og:url" content="https://zcrypt.network/privacy.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css?v=10">
+  <style>
+    .policy { max-width: 760px; padding: 150px var(--gutter) 110px; line-height: 1.65; }
+    .policy h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 400; letter-spacing: -0.03em; margin: 0 0 8px; }
+    .policy .updated { color: var(--muted); font-family: var(--mono); font-size: .76rem; letter-spacing: .06em; margin: 0 0 40px; }
+    .policy h2 { font-size: 1.25rem; margin: 38px 0 10px; }
+    .policy p, .policy li { color: var(--muted); }
+    .policy ul { padding-left: 22px; }
+    .policy li { margin: 6px 0; }
+    .policy code { font-family: var(--mono); font-size: .9em; color: var(--text); }
+    .policy a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top" id="top">
+    <a class="brand" href="/" aria-label="ZCrypt home">
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>ZCrypt</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="/#chapters">Why ZCrypt</a>
+      <a href="/#real">A real payment</a>
+      <a href="/#wallet">Wallet</a>
+      <a href="docs/">Developers</a>
+      <a href="/#brand">Brand</a>
+      <a href="https://explorer.zcrypt.network">Explorer</a>
+    </nav>
+    <div class="top-right">
+      <span class="live" title="Reference network"><i></i> zcrypt-1</span>
+      <a class="btn btn-solid btn-sm" href="/#wallet">Download</a>
+    </div>
+  </header>
+
+  <main id="content">
+    <article class="wrap policy">
+    <h1>ZCrypt Wallet Privacy Policy</h1>
+    <div class="updated">Effective 25 October 2026 · Echelon Labs LLC</div>
+
+    <p>ZCrypt Wallet is a self-custodial wallet for the ZCrypt network. It is built so that
+    we learn nothing about you. This page explains what the app stores, what it sends, and to whom.</p>
+
+    <h2>What we collect</h2>
+    <p>Nothing. The app has no account system, no analytics, no crash reporting, no advertising
+    identifiers and no tracking of any kind. We never receive your name, email address, phone
+    number, contacts, location, device identifiers, or wallet contents.</p>
+
+    <h2>What stays on your device</h2>
+    <ul>
+        <li>Your 24-word recovery phrase and spending keys, sealed with Argon2id and
+            ChaCha20-Poly1305 under your PIN. When Face ID or Touch ID is enabled, the
+            device secret is kept in the iOS Keychain. It never leaves the device.</li>
+        <li>Your coins, balance and payment history, stored in the app's private sandbox.</li>
+        <li>Your settings, including the node address you choose to connect to.</li>
+    </ul>
+    <p>Files you export (bearer coins, stealth notes, receipts) are written to the app's
+    Documents folder and shared only when you choose to share them.</p>
+
+    <h2>What the app sends over the network</h2>
+    <p>To work, a wallet has to talk to the blockchain. ZCrypt Wallet connects to:</p>
+    <ul>
+        <li>A ZCrypt node, by default <code>rpc.zcrypt.network</code> operated by Echelon Labs LLC.
+            You can point the app at any node, including your own or one reached over Tor.
+            The node receives the shielded transactions you submit and answers queries for
+            new blocks. A ZCrypt transaction reveals no sender, recipient, amount or asset.
+            Like any internet server, the node can see the IP address of the connection;
+            we do not log or retain IP addresses for wallet connections.</li>
+        <li>For the optional Bitcoin bridge, a public Bitcoin block explorer API
+            (by default <code>blockstream.info</code>, operated by Blockstream) to read Bitcoin
+            transactions. That service's own privacy policy applies to those requests.</li>
+    </ul>
+    <p>No other network requests are made. The app does not contact Echelon Labs LLC for any
+    purpose other than relaying to the node above.</p>
+
+    <h2>Face ID and Touch ID</h2>
+    <p>Biometric checks are performed entirely by iOS. The app only receives a yes or no
+    answer and never sees biometric data.</p>
+
+    <h2>Children</h2>
+    <p>The app is not directed at children under 13 and we do not knowingly collect
+    information from anyone.</p>
+
+    <h2>Your rights</h2>
+    <p>Because we hold no personal data about you, there is nothing for us to access,
+    correct or delete. Deleting the app removes everything it stored on your device.
+    Keep your recovery phrase safe: it is the only way to restore your wallet.</p>
+
+    <h2>Changes</h2>
+    <p>If this policy changes, the new version will be published at this address with a new
+    effective date.</p>
+
+    <h2>Contact</h2>
+    <p>Echelon Labs LLC · <a href="https://zcrypt.network">zcrypt.network</a> ·
+    <a href="https://x.com/zcryptnetwork">@zcryptnetwork</a></p>
+</article>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div class="foot-brand">
+        <span class="brand"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></span>
+        <p>Private digital cash you can send through any chat. No addresses to swap, no exchange in the middle.</p>
+      </div>
+      <div class="foot-cols">
+        <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="docs/">Run a node</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="/#brand">Brand</a></div>
+        <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a><a href="/privacy.html">Wallet privacy policy</a></div>
+      </div>
+    </div>
+    <div class="wrap foot-base mono"><span>© Echelon Labs · MIT</span><span>network zcrypt-1</span></div>
+  </footer>
+</body>
+</html>
