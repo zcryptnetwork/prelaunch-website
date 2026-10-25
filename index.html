@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZCrypt — Send money like a photo</title>
   <meta name="description" content="ZCrypt is a private blockchain where a payment is a small file. Send it through any chat and the recipient claims it into their wallet. No addresses to swap, no exchange in the middle, and the chain never shows who paid whom or how much.">
-  <meta name="theme-color" content="#04070a">
+  <meta name="theme-color" content="#06080f">
   <meta property="og:title" content="ZCrypt — Send money like a photo">
   <meta property="og:description" content="Private digital cash you can send through any chat. Make a payment file, send it to anyone, they claim it into their wallet.">
   <meta property="og:url" content="https://zcrypt.network">
@@ -16,8 +16,8 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=9">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css?v=10">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -29,7 +29,7 @@
 
   <header class="top" id="top">
     <a class="brand" href="/" aria-label="ZCrypt home">
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="10" stroke="currentColor" stroke-opacity=".35"/><path d="M6.5 7h9l-9 8h9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       <span>ZCrypt</span>
     </a>
     <nav aria-label="Primary">
@@ -37,6 +37,7 @@
       <a href="#real">A real payment</a>
       <a href="#wallet">Wallet</a>
       <a href="docs/">Developers</a>
+      <a href="#brand">Brand</a>
       <a href="https://explorer.zcrypt.network">Explorer</a>
     </nav>
     <div class="top-right">
@@ -379,17 +380,102 @@
         </div>
       </div>
     </section>
+
+    <!-- BRAND -->
+    <section class="brandbook" id="brand">
+      <div class="wrap">
+        <p class="section-label"><span>Brand</span> One identity across the site, the desktop wallet and the phone</p>
+        <h2 class="h-lg">The mark, the colour,<br>the type. <em>Use them as they are.</em></h2>
+        <p class="dek">ZCrypt is drawn once and used everywhere. The source files below are the same ones the wallets ship with. Take what you need for an article, an app listing or an integration; don't redraw, recolour or add effects.</p>
+
+        <div class="brand-grid">
+          <div class="brand-card">
+            <h3>The mark</h3>
+            <div class="logo-stage"><span class="zc-tile"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="zc-mark"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <div class="logo-stage light"><span class="zc-tile"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="zc-mark ink"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+            <p>A Z in one stroke with round ends. On the signal gradient it is the tile: app icon and avatar. Alone it takes the text colour, or cyan on ink. Clear space is one bar-height on every side; the minimum size is 16&nbsp;px.</p>
+          </div>
+
+          <div class="brand-card">
+            <h3>The wordmark</h3>
+            <div class="logo-stage" style="gap:16px"><span class="zc-tile sm"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="wordmark">ZCrypt</span></div>
+            <ul class="rules">
+              <li><b>ZCrypt</b> is the project and the wallet. Capital Z, capital C.</li>
+              <li><b>ZCRYPT</b> in capitals is the coin. 1,000 ZCRYPT.</li>
+              <li><b>zcrypt-1</b> in mono is the network.</li>
+              <li>Set in Inter Tight 600 at −0.02em tracking, never stretched or outlined.</li>
+            </ul>
+          </div>
+
+          <div class="brand-card">
+            <h3>Colour</h3>
+            <div class="swatches">
+              <div class="swatch wide" style="background:linear-gradient(135deg,#35e0ff,#6d7cff);color:#04111a"><b>Signal</b><span>#35e0ff → #6d7cff</span></div>
+              <div class="swatch" style="background:#35e0ff;color:#04111a"><b>Cyan</b><span>#35e0ff</span></div>
+              <div class="swatch" style="background:#6d7cff;color:#04111a"><b>Violet</b><span>#6d7cff</span></div>
+              <div class="swatch" style="background:#06080f;color:#f3f5f9"><b>Ink</b><span>#06080f</span></div>
+              <div class="swatch" style="background:#0e121b;color:#f3f5f9"><b>Surface</b><span>#0e121b</span></div>
+              <div class="swatch" style="background:#f3f5f9;color:#06080f"><b>Text</b><span>#f3f5f9</span></div>
+              <div class="swatch" style="background:#9aa3b5;color:#06080f"><b>Text 2</b><span>#9aa3b5</span></div>
+              <div class="swatch" style="background:#3ddc97;color:#04111a"><b>Ok</b><span>#3ddc97</span></div>
+              <div class="swatch" style="background:#ffb547;color:#04111a"><b>Warn</b><span>#ffb547</span></div>
+              <div class="swatch wide" style="background:#ff5c6c;color:#04111a"><b>Bad</b><span>#ff5c6c · green, amber and red mean state, never decoration</span></div>
+            </div>
+          </div>
+
+          <div class="brand-card">
+            <h3>Type</h3>
+            <div class="type-spec">
+              <div class="display">Send money<br><em>like a photo.</em></div>
+              <div class="body">Inter Tight for everything you read and tap: display at −0.04em, titles at −0.02em, body at 16px. It is the same face in the apps, bundled so it renders offline.</div>
+              <div class="serif">Instrument Serif italic, for one emphasised phrase in a heading. Website only.</div>
+              <div class="label">JetBrains Mono · labels · 0.08em</div>
+              <div class="data">2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88</div>
+            </div>
+          </div>
+
+          <div class="brand-card">
+            <h3>Shape and motion</h3>
+            <ul class="rules">
+              <li><b>18px</b> radius on cards, sheets and buttons. <b>12px</b> on inputs and chips. Pills are fully round.</li>
+              <li>The tile's corner radius is 27.5% of its side.</li>
+              <li>One easing, <span class="mono">cubic-bezier(.22,1,.36,1)</span>, and nothing moves for people who turned motion off.</li>
+              <li>The cyan glow is for the tile and the balance card. Not for text, not for borders.</li>
+              <li>Buttons say what happens: "Send", then "Sent". No shouting capitals.</li>
+            </ul>
+          </div>
+
+          <div class="brand-card">
+            <h3>Files</h3>
+            <p>SVG where possible. The PNGs are rendered from the same source.</p>
+            <div class="dl-list">
+              <a href="brand/logo-mark.svg" download>logo-mark.svg</a>
+              <a href="brand/logo-tile.svg" download>logo-tile.svg</a>
+              <a href="brand/logo-tile-square.svg" download>logo-tile-square.svg</a>
+              <a href="brand/logo-lockup.svg" download>logo-lockup.svg</a>
+              <a href="brand/favicon.svg" download>favicon.svg</a>
+              <a href="brand/png/logo-tile-1024.png" download>tile 1024.png</a>
+              <a href="brand/png/logo-tile-512.png" download>tile 512.png</a>
+              <a href="brand/png/logo-mark-512.png" download>mark 512.png</a>
+              <a href="brand/tokens.css" download>tokens.css</a>
+              <a href="https://github.com/echelonlabsresearch/ZCrypt/tree/main/brand">brand/ on GitHub</a>
+            </div>
+            <p class="mono">Fonts: Inter Tight, Instrument Serif and JetBrains Mono, all under the SIL Open Font License.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="foot">
     <div class="wrap foot-inner">
       <div class="foot-brand">
-        <span class="brand"><span>ZCrypt</span></span>
+        <span class="brand"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></span>
         <p>Private digital cash you can send through any chat. No addresses to swap, no exchange in the middle.</p>
       </div>
       <div class="foot-cols">
         <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="docs/">Run a node</a></div>
-        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="#brand">Brand</a></div>
         <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
       </div>
     </div>

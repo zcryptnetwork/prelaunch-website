@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <!-- ZCrypt favicon: explorer cyan on explorer black -->
-  <rect width="64" height="64" rx="12" ry="12" fill="#070a0e"/>
-  <polygon points="12,14 52,14 52,23 24,41 52,41 52,50 12,50 12,41 40,23 12,23"
-           fill="#2dd4e8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" fill="none">
+  <!-- Favicon: the mark in signal cyan on ink. -->
+  <rect width="40" height="40" rx="9" fill="#06080f"/>
+  <path d="M9 10h22L9 30h22" stroke="#35e0ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

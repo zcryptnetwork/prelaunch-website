@@ -168,7 +168,7 @@ const uniforms = {
   uTime: { value: 0 },
   uSize: { value: narrow ? 2.4 : 2.1 },
   uDpr: { value: Math.min(devicePixelRatio || 1, 2) },
-  uColA: { value: new THREE.Color("#2dd4e8") },
+  uColA: { value: new THREE.Color("#35e0ff") },
   uColB: { value: new THREE.Color("#e9fbfd") },
   uFade: { value: 1 },
 };

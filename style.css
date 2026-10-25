@@ -1,20 +1,20 @@
 /* Same tokens as explorer.zcrypt.network */
 :root {
-  --bg: #070a0e;
+  --bg: #06080f;
   --bg-grid: #0a0f14;
   --panel: #0e141b;
   --panel-2: #121b24;
   --panel-3: #16212b;
   --line: #1c2833;
   --line-soft: #14202a;
-  --text: #cbd8e2;
+  --text: #dbe3ec;
   --muted: #7d8fa0;
   --faint: #5b6c79;
   --faint2: #4c5c69;
-  --cyan: #2dd4e8;
+  --cyan: #35e0ff;
   --cyan-dim: #0e7490;
   --cyan-deep: #06232b;
-  --violet: #a78bfa;
+  --violet: #6d7cff;
   --amber: #f5b544;
   --ok: #34d399;
   --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
