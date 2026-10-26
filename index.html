@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=10">
+  <link rel="stylesheet" href="site.css?v=11">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -45,7 +45,6 @@
     </a>
     <nav aria-label="Primary">
       <a href="#chapters">Why ZCrypt</a>
-      <a href="#real">A real payment</a>
       <a href="#wallet">Wallet</a>
       <a href="docs/">Developers</a>
       <a href="brand.html">Brand</a>
@@ -73,10 +72,10 @@
           <p class="sub reveal" style="--d:3">Private digital cash you can send through any chat.</p>
           <p class="lead reveal" style="--d:4">Make a payment file. Send it to anyone, any way you like. They claim it straight into their wallet. No addresses to swap, no exchange in the middle, and the chain never shows who paid, who got paid, how much, or which coin.</p>
           <div class="actions reveal" style="--d:5">
-            <a class="btn btn-solid" href="#real">Watch a real payment</a>
-            <a class="btn btn-line" id="hero-download" href="#wallet">Get the wallet</a>
+            <a class="btn btn-solid" id="hero-download" href="#wallet">Get the wallet</a>
+            <a class="btn btn-line" href="#chapters">Why ZCrypt</a>
           </div>
-          <p class="hero-fine reveal" style="--d:6">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy. The wallet is a v0.1 alpha.</p>
+          <p class="hero-fine reveal" style="--d:6">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy. The wallet is an early release.</p>
         </div>
 
         <!-- DEMO: a looping illustration of one payment -->
@@ -146,7 +145,7 @@
               <p class="cap"></p>
             </div>
           </div>
-          <p class="demo-note mono" id="demo-note">Every step above is an illustration drawn from the wallet's screens, not a recording. <a href="#real">See a real payment on the chain ↓</a></p>
+          <p class="demo-note mono" id="demo-note">Every step above is an illustration drawn from the wallet's screens, not a recording.</p>
         </div>
       </div>
     </section>
@@ -278,36 +277,6 @@
     </section>
 
     <div id="scene-end"></div>
-
-    <!-- A REAL PAYMENT -->
-    <section class="observer" id="real">
-      <div class="wrap two">
-        <div>
-          <p class="section-label"><span>A real payment</span> Straight from the live chain</p>
-          <h2 class="h-lg">This payment happened.<br>Here is everything <em>anyone</em> can see.</h2>
-          <p class="dek">Below is a real shielded payment from the zcrypt-1 network, read live from a public node as you load this page. You can fetch the same bytes yourself.</p>
-          <dl class="txfacts mono">
-            <div><dt>transaction</dt><dd id="tx-hash" title="2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88">2558392D…09F0C88</dd></div>
-            <div><dt>in block</dt><dd id="tx-height">11,680</dd></div>
-            <div><dt>when</dt><dd id="tx-when">22 Oct 2026</dd></div>
-            <div><dt>size on chain</dt><dd id="tx-size">3.9 MB</dd></div>
-          </dl>
-          <div class="actions">
-            <a class="btn btn-line" href="https://rpc.zcrypt.network/tx?hash=0x2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88">Fetch the raw bytes</a>
-            <a class="btn btn-text" href="https://explorer.zcrypt.network">Open the explorer →</a>
-          </div>
-        </div>
-        <ul class="record mono">
-          <li><span>a proof the rules were followed</span><b>2</b><i>one for the fee, one for the payment. Anyone can check them, nobody can read them.</i></li>
-          <li><span>scrambled codes for the coins spent</span><b>4</b><i>so a coin can never be spent twice</i></li>
-          <li><span>new sealed coins</span><b>4</b><i>same size every time</i></li>
-          <li><span>fee</span><b>0.01 ZCRYPT</b><i>always the same, so it can't identify you</i></li>
-          <li class="none"><span>who sent it</span><b>—</b><i>not there</i></li>
-          <li class="none"><span>who received it</span><b>—</b><i>not there</i></li>
-          <li class="none"><span>how much · which coin</span><b>—</b><i>not there</i></li>
-        </ul>
-      </div>
-    </section>
 
     <!-- NUMBERS -->
     <section class="numbers" id="numbers">
@@ -492,24 +461,13 @@
           var st = demo.querySelector(".s5"); st.hidden = false;
           st.querySelector(".cap").textContent = "The \"Real\" tab is a screen recording of two wallets on zcrypt-1. The other tabs are illustrations.";
           var note = document.getElementById("demo-note");
-          if (note) note.innerHTML = 'Create, Send, Claim and Chain are illustrations. The "Real" tab is a recording. <a href="#real">See a real payment on the chain ↓</a>';
+          if (note) note.innerHTML = 'Create, Send, Claim and Chain are illustrations. The "Real" tab is a recording.';
         });
         vid.addEventListener("error", function () { realTab.hidden = true; });
       }
       go(1); arm();
     });
 
-    // The real payment: read the transaction and its block from the public node.
-    var TX = "2558392D46D9963FBA31AF0EB70744889E2DA9477DB69742B5CCF8D7309F0C88";
-    fetch("https://rpc.zcrypt.network/tx?hash=0x" + TX).then(function (r) { return r.json(); }).then(function (j) {
-      var res = j.result || j;
-      if (res.height) document.getElementById("tx-height").textContent = fmt(res.height);
-      if (res.tx) document.getElementById("tx-size").textContent = (res.tx.length * 0.75 / 1048576).toFixed(1) + " MB";
-      return fetch("https://rpc.zcrypt.network/block?height=" + res.height).then(function (r) { return r.json(); });
-    }).then(function (j) {
-      var t = j.result && j.result.block && j.result.block.header && j.result.block.header.time;
-      if (t) document.getElementById("tx-when").textContent = new Date(t).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" });
-    }).catch(function () {});
   })();
   </script>
 </body>

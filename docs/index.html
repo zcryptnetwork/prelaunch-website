@@ -3,163 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developers — ZCrypt</title>
-  <meta property="og:title" content="Developers — ZCrypt">
+  <title>ZCrypt — Developers</title>
+  <meta name="description" content="How to talk to zcrypt-1, run a local ZCrypt chain, join as a validator, and build the wallet.">
+  <meta name="theme-color" content="#06080f">
+  <meta property="og:title" content="ZCrypt — Developers">
   <meta property="og:description" content="How ZCrypt works: shielded coins, payment files, the zBTC bridge and the node.">
   <meta property="og:url" content="https://zcrypt.network/docs/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ZCrypt">
   <meta property="og:image" content="https://zcrypt.network/og.png">
+  <meta property="og:image:secure_url" content="https://zcrypt.network/og.png">
+  <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="ZCrypt: send money like a photo. Private digital cash.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Developers — ZCrypt">
+  <meta name="twitter:title" content="ZCrypt — Developers">
+  <meta name="twitter:description" content="How ZCrypt works: shielded coins, payment files, the zBTC bridge and the node.">
   <meta name="twitter:image" content="https://zcrypt.network/og.png">
-  <meta name="description" content="How to talk to zcrypt-1, run a local ZCrypt chain, join as a validator, and build the wallet.">
-  <meta name="theme-color" content="#070a0e">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
-  <link rel="stylesheet" href="../style.css?v=5">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../site.css?v=11">
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
-  <header class="site">
-    <div class="site-inner">
-      <a class="brand" href="/"><b>ZCrypt</b><span class="caret">/</span>network</a>
-      <span class="tag-line">developers</span>
-      <nav class="primary" aria-label="Primary">
-        <a href="/#story">The chain</a>
-        <a href="/#wallet">Wallet</a>
-        <a href="/docs/" aria-current="page">Developers</a>
-        <a href="https://explorer.zcrypt.network">Explorer</a>
-        <a class="nav-cta" href="/#wallet">Download</a>
-      </nav>
-      <span class="chain"><span class="dot on" aria-hidden="true"></span> chain <b>zcrypt-1</b></span>
+  <div class="grain" aria-hidden="true"></div>
+  <header class="top" id="top">
+    <a class="brand" href="/" aria-label="ZCrypt home">
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>ZCrypt</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="/#chapters">Why ZCrypt</a>
+      <a href="/#wallet">Wallet</a>
+      <a href="/docs/" aria-current="page">Developers</a>
+      <a href="/brand.html">Brand</a>
+      <a href="https://explorer.zcrypt.network">Explorer</a>
+    </nav>
+    <div class="top-right">
+      <span class="live" title="Reference network"><i></i> zcrypt-1</span>
+      <a class="btn btn-solid btn-sm" href="/#wallet">Download</a>
     </div>
   </header>
 
-  <div class="docs-shell">
-    <nav class="docs-nav" aria-label="On this page">
-      <a href="#live">The live chain</a>
-      <a href="#first-session">First session</a>
-      <a href="#playground">Local playground</a>
-      <a href="#three-node">Three validators</a>
-      <a href="#join">Join zcrypt-1</a>
-      <a href="#bond">Bond and delegate</a>
-      <a href="#wallet-source">Build the wallet</a>
-      <a href="#economics">Supply and fees</a>
-      <a href="#limits">What this does not claim</a>
-      <a href="#read">Read next</a>
-    </nav>
+  <main id="content">
+    <section class="docs-page">
+      <div class="wrap">
+        <div class="docs-head">
+          <p class="section-label"><span>Developers</span> Talk to the chain, run one, join one</p>
+          <h1 class="h-lg">Launch a node.<br>The reference chain is <em>already running.</em></h1>
+          <p class="dek">zcrypt-1 is the public network. You can watch it, point a wallet at it, or sync a validator and bond it. A local Docker stack is a separate chain for experiments, not a second copy of the coins on the public network.</p>
+        </div>
 
-    <article class="docs" id="content">
-      <p class="kicker">Developers</p>
-      <h1>Launch a node. The reference chain is already running.</h1>
-      <p class="lede">zcrypt-1 is the public network. You can watch it, point a wallet at it, or sync a validator and bond it. A local Docker stack is a separate chain for experiments. It is not a second copy of the coins on the public network.</p>
+        <div class="docs-shell">
+          <nav class="docs-nav" aria-label="On this page">
+            <b>On this page</b>
+            <a href="#live">The live chain</a>
+            <a href="#first-session">First session</a>
+            <a href="#playground">Local playground</a>
+            <a href="#three-node">Three validators</a>
+            <a href="#join">Join zcrypt-1</a>
+            <a href="#bond">Bond and delegate</a>
+            <a href="#wallet-source">Build the wallet</a>
+            <a href="#economics">Supply and fees</a>
+            <a href="#limits">What this does not claim</a>
+            <a href="#read">Read next</a>
+          </nav>
 
-      <h2 id="live">Talk to the chain that is already up</h2>
-      <p>The explorer and the RPC are the public doors. The explorer shows each transaction's program and re-checks what it can re-check from public data. It does not show the sender, the receiver, the asset, or the amount of a shielded payment.</p>
-      <table>
-        <thead><tr><th>Door</th><th>Address</th></tr></thead>
-        <tbody>
-          <tr><td>Explorer</td><td><a href="https://explorer.zcrypt.network">https://explorer.zcrypt.network</a></td></tr>
-          <tr><td>RPC</td><td><a href="https://rpc.zcrypt.network/status">https://rpc.zcrypt.network</a></td></tr>
-          <tr><td>Chain id</td><td><code>zcrypt-1</code></td></tr>
-          <tr><td>P2P</td><td>The foundation seed serves peers on port 26656. The validator compose file discovers it.</td></tr>
-          <tr><td>Protocol source</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt">github.com/echelonlabsresearch/ZCrypt</a></td></tr>
-        </tbody>
-      </table>
-      <p>A one-line liveness check against the public RPC:</p>
-      <pre><code>curl -s https://rpc.zcrypt.network/status</code></pre>
-      <p>The JSON field <code>result.node_info.network</code> is the chain id. <code>result.sync_info.latest_block_height</code> is the tip. Wallet and bridge traffic that carries proofs needs a large body limit. The public edge already allows it. A raw CometBFT port on the open internet is not how wallets should connect. Use the HTTPS RPC.</p>
+          <article class="docs">
+            <h2 id="live">Talk to the chain that is already up</h2>
+            <p>The explorer and the RPC are the public doors. The explorer shows each transaction's program and re-checks what it can re-check from public data. It does not show the sender, the receiver, the asset, or the amount of a shielded payment.</p>
+            <table>
+              <thead><tr><th>Door</th><th>Address</th></tr></thead>
+              <tbody>
+                <tr><td>Explorer</td><td><a href="https://explorer.zcrypt.network">https://explorer.zcrypt.network</a></td></tr>
+                <tr><td>RPC</td><td><a href="https://rpc.zcrypt.network/status">https://rpc.zcrypt.network</a></td></tr>
+                <tr><td>Chain id</td><td><code>zcrypt-1</code></td></tr>
+                <tr><td>P2P</td><td>The foundation seed serves peers on port 26656. The validator compose file discovers it.</td></tr>
+                <tr><td>Protocol source</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt">github.com/echelonlabsresearch/ZCrypt</a></td></tr>
+              </tbody>
+            </table>
+            <p>A one-line liveness check against the public RPC:</p>
+            <pre><code>curl -s https://rpc.zcrypt.network/status</code></pre>
+            <p>The JSON field <code>result.node_info.network</code> is the chain id. <code>result.sync_info.latest_block_height</code> is the tip. Wallet and bridge traffic that carries proofs needs a large body limit. The public edge already allows it. A raw CometBFT port on the open internet is not how wallets should connect. Use the HTTPS RPC.</p>
 
-      <h2 id="first-session">A first session with the wallet</h2>
-      <p>Download the installer from the <a href="/#wallet">homepage</a>. It selects the file for the computer you are using, from the latest public GitHub release of <a href="https://github.com/echelonlabsresearch/ZCrypt/releases">echelonlabsresearch/ZCrypt</a>.</p>
-      <ol>
-        <li>Install it. macOS is an Apple Silicon disk image. Linux ships an AppImage and a deb. Windows ships an NSIS <code>setup.exe</code> that is not Authenticode-signed.</li>
-        <li>Open Settings and set Consensus Node to <code>https://rpc.zcrypt.network</code>.</li>
-        <li>Tor is on by default and fail-closed. The wallet reaches the node only through a local Tor proxy at <code>127.0.0.1:9050</code>. If that daemon is not running, turn Tor off for this session, or start Tor and leave the switch on.</li>
-        <li>Create a wallet and write down the 24 words. Those words restore normal addresses and the change they derive. They do not restore a bearer file, and they do not restore a stealth address that was made with a fresh key.</li>
-        <li>Press Refresh after a payment. The wallet scans blocks and trial-decrypts notes.</li>
-      </ol>
-      <div class="callout">
-        <p>The public chain has no faucet. You can receive ZCRYPT, or any issued asset, from someone else's payment. A bearer file carries its own fee, so the receiver does not need a balance. Locking Bitcoin and receiving shielded zBTC does not charge ZCRYPT. Redeeming zBTC back to Bitcoin does not charge ZCRYPT either. Sending a coin inside the pool, swapping it, registering an asset, or creating a bearer all burn 0.01 ZCRYPT. A ZCRYPT coin pays that from itself, inside the same proof, so one coin is enough to send and the change comes back to you. A wallet that arrived holding only zBTC can hold it, redeem it, and swap it for ZCRYPT with no ZCRYPT on hand: the side giving ZCRYPT locks first and pays the gas for both legs. Sending zBTC to another pool address still needs a little ZCRYPT for the gas note.</p>
-      </div>
-      <p>On Receive, drop <code>zcrypt-bearer.txt</code> or paste it. The first line must be exactly <code>zcrypt-bearer/1</code>, then a <code>coin</code> line and a <code>gas</code> line. The first sweep in a block takes the file. On Send, choose bearer coin and the wallet writes the file. Creating one costs 0.03 ZCRYPT on top of the value you put in the file. Hand the file over the way you would hand over cash, then delete your copy.</p>
+            <h2 id="first-session">A first session with the wallet</h2>
+            <p>Download the installer from the <a href="/#wallet">homepage</a>. It selects the file for the computer you are using, from the latest public GitHub release of <a href="https://github.com/echelonlabsresearch/ZCrypt/releases">echelonlabsresearch/ZCrypt</a>.</p>
+            <ol>
+              <li>Install it. macOS is an Apple Silicon disk image. Linux ships an AppImage and a deb. Windows ships an NSIS <code>setup.exe</code> that is not Authenticode-signed.</li>
+              <li>Open Settings and set Consensus Node to <code>https://rpc.zcrypt.network</code>.</li>
+              <li>Tor is on by default and fail-closed. The wallet reaches the node only through a local Tor proxy at <code>127.0.0.1:9050</code>. If that daemon is not running, turn Tor off for this session, or start Tor and leave the switch on.</li>
+              <li>Create a wallet and write down the 24 words. Those words restore normal addresses and the change they derive. They do not restore a bearer file, and they do not restore a stealth address that was made with a fresh key.</li>
+              <li>Press Refresh after a payment. The wallet scans blocks and trial-decrypts notes.</li>
+            </ol>
+            <div class="callout">
+              <p>The public chain has no faucet. You can receive ZCRYPT, or any issued asset, from someone else's payment. A bearer file carries its own fee, so the receiver does not need a balance. Locking Bitcoin and receiving shielded zBTC does not charge ZCRYPT. Redeeming zBTC back to Bitcoin does not charge ZCRYPT either. Sending a coin inside the pool, swapping it, registering an asset, or creating a bearer all burn 0.01 ZCRYPT. A ZCRYPT coin pays that from itself, inside the same proof, so one coin is enough to send and the change comes back to you. A wallet that arrived holding only zBTC can hold it, redeem it, and swap it for ZCRYPT with no ZCRYPT on hand: the side giving ZCRYPT locks first and pays the gas for both legs. Sending zBTC to another pool address still needs a little ZCRYPT for the gas note.</p>
+            </div>
+            <p>On Receive, drop <code>zcrypt-bearer.txt</code> or paste it. The first line must be exactly <code>zcrypt-bearer/1</code>, then a <code>coin</code> line and a <code>gas</code> line. The first sweep in a block takes the file. On Send, choose bearer coin and the wallet writes the file. Creating one costs 0.03 ZCRYPT on top of the value you put in the file. Hand the file over the way you would hand over cash, then delete your copy.</p>
 
-      <h2 id="playground">Run a local playground</h2>
-      <p>This is a private chain on your machine. Coins minted here do not exist on zcrypt-1. You need Docker and Docker Compose v2. The first image build compiles the prover and takes a few minutes.</p>
-      <pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
+            <h2 id="playground">Run a local playground</h2>
+            <p>This is a private chain on your machine. Coins minted here do not exist on zcrypt-1. You need Docker and Docker Compose v2. The first image build compiles the prover and takes a few minutes.</p>
+            <pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
 cd ZCrypt/chain
 cp .env.example .env</code></pre>
-      <p>Edit <code>.env</code> before you start. A local playground is the devnet feature plus Bitcoin regtest. Leave <code>ABCI_FEATURES</code> empty only when you mean a production build. An empty feature set has no faucet, requires a foundation address, and refuses regtest.</p>
-      <pre><code>ABCI_FEATURES=devnet
+            <p>Edit <code>.env</code> before you start. A local playground is the devnet feature plus Bitcoin regtest. Leave <code>ABCI_FEATURES</code> empty only when you mean a production build. An empty feature set has no faucet, requires a foundation address, and refuses regtest.</p>
+            <pre><code>ABCI_FEATURES=devnet
 ZCRYPT_BTC_NET=regtest</code></pre>
-      <p>Then:</p>
-      <pre><code>docker compose up --build -d</code></pre>
-      <p>Add <code>--profile dev</code> when you also want the regtest bitcoind that the bridge demo uses. Add <code>--profile bridge</code> only after you understand the reserve-key instructions in <code>chain/.env.example</code>. The reserve key is a file in <code>secrets/</code>, mode <code>0600</code>, and it never belongs in <code>.env</code>.</p>
-      <table>
-        <thead><tr><th>Service</th><th>What it is</th><th>From the host</th></tr></thead>
-        <tbody>
-          <tr><td><code>abci</code></td><td>The ZCrypt state machine</td><td>Internal only</td></tr>
-          <tr><td><code>cometbft</code></td><td>Consensus, CometBFT 0.38</td><td><code>http://127.0.0.1:36657</code></td></tr>
-          <tr><td><code>explorer</code></td><td>Block explorer</td><td>Through Caddy, once <code>EXPLORER_DOMAIN</code> resolves</td></tr>
-          <tr><td><code>caddy</code></td><td>HTTPS edge for the public RPC</td><td>Used on a real host, not required to poke the raw RPC locally</td></tr>
-          <tr><td><code>bitcoind</code></td><td>Regtest, dev profile only</td><td><code>127.0.0.1:18443</code></td></tr>
-        </tbody>
-      </table>
-      <pre><code>curl -s http://127.0.0.1:36657/status
+            <p>Then:</p>
+            <pre><code>docker compose up --build -d</code></pre>
+            <p>Add <code>--profile dev</code> when you also want the regtest bitcoind that the bridge demo uses. Add <code>--profile bridge</code> only after you understand the reserve-key instructions in <code>chain/.env.example</code>. The reserve key is a file in <code>secrets/</code>, mode <code>0600</code>, and it never belongs in <code>.env</code>.</p>
+            <table>
+              <thead><tr><th>Service</th><th>What it is</th><th>From the host</th></tr></thead>
+              <tbody>
+                <tr><td><code>abci</code></td><td>The ZCrypt state machine</td><td>Internal only</td></tr>
+                <tr><td><code>cometbft</code></td><td>Consensus, CometBFT 0.38</td><td><code>http://127.0.0.1:36657</code></td></tr>
+                <tr><td><code>explorer</code></td><td>Block explorer</td><td>Through Caddy, once <code>EXPLORER_DOMAIN</code> resolves</td></tr>
+                <tr><td><code>caddy</code></td><td>HTTPS edge for the public RPC</td><td>Used on a real host, not required to poke the raw RPC locally</td></tr>
+                <tr><td><code>bitcoind</code></td><td>Regtest, dev profile only</td><td><code>127.0.0.1:18443</code></td></tr>
+              </tbody>
+            </table>
+            <pre><code>curl -s http://127.0.0.1:36657/status
 curl -s 'http://127.0.0.1:36657/abci_query?path="/commit/count"'</code></pre>
-      <p>State lives on a Docker volume. <code>docker compose down</code> keeps it. <code>docker compose down -v</code> deletes it.</p>
-      <p>Point a wallet at <code>http://127.0.0.1:36657</code> and turn Tor off for localhost. The devnet build is the one whose Fund button can mint test coins with the <code>0x56</code> faucet. That faucet does not exist on zcrypt-1.</p>
-      <div class="callout">
-        <p>The local compose chain id is also the string <code>zcrypt-1</code>. It is still a different chain: different genesis, different coins. Use a fresh wallet for it. The wallet pins the first chain it connects to and refuses to sign for a node that reports a different chain id. The same id string will not save you from mixing two genesis files in your head.</p>
-      </div>
+            <p>State lives on a Docker volume. <code>docker compose down</code> keeps it. <code>docker compose down -v</code> deletes it.</p>
+            <p>Point a wallet at <code>http://127.0.0.1:36657</code> and turn Tor off for localhost. The devnet build is the one whose Fund button can mint test coins with the <code>0x56</code> faucet. That faucet does not exist on zcrypt-1.</p>
+            <div class="callout">
+              <p>The local compose chain id is also the string <code>zcrypt-1</code>. It is still a different chain: different genesis, different coins. Use a fresh wallet for it. The wallet pins the first chain it connects to and refuses to sign for a node that reports a different chain id. The same id string will not save you from mixing two genesis files in your head.</p>
+            </div>
 
-      <h2 id="three-node">A three-validator devnet</h2>
-      <p>The bundled stack runs three consensus nodes over one state machine. Each one verifies the shielded proofs. They have to agree on the app hash.</p>
-      <pre><code>cd ZCrypt/chain
+            <h2 id="three-node">A three-validator devnet</h2>
+            <p>The bundled stack runs three consensus nodes over one state machine. Each one verifies the shielded proofs. They have to agree on the app hash.</p>
+            <pre><code>cd ZCrypt/chain
 docker compose -f e2e/docker-compose.3node.yml up --build -d</code></pre>
-      <table>
-        <thead><tr><th>Node</th><th>RPC</th></tr></thead>
-        <tbody>
-          <tr><td>node0</td><td><code>http://127.0.0.1:46657</code></td></tr>
-          <tr><td>node1</td><td><code>http://127.0.0.1:46667</code></td></tr>
-          <tr><td>node2</td><td><code>http://127.0.0.1:46677</code></td></tr>
-        </tbody>
-      </table>
-      <p>The full live driver stands the stack up, runs the product flows, and tears it down:</p>
-      <pre><code>KEEP=0 ./chain/e2e/run-all.sh</code></pre>
-      <p>The fast suite, from a Rust checkout with the pinned nightly, is <code>cd impl && cargo test --workspace</code>. CI on every push runs the same tests in shards, plus Clippy, cargo audit, cargo deny, and the wallet. The three-node job runs on main, nightly, and when someone starts the workflow.</p>
+            <table>
+              <thead><tr><th>Node</th><th>RPC</th></tr></thead>
+              <tbody>
+                <tr><td>node0</td><td><code>http://127.0.0.1:46657</code></td></tr>
+                <tr><td>node1</td><td><code>http://127.0.0.1:46667</code></td></tr>
+                <tr><td>node2</td><td><code>http://127.0.0.1:46677</code></td></tr>
+              </tbody>
+            </table>
+            <p>The full live driver stands the stack up, runs the product flows, and tears it down:</p>
+            <pre><code>KEEP=0 ./chain/e2e/run-all.sh</code></pre>
+            <p>The fast suite, from a Rust checkout with the pinned nightly, is <code>cd impl &amp;&amp; cargo test --workspace</code>. CI on every push runs the same tests in shards, plus Clippy, cargo audit, cargo deny, and the wallet. The three-node job runs on main, nightly, and when someone starts the workflow.</p>
 
-      <h2 id="join">Join the public chain as a validator</h2>
-      <p>A validator is a full node plus a bond. Syncing does not require a bond. Producing blocks does. The plug-and-play file is <code>chain/docker-compose.validator.yml</code> in the protocol repo. From a clone:</p>
-      <pre><code>cd ZCrypt/chain
+            <h2 id="join">Join the public chain as a validator</h2>
+            <p>A validator is a full node plus a bond. Syncing does not require a bond. Producing blocks does. The plug-and-play file is <code>chain/docker-compose.validator.yml</code> in the protocol repo. From a clone:</p>
+            <pre><code>cd ZCrypt/chain
 docker compose -f docker-compose.validator.yml up -d
 docker logs -f zcrypt-validator-cometbft</code></pre>
-      <p>The entrypoint downloads genesis from the public foundation and finds a seed peer. You do not hand-edit genesis. Until you bond, the process is a syncing full node.</p>
-      <h3>Pin the genesis you actually synced</h3>
-      <p>The foundation node writes <code>config/genesis.sha256</code> at first start. Put that 64-hex digest in a <code>.env</code> beside the compose file as <code>GENESIS_SHA256</code>. The entrypoint then refuses any genesis whose hash differs. Read the digest from a node you already trust, or from the foundation operator. Do not take it from a random paste.</p>
-      <h3>Verify the image before you bond</h3>
-      <p>The compose file pins the ABCI image by digest. The publish workflow signs that digest with keyless cosign. Check it once:</p>
-      <pre><code>IMG=$(grep -o 'ghcr.io/[^ ]*@sha256:[0-9a-f]*' docker-compose.validator.yml | head -1)
+            <p>The entrypoint downloads genesis from the public foundation and finds a seed peer. You do not hand-edit genesis. Until you bond, the process is a syncing full node.</p>
+            <h3>Pin the genesis you actually synced</h3>
+            <p>The foundation node writes <code>config/genesis.sha256</code> at first start. Put that 64-hex digest in a <code>.env</code> beside the compose file as <code>GENESIS_SHA256</code>. The entrypoint then refuses any genesis whose hash differs. Read the digest from a node you already trust, or from the foundation operator. Do not take it from a random paste.</p>
+            <h3>Verify the image before you bond</h3>
+            <p>The compose file pins the ABCI image by digest. The publish workflow signs that digest with keyless cosign. Check it once:</p>
+            <pre><code>IMG=$(grep -o 'ghcr.io/[^ ]*@sha256:[0-9a-f]*' docker-compose.validator.yml | head -1)
 cosign verify "$IMG" \
   --certificate-identity-regexp '^https://github.com/echelonlabsresearch/ZCrypt/\.github/workflows/image\.yml@refs/tags/v' \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com</code></pre>
-      <p>That identity is what the publish workflow puts in the job summary. Use the line it prints if it ever differs. If verification fails, do not run the image. A digest does not move when a tag moves. To build from source instead, set <code>ZCRYPT_ABCI_IMAGE</code> to a local tag as <code>validator.env.example</code> describes. The Dockerfile uses the same pinned nightly and <code>--locked</code> build.</p>
-      <p>The validator RPC binds to <code>127.0.0.1:56657</code> unless you set <code>VALIDATOR_RPC_BIND</code>. P2P port <code>56656</code> has to be reachable by peers. Opening the raw RPC on a public address is a separate decision. Wallets should keep using <code>https://rpc.zcrypt.network</code>.</p>
-      <p>Stop and keep the identity with <code>docker compose -f docker-compose.validator.yml down</code>. Add <code>-v</code> only when you mean to delete that validator's state and keys.</p>
+            <p>That identity is what the publish workflow puts in the job summary. Use the line it prints if it ever differs. If verification fails, do not run the image. A digest does not move when a tag moves. To build from source instead, set <code>ZCRYPT_ABCI_IMAGE</code> to a local tag as <code>validator.env.example</code> describes. The Dockerfile uses the same pinned nightly and <code>--locked</code> build.</p>
+            <p>The validator RPC binds to <code>127.0.0.1:56657</code> unless you set <code>VALIDATOR_RPC_BIND</code>. P2P port <code>56656</code> has to be reachable by peers. Opening the raw RPC on a public address is a separate decision. Wallets should keep using <code>https://rpc.zcrypt.network</code>.</p>
+            <p>Stop and keep the identity with <code>docker compose -f docker-compose.validator.yml down</code>. Add <code>-v</code> only when you mean to delete that validator's state and keys.</p>
 
-      <h2 id="bond">Bond, claim, unbond, delegate</h2>
-      <p>The minimum bond is <strong>10,000 ZCRYPT</strong>, taken from a shielded balance. The bond spends those coins into a burn. The stake is real. Voting power is the stake in whole ZCRYPT. On the next block the node joins the active set. Rewards accrue every 100 blocks and are withdrawn with a claim into a fresh private coin.</p>
-      <p>The consensus private key never goes in the wallet. It stays in the validator's <code>priv_validator_key.json</code>.</p>
-      <ol>
-        <li>In the wallet, Rewards, Become a validator. Enter the stake and the commission. Prepare bond. The wallet shows the chain id, the reward address, the stake in base units, the commission in basis points, and the nonce.</li>
-        <li>On the validator host, extract the seed and sign. The seed is the first 32 bytes of the consensus private key. Anyone who has it can equivocate your validator and get it slashed. Do not paste it into a chat or into the desktop wallet.</li>
-      </ol>
-      <pre><code>export VALIDATOR_SEED_HEX=$(docker exec zcrypt-validator-cometbft \
+            <h2 id="bond">Bond, claim, unbond, delegate</h2>
+            <p>The minimum bond is <strong>10,000 ZCRYPT</strong>, taken from a shielded balance. The bond spends those coins into a burn. The stake is real. Voting power is the stake in whole ZCRYPT. On the next block the node joins the active set. Rewards accrue every 100 blocks and are withdrawn with a claim into a fresh private coin.</p>
+            <p>The simplest path keeps the consensus key in the wallet's hands from the start. In the wallet, open Rewards, Run a validator, Node setup, and copy the <code>.env</code> line. Put that <code>VALIDATOR_KEY=…</code> line in the <code>.env</code> beside the compose file before the node's first start. The node then runs with the wallet's validator identity, and the wallet bonds and unbonds it with one click and no host-side signing.</p>
+            <p>If the node already generated its own key, the consensus private key stays in the validator's <code>priv_validator_key.json</code> and the bond is signed on the host:</p>
+            <ol>
+              <li>In the wallet, Rewards, Become a validator. Enter the stake and the commission. Prepare bond. The wallet shows the chain id, the reward address, the stake in base units, the commission in basis points, and the nonce.</li>
+              <li>On the validator host, extract the seed and sign. The seed is the first 32 bytes of the consensus private key. Anyone who has it can equivocate your validator and get it slashed. Do not paste it into a chat or into the desktop wallet.</li>
+            </ol>
+            <pre><code>export VALIDATOR_SEED_HEX=$(docker exec zcrypt-validator-cometbft \
   cat /cometbft/config/priv_validator_key.json \
   | python3 -c "import sys,json,base64; print(base64.b64decode(json.load(sys.stdin)['priv_key']['value'])[:32].hex())")
 
@@ -169,66 +187,88 @@ cargo run --release -p zcrypt-bridge --bin bond_validator -- sign \
   --stake &lt;base units&gt; \
   --commission-bps &lt;bps&gt; \
   --node http://127.0.0.1:56657</code></pre>
-      <p>Paste the 128-hex signature back into the wallet and submit. Confirm the set afterwards:</p>
-      <pre><code>curl -s 'http://127.0.0.1:56657/abci_query?path="/staking/validators"'</code></pre>
-      <p>A headless alternative, <code>chain/validator-bond.sh</code>, reads the key inside the container and bonds to a reward address the wallet already prepared. Pass the RPC and a stake if you are not on the defaults: <code>./validator-bond.sh http://127.0.0.1:56657 20000</code>.</p>
-      <h3>Unbond</h3>
-      <p>An unbond sets voting power to zero on the next block. The stake stays locked for <strong>10 days</strong>, then becomes claimable. Equivocation, a double-sign that CometBFT reports, burns <strong>5%</strong> of the pledged stake and tombstones the key. The slash also reaches into the unbonding queue. The remaining 95% still waits out the 10 days.</p>
-      <h3>Delegate</h3>
-      <p>You can back someone else's validator without running a node. In the wallet, Rewards, Delegate. Your coins are pledged the same way. You raise that validator's power, you earn a share of its rewards after its commission, and you share its slashing risk. Undelegate drops the power immediately and starts the same 10-day wait. Only the key that delegated can undelegate.</p>
-      <p>Claims pay two streams into the Rewards tab. Block rewards are ZCRYPT. Bridge-fee yield is denominated in the bridged asset itself, split by stake. A claim takes the whole claimable balance of that stream. Balances under 1 ZCRYPT keep accruing. The chain refuses a dust claim so a third party cannot force a tiny coin onto you.</p>
-      <p>The canonical write-up, including the message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/chain/README-validator.md">chain/README-validator.md</a>. The mechanics of bond, unbond, and delegate are in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/running.md">running.md</a>.</p>
+            <p>Paste the 128-hex signature back into the wallet and submit. Confirm the set afterwards:</p>
+            <pre><code>curl -s 'http://127.0.0.1:56657/abci_query?path="/staking/validators"'</code></pre>
+            <p>A headless alternative, <code>chain/validator-bond.sh</code>, reads the key inside the container and bonds to a reward address the wallet already prepared. Pass the RPC and a stake if you are not on the defaults: <code>./validator-bond.sh http://127.0.0.1:56657 20000</code>.</p>
+            <h3>Unbond</h3>
+            <p>An unbond sets voting power to zero on the next block. The stake stays locked for <strong>10 days</strong>, then becomes claimable. Equivocation, a double-sign that CometBFT reports, burns <strong>5%</strong> of the pledged stake and tombstones the key. The slash also reaches into the unbonding queue. The remaining 95% still waits out the 10 days.</p>
+            <h3>Delegate</h3>
+            <p>You can back someone else's validator without running a node. In the wallet, Rewards, Delegate. Your coins are pledged the same way. You raise that validator's power, you earn a share of its rewards after its commission, and you share its slashing risk. Undelegate drops the power immediately and starts the same 10-day wait. Only the key that delegated can undelegate.</p>
+            <p>Claims pay two streams into the Rewards tab. Block rewards are ZCRYPT. Bridge-fee yield is denominated in the bridged asset itself, split by stake. A claim takes the whole claimable balance of that stream. Balances under 1 ZCRYPT keep accruing. The chain refuses a dust claim so a third party cannot force a tiny coin onto you.</p>
+            <p>The canonical write-up, including the message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/chain/README-validator.md">chain/README-validator.md</a>. The mechanics of bond, unbond, and delegate are in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/running.md">running.md</a>.</p>
 
-      <h2 id="wallet-source">Build the wallet from source</h2>
-      <p>The wallet is a Tauri and React desktop app. You need Node.js 20 or newer and Rust. The nightly is pinned by <code>wallet/rust-toolchain.toml</code>, so a plain <code>cargo</code> in that directory selects it. macOS and Windows use the system webview. Linux needs <code>libwebkit2gtk-4.1-dev</code>, <code>libgtk-3-dev</code>, <code>librsvg2-dev</code>, and <code>libayatana-appindicator3-dev</code>.</p>
-      <pre><code>cd ZCrypt/wallet
+            <h2 id="wallet-source">Build the wallet from source</h2>
+            <p>The wallet is a Tauri and React app for desktop and iPhone. You need Node.js 20 or newer and Rust. The nightly is pinned by <code>wallet/rust-toolchain.toml</code>, so a plain <code>cargo</code> in that directory selects it. macOS and Windows use the system webview. Linux needs <code>libwebkit2gtk-4.1-dev</code>, <code>libgtk-3-dev</code>, <code>librsvg2-dev</code>, and <code>libayatana-appindicator3-dev</code>.</p>
+            <pre><code>cd ZCrypt/wallet
 npm install
 npm run tauri:dev
 npm run tauri:build</code></pre>
-      <p><code>tauri:dev</code> compiles the Rust backend on first launch. Release bundles land in <code>wallet/src-tauri/target/release/bundle/</code>. <code>npm run dev</code> is the web UI alone, with no chain behind it.</p>
-      <p>Published installers are built by <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/.github/workflows/wallet-release.yml">wallet-release.yml</a> on a <code>v*</code> tag. The Mac job notarizes and staples the disk image. The checksum job refuses to finish unless the release has a dmg, a deb, an AppImage, and a Windows <code>-setup.exe</code>.</p>
+            <p><code>tauri:dev</code> compiles the Rust backend on first launch. Release bundles land in <code>wallet/src-tauri/target/release/bundle/</code>. <code>npm run dev</code> is the web UI alone, with no chain behind it.</p>
+            <p>Published installers are built by <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/.github/workflows/wallet-release.yml">wallet-release.yml</a> on a <code>v*</code> tag. The Mac job notarizes and staples the disk image. The checksum job refuses to finish unless the release has a dmg, a deb, an AppImage, and a Windows <code>-setup.exe</code>.</p>
 
-      <h2 id="economics">Supply, fees, and the pool</h2>
-      <p>The cap is <strong>21,000,000 ZCRYPT</strong>. Twenty percent is the foundation allocation, 4,200,000. Of that, 50,000 is liquid at genesis. Twenty-five percent unlocks at month 12, then monthly through month 48. Eighty percent is mined: 0.14 ZCRYPT per block, halving every 60,000,000 blocks, with rewards paid every 100 blocks. Blocks are one second apart.</p>
-      <p>A shielded payment burns <strong>0.01 ZCRYPT</strong>. A ZCRYPT payment is one proof: its first output is that burn, revealed so anyone can check it, and the other two outputs are the payment and the change. A payment of any other asset is two proofs, the payment proof with a zero fee and a ZCRYPT gas proof carrying the same burn. One-input spends are padded so the chain always sees two inputs and three outputs.</p>
-      <p>Issuance registers a ticker, a precision, and a hard cap. Further mint is an M-of-N authorization over that exact mint. The wallet uses a 1-of-1 key from the seed. zBTC has no signer set. A Bitcoin proof is the gate. The depositor's shielded coin is the locked amount net of a 10 basis-point fee. That fee accrues to stakers in zBTC. The Bitcoin lock itself is a public Bitcoin transaction. The coin that lands in the pool is an ordinary shielded coin. The swap record of an in-pool trade is also public about that trade's amount, asset, and the keys of the two sides. The payments that funded the escrow, and the payments that take the proceeds away, are ordinary pool payments.</p>
+            <h2 id="economics">Supply, fees, and the pool</h2>
+            <p>The cap is <strong>21,000,000 ZCRYPT</strong>. Twenty percent is the foundation allocation, 4,200,000. Of that, 50,000 is liquid at genesis. Twenty-five percent unlocks at month 12, then monthly through month 48. Eighty percent is mined: 0.14 ZCRYPT per block, halving every 60,000,000 blocks, with rewards paid every 100 blocks. Blocks are one second apart. The vesting schedule is a consensus rule, the amount claimed so far is part of the state every validator signs, and the explorer shows vested against claimed.</p>
+            <p>A shielded payment burns <strong>0.01 ZCRYPT</strong>. A ZCRYPT payment is one proof: its first output is that burn, revealed so anyone can check it, and the other two outputs are the payment and the change. A payment of any other asset is two proofs, the payment proof with a zero fee and a ZCRYPT gas proof carrying the same burn. One-input spends are padded so the chain always sees two inputs and three outputs.</p>
+            <p>Issuance registers a ticker, a precision, and a hard cap. Further mint is an M-of-N authorization over that exact mint. The wallet uses a 1-of-1 key from the seed. zBTC has no signer set. A Bitcoin proof is the gate. The depositor's shielded coin is the locked amount net of a 10 basis-point fee. That fee accrues to stakers in zBTC. The Bitcoin lock itself is a public Bitcoin transaction. The coin that lands in the pool is an ordinary shielded coin. The swap record of an in-pool trade is also public about that trade's amount, asset, and the keys of the two sides. The payments that funded the escrow, and the payments that take the proceeds away, are ordinary pool payments.</p>
 
-      <h2 id="limits">What this does not claim</h2>
-      <ul>
-        <li>The value layer is post-quantum. Block ordering is CometBFT, and its consensus signatures are classical. The Bitcoin reserve is Bitcoin's signature scheme. Those two cannot forge a shielded coin.</li>
-        <li>A shielded payment is accepted because the STARK verifies. The seven-opcode program is the specification, the wallet's pre-broadcast check, the differential test, and what the explorer shows. Consensus does not re-execute that program over the secret values. It does not have them.</li>
-        <li>The Lean proofs cover conservation, including the field-arithmetic wrap that has inflated other hidden ledgers. They are a hand-written model. They do not prove FRI, Poseidon2, ML-KEM, or ML-DSA, and they do not extract the Rust.</li>
-        <li>There has not been an external audit of the circuit. Treat that as the dominant limit on how much value you point at the chain. An internal review fixed issues it found. The open item is the outside review.</li>
-        <li>The pool hides a spend among the coins the pool has ever held. Early on, that crowd is small. Nullifiers show that spends happen. Staking, claims, mints, bridge escrows, and in-pool swaps name the key they act for. A node sees the submitter's IP unless Tor is on.</li>
-        <li>The Johnson bound the node enforces is 132 bits. A higher figure you may see in the proof parameters is a list-decoding conjecture, not the floor the node checks.</li>
-      </ul>
+            <h2 id="limits">What this does not claim</h2>
+            <ul>
+              <li>The value layer is post-quantum. Block ordering is CometBFT, and its consensus signatures are classical. The Bitcoin reserve is Bitcoin's signature scheme. Those two cannot forge a shielded coin.</li>
+              <li>A shielded payment is accepted because the STARK verifies. The seven-opcode program is the specification, the wallet's pre-broadcast check, the differential test, and what the explorer shows. Consensus does not re-execute that program over the secret values. It does not have them.</li>
+              <li>The Lean proofs cover conservation, including the field-arithmetic wrap that has inflated other hidden ledgers. They are a hand-written model. They do not prove FRI, Poseidon2, ML-KEM, or ML-DSA, and they do not extract the Rust.</li>
+              <li>There has not been an external audit of the circuit. Treat that as the dominant limit on how much value you point at the chain. Internal reviews fixed what they found. The open item is the outside review.</li>
+              <li>The pool hides a spend among the coins the pool has ever held. Early on, that crowd is small. Nullifiers show that spends happen. Staking, claims, mints, bridge escrows, and in-pool swaps name the key they act for. A node sees the submitter's IP unless Tor is on.</li>
+              <li>The Johnson bound the node enforces is 132 bits. A higher figure you may see in the proof parameters is a list-decoding conjecture, not the floor the node checks.</li>
+            </ul>
 
-      <h2 id="read">Read next</h2>
-      <table>
-        <thead><tr><th>If you want</th><th>The source</th></tr></thead>
-        <tbody>
-          <tr><td>The paper</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Cash Is a File</a></td></tr>
-          <tr><td>What a stranger can see</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">privacy.md</a></td></tr>
-          <tr><td>Assumptions and the proofs</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/security.md">security.md</a> and <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/formal/README.md">formal/README.md</a></td></tr>
-          <tr><td>Transactions, fees, issuance, the bridge</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/protocol.md">protocol.md</a></td></tr>
-          <tr><td>The opcode programs</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/vm.md">vm.md</a></td></tr>
-          <tr><td>Operate a node</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/running.md">running.md</a></td></tr>
-          <tr><td>The explorer</td><td><a href="https://explorer.zcrypt.network">explorer.zcrypt.network</a></td></tr>
-        </tbody>
-      </table>
-      <p>Reports go to <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>. The implementation is MIT.</p>
-    </article>
-  </div>
+            <h2 id="read">Read next</h2>
+            <table>
+              <thead><tr><th>If you want</th><th>The source</th></tr></thead>
+              <tbody>
+                <tr><td>The paper</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Cash Is a File</a></td></tr>
+                <tr><td>What a stranger can see</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">privacy.md</a></td></tr>
+                <tr><td>Assumptions and the proofs</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/security.md">security.md</a> and <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/formal/README.md">formal/README.md</a></td></tr>
+                <tr><td>Transactions, fees, issuance, the bridge</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/protocol.md">protocol.md</a></td></tr>
+                <tr><td>The opcode programs</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/vm.md">vm.md</a></td></tr>
+                <tr><td>Operate a node</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/running.md">running.md</a></td></tr>
+                <tr><td>The explorer</td><td><a href="https://explorer.zcrypt.network">explorer.zcrypt.network</a></td></tr>
+              </tbody>
+            </table>
+            <p class="fine-print">Reports go to <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>. The implementation is MIT.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
 
-  <footer class="site">
-    <div class="wrap foot">
-      <div>ZCrypt · chain id zcrypt-1</div>
-      <nav aria-label="Footer">
-        <a href="https://explorer.zcrypt.network">Explorer</a>
-        <a href="https://github.com/echelonlabsresearch/ZCrypt">Protocol</a>
-        <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>
-      </nav>
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div class="foot-brand">
+        <span class="brand"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></span>
+        <p>Private digital cash you can send through any chat. No addresses to swap, no exchange in the middle.</p>
+      </div>
+      <div class="foot-cols">
+        <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="/docs/">Run a node</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="/brand.html">Brand</a></div>
+        <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a><a href="/privacy.html">Wallet privacy policy</a></div>
+      </div>
     </div>
+    <div class="wrap foot-base mono"><span>© Echelon Labs · MIT</span><span>network zcrypt-1</span></div>
   </footer>
+  <script>
+    // Highlight the section in view in the side navigation.
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll(".docs-nav a"));
+      var heads = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+      if (!("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (a) { a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id); });
+        });
+      }, { rootMargin: "-20% 0px -70% 0px" });
+      heads.forEach(function (h) { if (h) io.observe(h); });
+    })();
+  </script>
 </body>
 </html>

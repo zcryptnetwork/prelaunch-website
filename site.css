@@ -433,3 +433,44 @@ footer.foot { border-top: 1px solid var(--line); background: var(--bg); padding:
 .dl-list a:hover { border-color: var(--cyan); background: var(--cyan-dim); }
 @media (max-width: 1100px) { .brand-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 720px) { .brand-grid { grid-template-columns: minmax(0, 1fr); } .brandbook { padding: 80px 0 90px; } }
+
+/* ---- Developers page ---------------------------------------------------- */
+.docs-page { padding: 150px 0 90px; }
+.docs-head { max-width: 760px; }
+.docs-head .dek { max-width: 640px; }
+.docs-shell { display: grid; grid-template-columns: 220px minmax(0, 760px); gap: 70px; margin-top: 56px; align-items: start; }
+.docs-nav { position: sticky; top: 96px; display: flex; flex-direction: column; gap: 2px; font-family: var(--mono); font-size: .78rem; letter-spacing: .02em; }
+.docs-nav b { color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .1em; font-size: .68rem; margin: 0 0 10px 14px; }
+.docs-nav a { color: var(--muted); padding: 7px 14px; border-left: 1px solid var(--line); border-radius: 0 10px 10px 0; transition: color .2s, background .2s, border-color .2s; }
+.docs-nav a:hover, .docs-nav a.on { color: var(--text); background: var(--panel); border-color: var(--cyan); }
+.docs { font-size: 1.02rem; line-height: 1.7; color: var(--body); }
+.docs h2 { font-size: clamp(1.5rem, 2.4vw, 2rem); line-height: 1.12; margin: 64px 0 18px; padding-top: 22px; border-top: 1px solid var(--line); scroll-margin-top: 96px; }
+.docs h2:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.docs h3 { font-size: 1.12rem; font-weight: 500; margin: 30px 0 10px; color: var(--text); }
+.docs p { margin: 0 0 16px; }
+.docs ol, .docs ul { margin: 0 0 18px; padding-left: 22px; }
+.docs li { margin: 0 0 8px; }
+.docs li::marker { color: var(--cyan); font-family: var(--mono); font-size: .9em; }
+.docs strong { color: var(--text); font-weight: 600; }
+.docs a { color: var(--cyan-2); text-decoration: underline; text-decoration-color: rgba(142,233,243,.35); text-underline-offset: 3px; }
+.docs a:hover { text-decoration-color: var(--cyan); }
+.docs code { font-family: var(--mono); font-size: .88em; color: var(--text); background: var(--cyan-dim); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+.docs pre { margin: 16px 0 22px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(180deg, rgba(14,20,27,.7), rgba(14,20,27,.4)); overflow-x: auto; font-family: var(--mono); font-size: .86rem; line-height: 1.7; color: var(--text); }
+.docs pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.docs table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: .95rem; }
+.docs th { text-align: left; font-family: var(--mono); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; padding: 0 14px 10px; border-bottom: 1px solid var(--line-2); }
+.docs td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.docs td:first-child { color: var(--text); white-space: nowrap; }
+.docs .callout { margin: 20px 0 24px; padding: 18px 22px; border: 1px solid var(--line); border-left: 2px solid var(--cyan); border-radius: 0 14px 14px 0; background: var(--panel); }
+.docs .callout p:last-child { margin: 0; }
+.docs .fine-print { font-family: var(--mono); font-size: .8rem; color: var(--muted); }
+@media (max-width: 860px) {
+  .docs-page { padding-top: 120px; }
+  .docs-shell { grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .docs table { display: block; overflow-x: auto; }
+  .docs a { overflow-wrap: anywhere; }
+  .docs-nav { position: static; flex-direction: row; flex-wrap: wrap; gap: 6px; }
+  .docs-nav b { display: none; }
+  .docs-nav a { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+  .docs td:first-child { white-space: normal; }
+}
