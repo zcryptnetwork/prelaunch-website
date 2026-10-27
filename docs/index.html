@@ -95,7 +95,7 @@
             <h2 id="first-session">Setting up the wallet</h2>
             <p>The <a href="/#wallet">homepage</a> download button picks the installer for your operating system from the latest public GitHub release of <a href="https://github.com/echelonlabsresearch/ZCrypt/releases">echelonlabsresearch/ZCrypt</a>.</p>
             <ol>
-              <li>Install it. The macOS build is an Apple Silicon disk image, Linux has an AppImage and a deb package, and Windows has an <code>.msi</code> installer.</li>
+              <li>Install it. macOS has a disk image each for Apple Silicon and Intel, Linux has an AppImage and a deb package, and Windows has an <code>.msi</code> installer.</li>
               <li>Open Settings and set Consensus Node to <code>https://rpc.zcrypt.network</code>.</li>
               <li>Tor is on by default, and the wallet refuses to connect without it. It expects a local Tor proxy at <code>127.0.0.1:9050</code>. If you do not run one, either start Tor or turn the setting off.</li>
               <li>Create a wallet and write down the 24 words. The seed restores normal addresses and the change coins derived from them. It does not restore bearer files or stealth addresses that were generated with a fresh key.</li>
@@ -211,7 +211,7 @@ npm install
 npm run tauri:dev
 npm run tauri:build</code></pre>
             <p><code>tauri:dev</code> compiles the Rust backend on first launch. Release bundles are written to <code>wallet/src-tauri/target/release/bundle/</code>. <code>npm run dev</code> serves the web UI alone, without a backend.</p>
-            <p>Published installers are built by <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/.github/workflows/wallet-release.yml">wallet-release.yml</a> whenever a <code>v*</code> tag is pushed. The macOS job notarizes and staples the disk image, and the checksum job fails unless the release contains a dmg, a deb, an AppImage and a Windows <code>.msi</code>.</p>
+            <p>Published installers are built by <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/.github/workflows/wallet-release.yml">wallet-release.yml</a> whenever a <code>v*</code> tag is pushed. The macOS job notarizes and staples the disk image, and the checksum job fails unless the release contains a dmg, a deb, an AppImage and a Windows <code>.msi</code>. The Intel disk image is cross-compiled on the same Apple Silicon runner.</p>
 
             <h2 id="economics">Supply and fees</h2>
             <p>The supply cap is <strong>21,000,000 ZCRYPT</strong>. Twenty percent, 4,200,000 ZCRYPT, is allocated to the foundation. Of that, 50,000 is liquid at genesis, 25% unlocks at month 12, and the remainder vests monthly until month 48. The other 80% is issued as block rewards of 0.14 ZCRYPT per block, halving every 60,000,000 blocks, paid out every 100 blocks. Blocks are one second apart. The vesting schedule is enforced by consensus, the amount claimed so far is part of the state hash that every validator signs, and the explorer shows the vested and claimed totals.</p>

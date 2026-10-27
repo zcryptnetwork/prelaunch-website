@@ -12,7 +12,7 @@
   if (!button || !status || !list) return;
 
   var os = detect();
-  var pretty = { mac: "macOS (Apple Silicon)", windows: "Windows", linux: "Linux", other: "this computer" }[os];
+  var pretty = { mac: "macOS", windows: "Windows", linux: "Linux", other: "this computer" }[os];
 
   status.textContent = "Looking up the latest public installers for " + pretty + ".";
 
@@ -114,7 +114,7 @@
 
   function kind(name) {
     var n = name.toLowerCase();
-    if (n.endsWith(".dmg")) return "macOS";
+    if (n.endsWith(".dmg")) return /aarch64|arm64/.test(n) ? "macOS Apple Silicon" : /x64|x86_64|intel/.test(n) ? "macOS Intel" : "macOS";
     if (n.endsWith(".appimage")) return "Linux AppImage";
     if (n.endsWith(".deb")) return "Linux deb";
     if (n.endsWith("-setup.exe") || n.endsWith(".msi")) return "Windows";
