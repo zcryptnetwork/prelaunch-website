@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZCrypt Security: money that cannot be printed</title>
+  <meta name="description" content="How ZCrypt makes sure nobody can create coins out of thin air: the rule is a machine-checked theorem in Lean 4, not a promise. From a one-minute explanation to the full detail of what is proven, what is tested, and what is still an assumption.">
+  <meta name="theme-color" content="#06080f">
+  <meta property="og:title" content="ZCrypt Security: money that cannot be printed">
+  <meta property="og:description" content="The rule that nobody can create ZCrypt out of thin air is a machine-checked theorem, kernel-verified in Lean 4 with zero sorry. Here is what that means, what else is proven, and what is not.">
+  <meta property="og:url" content="https://zcrypt.network/security.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:image" content="https://zcrypt.network/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ZCrypt Security: money that cannot be printed">
+  <meta name="twitter:description" content="No inflation is a theorem, not a promise. What is formally verified in ZCrypt, what is tested, and what is still an assumption.">
+  <meta name="twitter:image" content="https://zcrypt.network/og.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css?v=12">
+</head>
+<body class="page-security">
+  <a class="skip" href="#content">Skip to content</a>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top" id="top">
+    <a class="brand" href="/" aria-label="ZCrypt home">
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>ZCrypt</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="/#chapters">Why ZCrypt</a>
+      <a href="security.html" aria-current="page">Security</a>
+      <a href="/#wallet">Wallet</a>
+      <a href="docs/">Developers</a>
+      <a href="brand.html">Brand</a>
+      <a href="https://explorer.zcrypt.network">Explorer</a>
+    </nav>
+    <div class="top-right">
+      <span class="live" title="Reference network"><i></i> zcrypt-1</span>
+      <a class="btn btn-solid btn-sm" href="/#wallet">Download</a>
+    </div>
+  </header>
+
+  <main id="content">
+
+    <!-- HERO -->
+    <section class="sec-hero">
+      <div class="wrap">
+        <p class="section-label"><span>Security</span> Proven, tested, reviewed. In that order.</p>
+        <h1 class="display">Money that<br><em>cannot be printed.</em></h1>
+        <p class="lead">The most important rule of any currency is that nobody can create it out of thin air. On ZCrypt that rule is not a promise, a policy, or a line in a document. It is a mathematical theorem, checked by a computer, about the exact circuit that runs on the network today.</p>
+        <div class="sec-badges" aria-label="Headline facts">
+          <div class="sec-badge"><b>0</b><span>unproven steps (<code>sorry</code>) in the Lean proofs</span></div>
+          <div class="sec-badge"><b>82</b><span>machine-checked theorems</span></div>
+          <div class="sec-badge"><b>40 / 40</b><span>constraints of the live circuit modeled</span></div>
+          <div class="sec-badge"><b>7</b><span>adversarial review rounds since July 2026</span></div>
+        </div>
+        <p class="sec-fine mono">This page starts simple and gets deep. Read the first section if you have a minute, the second if you are technical, and the rest if you want to check our work.</p>
+      </div>
+    </section>
+
+    <!-- LEVEL 1 -->
+    <section class="sec" id="in-a-minute">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Level 1</span>
+          <h2>In a minute</h2>
+          <p class="sec-who">For everyone</p>
+        </div>
+        <div class="sec-body">
+          <p>A ZCrypt payment hides everything: who paid, who was paid, how much, and which coin. That raises an obvious question. If nobody can see the amounts, how does anyone know the money is real? How do you know a payment did not quietly create a million coins?</p>
+          <p>The answer is that every payment carries a proof. Before the network accepts a payment, it checks that proof, and the proof can only exist if the payment obeyed the rules: the coins going in are worth exactly the coins coming out plus the fee, every coin spent really existed, and no coin is spent twice. The chain checks the rules without ever seeing the numbers.</p>
+          <p>That shifts the whole question onto the rules themselves. If the rule-checker has a bug, the proof might pass for a payment that invents money, and because the amounts are hidden, nobody would ever notice. In privacy systems this is the nightmare scenario, and it has happened in the real world.</p>
+          <p>So we did something most projects do not. We wrote the rule-checker down in a language a proof assistant understands, and we proved, step by step, that any proof it accepts describes a payment where <em>nothing was created and nothing was lost</em>. The computer checks every step of that argument. If a single step were missing, the proof would not compile. It compiles, with nothing missing.</p>
+          <div class="sec-callout">
+            <b>What this means for you</b>
+            <p>The supply of ZCrypt can only ever go down. There are 21 million coins at most, every fee is burned, and the rule that stops anyone from printing more is a theorem, not a trust assumption about the people who wrote the code.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEVEL 2 -->
+    <section class="sec" id="how-it-works">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Level 2</span>
+          <h2>How it works</h2>
+          <p class="sec-who">For the technical reader</p>
+        </div>
+        <div class="sec-body">
+          <h3>The seven checks</h3>
+          <p>A shielded transfer on ZCrypt proves one statement with a STARK, a zero-knowledge proof system built only from hashes, with no trusted setup and no elliptic curves. The statement is the same seven checks you can watch run on any transaction in the <a href="https://explorer.zcrypt.network">explorer</a>:</p>
+          <ol class="program mono sec-program" aria-label="The seven checks">
+            <li>Amounts are real</li><li>One coin type per payment</li><li>Nothing created, nothing lost</li><li>Spent coins are spent</li><li>New coins match</li><li>Every coin came from the pool</li><li>Done</li>
+          </ol>
+          <p>Each check is also written as a small, transparent bytecode program (the auditability VM). Wallets run that program on the real numbers before they build a proof, nodes run it again on the public parts of every transaction, and the proof system enforces it on the hidden parts. The circuit and the VM are tested against each other on thousands of sampled witnesses, valid and adversarial, so a divergence between what the program says and what the circuit enforces cannot hide.</p>
+
+          <h3>What "formally verified" means here</h3>
+          <p>A STARK circuit is a table of numbers (the trace) and a list of equations (the constraints) that every row of the table has to satisfy. The prover fills in the table, the verifier checks the equations. The production circuit, <code>CoinsAirTall</code>, has 128 rows, 9 hash groups per row, two inputs, three outputs, and 62-level Merkle paths. It has exactly 40 places where it asserts that something is zero.</p>
+          <p>We transcribed all 40 of those assertion sites, with their row gating, lane layout and public-input offsets, into <a href="https://lean-lang.org">Lean 4</a>, a proof assistant whose kernel checks every logical step. Then we proved the soundness theorem:</p>
+          <blockquote class="sec-thm">
+            <span class="mono">Zcrypt.Air.soundness</span>
+            <p>Any well-formed trace that satisfies all 40 constraints describes a transfer in which, over the integers, in<sub>0</sub> + in<sub>1</sub> = out<sub>0</sub> + out<sub>1</sub> + out<sub>2</sub> + fee; every value is a bounded 26-bit integer; each published output commitment is the hash of its value, blind, owner key and asset, with one shared asset; each input's owner key is derived from a spend secret the trace holds; each published nullifier is the one canonical nullifier of that input and nothing else; a dummy input has value zero; and every active input sits under the public Merkle root along a 62-level path.</p>
+          </blockquote>
+          <p>From that one theorem the protocol's money guarantees fall out as short corollaries: <code>no_inflation</code>, <code>nullifier_canonical</code>, <code>every_input_publishes</code>, <code>dummy_worthless</code>. Lean checks them all. The whole development is <strong>1,563 lines, 82 theorems, zero <code>sorry</code></strong>, and the main theorems depend on nothing but Lean's three standard foundational axioms (<code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>). No Mathlib, no external library: the proofs are discharged by Lean's own <code>omega</code> decision procedure, and the full build, including a kernel-checked primality proof of the field modulus, takes about fifteen seconds on a laptop.</p>
+
+          <h3>Check it yourself</h3>
+          <p>The proofs live in the public repository under <a href="https://github.com/echelonlabsresearch/ZCrypt/tree/main/formal"><code>formal/</code></a>, with a <code>file:line</code> reference into the Rust source on every modeled constraint. To machine-check them:</p>
+          <pre class="sec-code mono"><code>git clone https://github.com/echelonlabsresearch/ZCrypt
+cd ZCrypt/formal
+lake build                       # kernel-checks every proof
+
+# confirm nothing depends on sorry
+echo 'import Zcrypt
+#print axioms Zcrypt.Air.soundness_prop
+#print axioms Zcrypt.Carry.conservation_of_limb_constraints' > ax.lean
+lake env lean ax.lean
+# => depends on axioms: [propext, Classical.choice, Quot.sound]</code></pre>
+          <p>Lean 4 is installed with <a href="https://github.com/leanprover/elan">elan</a>; the toolchain is pinned in <code>formal/lean-toolchain</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEVEL 3 -->
+    <section class="sec" id="in-detail">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Level 3</span>
+          <h2>The proofs in detail</h2>
+          <p class="sec-who">For cryptographers and auditors</p>
+        </div>
+        <div class="sec-body">
+          <h3>Three layers of theorems</h3>
+          <p>The formal work was built up in three layers, each one closer to the deployed code.</p>
+          <div class="sec-table-wrap">
+            <table class="sec-table">
+              <thead><tr><th>Layer</th><th>Files</th><th>What is established</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><b>Specification</b></td>
+                  <td class="mono">Spec.lean</td>
+                  <td>The transparent VM's range and conservation guards over cleartext values. <code>no_inflation</code>: an accepted transfer never outputs more than it consumed. <code>conservation_exact</code>: acceptance is exactly integer conservation. <code>exact_split</code>: value is neither created nor destroyed.</td>
+                </tr>
+                <tr>
+                  <td><b>Field arithmetic</b></td>
+                  <td class="mono">Carry.lean<br>Binding.lean</td>
+                  <td>The central soundness argument of a STARK over a small field. Values live in BabyBear, p = 2<sup>31</sup> − 2<sup>27</sup> + 1 = 2013265921, and are split into 26-bit limbs. <code>nonwrap</code>: an integer divisible by p with magnitude below p is zero, so a range-checked carry cannot wrap around the field. <code>conservation_of_limb_constraints</code>: the circuit's two per-limb field equations plus the range checks imply conservation <em>over the integers</em>. <code>limb_injective</code>: a value has exactly one limb decomposition. <code>Binding.lean</code> states coin-level safety as an explicit collision reduction: breaking commitment binding or nullifier uniqueness hands you two distinct hash inputs with the same digest.</td>
+                </tr>
+                <tr>
+                  <td><b>The deployed circuit</b></td>
+                  <td class="mono">Air/Layout.lean<br>Air/Statement.lean<br>Air/Soundness.lean<br>Air/Corollaries.lean<br>Air/Field.lean<br>Air/Prime.lean</td>
+                  <td>The production AIR, constraint by constraint. <code>Layout.lean</code> is the trace, the preprocessed row selectors and the 40 assertion sites of <code>eval</code> in source order. <code>Statement.lean</code> is the transfer statement a trace proves. <code>Soundness.lean</code> reads the witness off the trace and proves the statement. <code>Prime.lean</code> proves p is prime inside the kernel by trial division (<code>decide</code> on a log-depth checker), so nothing about the field is assumed. <code>Corollaries.lean</code> derives no inflation, canonical nullifiers, domain separation between the commitment, nullifier and key hash blocks, and the arity-hiding property.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>The hash is abstract, on purpose</h3>
+          <p>The circuit hashes with Poseidon2. The Lean model does not re-prove Poseidon2's round constraints; it takes <code>out = H(inp)</code> for an <em>arbitrary</em> function H and proves everything the wiring of those digests implies. Every theorem therefore holds for the real hash, and nothing is assumed about H, not even injectivity. Where a corollary genuinely needs a hash property, the theorem says so explicitly: <code>nfBlock_injective</code> is a statement about the block layout, not about H. This is the honest shape of the claim: constraint and arithmetic correctness are proven unconditionally; collision resistance of the concrete hash is a cryptographic assumption, as it is in every system.</p>
+
+          <h3>A finding the model caught</h3>
+          <p>Formal models earn their keep when they see what a reader misses. Our circuit review of 26 October 2026 found a medium-severity privacy issue: the inner nullifier block absorbed the blind directly, so a sender who chose a degenerate blind could make that block coincide with the key block and predict the recipient's nullifier, learning when the coin was later spent. The value-level models could not see it because they abstract each field to one integer. The circuit-level model can. <code>Corollaries.inner_nf_eq_pk_iff</code> is that finding stated as a theorem over the fixed layout: after the fix, the two blocks coincide exactly when an inner digest equals a fixed constant, which is a preimage of H and not a free choice. The nullifier function was changed the same day, in both circuits, before genesis.</p>
+
+          <h3>The proof system's parameters</h3>
+          <p>The STARK ships with one parameter set in every build: 112 FRI queries, 20 bits of proof-of-work grinding, and a rate of 2<sup>−2</sup>. <code>Fri.lean</code> pins those constants and proves the arithmetic behind the two security figures the code reports: 132 bits under the Johnson bound, which is what the node enforces as its mainnet floor of 128, and 244 bits under the conjectured list-decoding radius. A unit test in the Rust crate fails if the Lean constants and the compiled constants ever drift apart. What <code>Fri.lean</code> does not prove is FRI itself, the Reed-Solomon proximity-gap theorem; that is the programme of ArkLib and our planned next step.</p>
+
+          <h3>The cryptographic foundation</h3>
+          <ul class="sec-list">
+            <li><b>No signatures in the pool.</b> Spend authority is a Poseidon2 preimage, not a discrete-log signature. Proofs are hash-based STARKs with no trusted setup.</li>
+            <li><b>Post-quantum note encryption.</b> Encrypted notes use ML-KEM-768 (FIPS 203), so a ciphertext recorded today is not waiting to be opened by a future quantum computer.</li>
+            <li><b>Post-quantum issuance authority.</b> Mint authorizations for bridged and user-issued assets are ML-DSA-65 (FIPS 204) threshold signatures over the complete escrow parameters under a protocol context string, epoch-bound and replay-proof.</li>
+            <li><b>Canonical encodings.</b> A field element has one serialization anywhere it matters; transaction parsing rejects non-canonical limbs, and nullifier registry keys are computed over reduced forms, which rules out spending a coin twice under two encodings of the same nullifier.</li>
+            <li><b>Replay and binding.</b> A proof binds a chain-domain tag, an anchor from a bounded root window, and a transaction-binding hash over its ciphertexts, commitments, fee and proof bytes. A proof made for one chain, one state or one transaction cannot be reused for another.</li>
+            <li><b>Whole-crowd anonymity.</b> Membership is proven by a 62-level Merkle path inside the circuit, so every payment hides among every coin that has ever existed, with no decoy sets to analyse and no tree rollover, ever.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- BEYOND PROOFS -->
+    <section class="sec" id="beyond-the-proofs">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Assurance</span>
+          <h2>Beyond the proofs</h2>
+          <p class="sec-who">Testing and engineering discipline</p>
+        </div>
+        <div class="sec-body">
+          <p>A theorem covers what it states. Everything around it is covered by tests, and those tests run on every push.</p>
+          <ul class="sec-list">
+            <li><b>Differential testing.</b> The production circuit is checked against an independent wide-trace implementation of the same statement and against the transparent VM, on sampled witnesses, valid and adversarial. The three must agree on every one.</li>
+            <li><b>Mutation testing of the circuit.</b> Seventeen mutation tests deliberately corrupt a satisfying trace, one cell or one constraint at a time, and assert that the constraint checker rejects it. A constraint that could be removed without a test failing would be a constraint that enforces nothing.</li>
+            <li><b>Live multi-validator end-to-end.</b> A three-validator network is brought up in CI and driven through the whole product surface: shielded transfers, bearer coins, staking, claims, asset registration, the Bitcoin bridge in both directions, and in-pool swaps, plus an adversarial suite of transactions that must be rejected.</li>
+            <li><b>Reproducible state.</b> Every node recomputes its state root from its persisted snapshot on start and refuses to run if the root does not match. Consensus folds the commitment tree, the nullifier set, the staking ledger and the validator set into that root.</li>
+            <li><b>Supply chain.</b> Dependencies are audited and pinned (<code>cargo audit</code>, <code>cargo deny</code>, <code>npm audit</code>), the lint ratchet only tightens, and the macOS wallet is signed and notarized, the Windows installer Authenticode-signed, with checksums published for every artifact.</li>
+            <li><b>Transparent rules on chain.</b> The explorer runs the auditability VM on every transaction and shows each of the seven checks passing. The rules are not hidden inside the proof; they are readable by anyone.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="sec" id="review">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Review</span>
+          <h2>Adversarial review</h2>
+          <p class="sec-who">Seven rounds and counting</p>
+        </div>
+        <div class="sec-body">
+          <p>ZCrypt is built by a team with two decades of application security experience, and the project has been reviewed the way we would review anyone else's: by assuming it is broken and trying to prove it. Since July 2026 the full source has been through seven rounds of adversarial, code-only security and privacy review, each run as an independent red-team pass over consensus, the circuit, key management, the bridge, the wallet and the explorer.</p>
+          <div class="sec-table-wrap">
+            <table class="sec-table">
+              <thead><tr><th>Round</th><th>Scope</th><th>Outcome</th></tr></thead>
+              <tbody>
+                <tr><td>31 Jul 2026</td><td>Full system, five parallel red teams</td><td>Crypto core found sound. Replayable unbond, permanent bootstrap sentinel and a devnet-default build fixed.</td></tr>
+                <tr><td>3 Aug 2026</td><td>Full system, source-only, six reviewers</td><td>Circuit traced at constraint level: no mint, double-spend or fake-membership path. Front-runnable bridge mint fixed with a depositor authorization.</td></tr>
+                <tr><td>7 Sep 2026</td><td>Full system after the bridge and asset registry landed</td><td>Five criticals found, all fixed the same day with regression tests: asset-id aliasing, SPV timestamp confusion, unbounded preimage, unbounded escrow timeout, sentinel clobber.</td></tr>
+                <tr><td>9 Sep 2026</td><td>Fresh-eyes re-review</td><td>Stake-pledge front-run fixed by binding the signed header into the proof envelope; header-flood and stale-tip protections added; reserve key rotation built.</td></tr>
+                <tr><td>14 Sep 2026</td><td>Fifth full review</td><td>Escrow identity, wallet persistence ordering and watcher planning hardened; three-node harness extended to cover every fix.</td></tr>
+                <tr><td>17 Oct 2026</td><td>Bridge and swap deep dive, seven parallel reads</td><td>A chain-halt via a publicly computable settlement blind and a wallet preimage-loss path fixed; escrows auto-expire in consensus.</td></tr>
+                <tr><td>26 Oct 2026</td><td>The shield circuits, constraint by constraint</td><td>No soundness break. Degenerate-blind nullifier linkage fixed before genesis; the fix is now a theorem; seventeen mutation tests added.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Every critical and high finding from these rounds was fixed, with a test, before the network launched. The protocol will also go through independent external audit; the formal model and the review history above exist so that an outside auditor starts from a precise statement of what is claimed, rather than from scratch.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOUNDARY -->
+    <section class="sec" id="not-proven">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Boundary</span>
+          <h2>What is not proven</h2>
+          <p class="sec-who">Read this part too</p>
+        </div>
+        <div class="sec-body">
+          <p>A security page that only lists wins is marketing. Here is the edge of what the theorems cover.</p>
+          <ul class="sec-list">
+            <li><b>The hash and the proof system are assumptions.</b> Poseidon2 collision resistance, FRI query soundness, and the security of ML-KEM and ML-DSA are cryptographic assumptions, as in every deployed system. The theorems prove the constraints and the arithmetic; they do not prove the primitives.</li>
+            <li><b>Two public inputs sit outside the model.</b> The chain-domain tag and the encrypted-notes digest are bound only through the Fiat-Shamir transcript, not by circuit constraints, so the AIR model has nothing to say about them.</li>
+            <li><b>The model is a hand transcription.</b> <code>Layout.lean</code> was written from <code>tall.rs</code> by reading it. It is checked against the source by file-and-line provenance, by the mutation tests, and by a test that fails if the compiled constants drift, but it is not yet an automatic extraction. Mechanically extracting the Rust into Lean (Charon, then Aeneas) is the next engagement, and the circuit's heavy use of generic traits is the first obstacle to scope.</li>
+            <li><b>The proofs cover the money rules, not every line.</b> Consensus, networking, the wallet, the bridge watcher and the explorer are tested and reviewed, not proven. Staking, trade escrows and the Bitcoin bridge are public by design; what is and is not private is written down in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">plain language</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- DISCLOSURE -->
+    <section class="sec sec-last" id="disclosure">
+      <div class="wrap sec-grid">
+        <div class="sec-side">
+          <span class="sec-num mono">Disclosure</span>
+          <h2>Found something?</h2>
+          <p class="sec-who">We want to hear it</p>
+        </div>
+        <div class="sec-body">
+          <p>Report vulnerabilities to <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>. Please give us a reasonable window to fix an issue before publishing it, and do not test against other people's funds. We will acknowledge within two business days, credit you in the fix if you want to be credited, and publish the finding once it is closed.</p>
+          <div class="sec-links">
+            <a class="btn btn-line" href="https://github.com/echelonlabsresearch/ZCrypt/tree/main/formal">The Lean proofs</a>
+            <a class="btn btn-line" href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a>
+            <a class="btn btn-line" href="https://explorer.zcrypt.network">Watch the checks run</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div class="foot-brand">
+        <span class="brand"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></span>
+        <p>Private digital cash you can send through any chat. No addresses to swap, no exchange in the middle.</p>
+      </div>
+      <div class="foot-cols">
+        <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="docs/">Run a node</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="security.html">Security</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="brand.html">Brand</a></div>
+        <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a><a href="/privacy.html">Wallet privacy policy</a></div>
+      </div>
+    </div>
+    <div class="wrap foot-base mono"><span>© Echelon Labs · MIT</span><span>network zcrypt-1</span></div>
+  </footer>
+</body>
+</html>

@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=11">
+  <link rel="stylesheet" href="site.css?v=12">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -45,6 +45,7 @@
     </a>
     <nav aria-label="Primary">
       <a href="#chapters">Why ZCrypt</a>
+      <a href="security.html">Security</a>
       <a href="#wallet">Wallet</a>
       <a href="docs/">Developers</a>
       <a href="brand.html">Brand</a>
@@ -63,7 +64,7 @@
       <div class="hero-grid">
         <div class="hero-inner">
           <p class="kicker reveal" style="--d:0">
-            <span>Live network</span><span class="sep"></span><span>Open source</span><span class="sep"></span><span>Post-quantum design</span>
+            <span>Live network</span><span class="sep"></span><span>Open source</span><span class="sep"></span><span>Post-quantum design</span><span class="sep"></span><span>Formally verified</span>
           </p>
           <h1 class="display">
             <span class="line reveal" style="--d:1"><span>Send money</span></span>
@@ -75,7 +76,8 @@
             <a class="btn btn-solid" id="hero-download" href="#wallet">Get the wallet</a>
             <a class="btn btn-line" href="#chapters">Why ZCrypt</a>
           </div>
-          <p class="hero-fine reveal" style="--d:6">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy. The wallet is an early release.</p>
+          <a class="hero-proof reveal" style="--d:6" href="security.html"><i>✓</i><span><b>Inflation is impossible, and that is a theorem.</b> The rule that nobody can create coins is machine-checked in Lean 4 against the live circuit. Read how.</span></a>
+          <p class="hero-fine reveal" style="--d:7">A payment file can be copied until it is claimed. The first claim on the chain wins. Send it like cash, then delete your copy. The wallet is an early release.</p>
         </div>
 
         <!-- DEMO: a looping illustration of one payment -->
@@ -267,7 +269,7 @@
         <div class="ch-body">
           <span class="ch-num mono">06</span>
           <h2>Don't trust us.<br>Check it.</h2>
-          <p>Private money needs public rules. Every payment carries proof that it passed seven simple checks, and you can watch those checks on any transaction in the explorer. The rule that nobody can create money out of thin air has been checked line by line by a proof assistant, not just promised.</p>
+          <p>Private money needs public rules. Every payment carries proof that it passed seven simple checks, and you can watch those checks on any transaction in the explorer. The rule that nobody can create money out of thin air is a theorem: every constraint of the live circuit is modeled in Lean 4 and machine-checked, with nothing left unproven. <a href="security.html">Read exactly what is proven, and what is not.</a></p>
           <ol class="program mono" aria-label="The seven checks">
             <li>Amounts are real</li><li>One coin type per payment</li><li>Nothing created, nothing lost</li><li>Spent coins are spent</li><li>New coins match</li><li>Every coin came from the pool</li><li>Done</li>
           </ol>
@@ -308,7 +310,7 @@
           </article>
           <article>
             <h3>Honest about the edges</h3>
-            <p>Staking, trade escrows, and the Bitcoin bridge are public by design. The proofs cover the money rules, not every line of the system, and there has been no outside audit yet. Everything that is and isn't private, and is and isn't proven, is written down in plain language.</p>
+            <p>Staking, trade escrows, and the Bitcoin bridge are public by design. The proofs cover the money rules, not every line of the system; the rest is tested on every push and has been through seven rounds of adversarial security review, with every critical and high finding fixed before launch. Everything that is and isn't private, and is and isn't proven, is written down in plain language on the <a href="security.html">security page</a>.</p>
           </article>
         </div>
       </div>
@@ -319,7 +321,7 @@
       <div class="wrap">
         <div class="wallet-panel">
           <div class="wallet-copy">
-            <p class="section-label"><span>v0.2.2</span> Free · open source · macOS · Windows · Linux</p>
+            <p class="section-label"><span>v0.2.3</span> Free · open source · macOS · Windows · Linux</p>
             <h2 class="h-lg">Get the wallet.<br>Two minutes to your first payment.</h2>
             <p class="dek">This is early software on a young network. The button picks the right download for your computer. Check the file against SHA256SUMS before you open it, the way you'd check any money software.</p>
             <div class="dl-row">
@@ -371,7 +373,7 @@
       </div>
       <div class="foot-cols">
         <div><b>Network</b><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://rpc.zcrypt.network/status">RPC status</a><a href="docs/">Run a node</a></div>
-        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="brand.html">Brand</a></div>
+        <div><b>Protocol</b><a href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/whitepaper/whitepaper.pdf">Whitepaper</a><a href="security.html">Security</a><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/privacy.md">What stays private</a><a href="brand.html">Brand</a></div>
         <div><b>Contact</b><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a><a href="/privacy.html">Wallet privacy policy</a></div>
       </div>
     </div>
