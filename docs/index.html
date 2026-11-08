@@ -162,7 +162,7 @@ docker compose -f e2e/docker-compose.3node.yml up --build -d</code></pre>
             <h3>2. Start the node</h3>
             <pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
 cd ZCrypt
-git checkout testnet
+git checkout mainnet
 cd chain/validator
 cp .env.example .env
 # paste VALIDATOR_KEY=... into .env before the first start
@@ -199,7 +199,7 @@ cargo run --release -p zcrypt-bridge --bin bond_validator -- sign \
             <h3>Delegating</h3>
             <p>To stake without running a node, delegate to an existing validator from Rewards, then Delegate, in the wallet. The coins are pledged in the same way as a bond. Delegation adds to that validator's voting power, earns a share of its rewards after commission, and carries the same slashing risk. Undelegating removes the power immediately and starts the same 10-day wait, and only the key that delegated can undelegate.</p>
             <p>The Rewards tab shows two claimable streams: block rewards in ZCRYPT, and bridge-fee yield denominated in the bridged asset and divided by stake. A claim always withdraws the whole claimable balance of a stream. Balances below 1 ZCRYPT keep accruing until they pass that threshold, because the chain rejects dust claims; this prevents a third party from forcing a tiny coin into your wallet.</p>
-            <p>The full reference, including the exact message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/testnet/chain/README-validator.md">chain/README-validator.md</a>. The bond, unbond and delegate transactions are described in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/testnet/running.md">running.md</a>.</p>
+            <p>The full reference, including the exact message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/mainnet/chain/README-validator.md">chain/README-validator.md</a>. The bond, unbond and delegate transactions are described in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/mainnet/running.md">running.md</a>.</p>
 
             <h2 id="wallet-source">Building the wallet from source</h2>
             <p>The wallet is a Tauri application with a React front end, built for desktop and iPhone. It requires Node.js 20 or newer and Rust. The nightly toolchain is pinned in <code>wallet/rust-toolchain.toml</code>, so cargo selects it automatically in that directory. macOS and Windows use the system webview; Linux needs <code>libwebkit2gtk-4.1-dev</code>, <code>libgtk-3-dev</code>, <code>librsvg2-dev</code> and <code>libayatana-appindicator3-dev</code>.</p>
