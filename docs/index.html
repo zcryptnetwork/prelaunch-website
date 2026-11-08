@@ -157,8 +157,7 @@ docker compose -f e2e/docker-compose.3node.yml up --build -d</code></pre>
             <h3>1. Copy the identity from the wallet</h3>
             <p>The wallet holds a validator identity, an ed25519 consensus key derived from the recovery phrase, so it restores with the phrase. In the wallet, open Rewards, then Run a validator, then Node setup, and click Copy the .env line. In <code>chain/validator</code>, copy <code>.env.example</code> to <code>.env</code> and paste that one line into it:</p>
             <pre><code>VALIDATOR_KEY=eyJhZGRyZXNzIjoi…   # one line, from the wallet</code></pre>
-            <p><code>.env</code> is only that key. Chain id <code>zcrypt-1</code>, the seed <code>https://rpc.zcrypt.network</code>, and the ports are already in the compose file. Do this before the node starts for the first time. The entrypoint installs the line as the node's <code>priv_validator_key.json</code>, and CometBFT keeps an existing key, so the node signs blocks with the wallet's identity from then on. The line is the signing key: keep the file private and treat it like the recovery phrase. If the node has already started and generated its own key, stop it with <code>docker compose down -v</code>, add the line, and start again.</p>
-            <p>The chain requires every bond and unbond to be signed by the node's consensus key. When the wallet creates that key and the node imports it, staking is a button in the wallet. When the node invents the key instead, every staking action needs a signature produced on the server, which is the fallback described under bonding below.</p>
+            <p><code>.env</code> is only that key. Chain id <code>zcrypt-1</code>, the seed <code>https://rpc.zcrypt.network</code>, and the ports are already in the compose file. Do this before the node starts for the first time. The entrypoint installs the line as the node's <code>priv_validator_key.json</code>, and CometBFT keeps an existing key, so the node signs blocks with the wallet's identity from then on. The line is the signing key: keep the file private and treat it like the recovery phrase. If the node has already started and generated its own key, stop it with <code>docker compose down -v</code>, add the line, and start again. After that, bonding is the wallet button in step 3. There is no command to run on the host.</p>
             <h3>2. Start the node</h3>
             <pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
 cd ZCrypt
@@ -172,28 +171,14 @@ docker logs -f zcrypt-validator-cometbft</code></pre>
             <p>The validator's RPC is on <code>127.0.0.1:56657</code>. The P2P port, <code>56656</code>, must be reachable by peers. Wallets should keep using <code>https://rpc.zcrypt.network</code>.</p>
             <p>From <code>chain/validator</code>, <code>docker compose down</code> stops the node and keeps its identity and state. Adding <code>-v</code> deletes both.</p>
             <h3>3. Bond it from the wallet</h3>
-            <p>Back in Rewards, Run a validator, enter the stake and the commission and click Bond. The wallet signs the bond with the validator key it holds, so there is no step on the host. The card shows whether the node is signing blocks within a few blocks of the bond. Details of the bond, rewards, unbonding and delegation follow.</p>
+            <p>Wait until the log shows the node has synced. Then, in the same wallet, open Rewards, Run a validator. Tick that the node is running with this identity and is synced. Enter the stake, at least <strong>10,000 ZCRYPT</strong>, and the commission, and click <strong>Bond</strong>. The wallet signs the bond with the key from step 1 and broadcasts it. You do not extract a seed, sign anything on the host, or paste a signature back into the wallet.</p>
+            <p>The stake leaves your balance and is locked. On the next block the node joins the validator set and can produce blocks. The same card then shows whether it is signing, and an <strong>Unbond</strong> button. After unbond, the stake stays locked for 10 days and then can be claimed. Block rewards and bridge-fee yield show on the Rewards tab; claim them there.</p>
+            <p>To see the set afterwards:</p>
+            <pre><code>curl -s 'http://127.0.0.1:56657/abci_query?path="/staking/validators"'</code></pre>
 
             <h2 id="bond">Bond, claim, unbond, delegate</h2>
             <p>The minimum bond is <strong>10,000 ZCRYPT</strong>, paid from a shielded balance. Bonding spends the coins into a burn, so the stake is locked rather than merely marked. Voting power equals the stake in whole ZCRYPT. The node joins the active set on the next block. Rewards accrue every 100 blocks and are withdrawn with a claim transaction that produces a new private coin.</p>
-            <p>With the wallet-owned key from step 1 above, bonding and unbonding are wallet buttons. The fallback below is for a node that generated its own key: that key stays in the validator's <code>priv_validator_key.json</code> and the bond must be signed on the host.</p>
-            <ol>
-              <li>In the wallet, open Rewards, then Become a validator. Enter the stake and the commission and choose Prepare bond. The wallet displays the chain id, the reward address, the stake in base units, the commission in basis points, and the nonce.</li>
-              <li>On the validator host, extract the seed and sign the bond. The seed is the first 32 bytes of the consensus private key. Anyone holding it can make your validator double-sign and get it slashed, so keep it on the host and do not paste it into a chat or the desktop wallet.</li>
-            </ol>
-            <pre><code>export VALIDATOR_SEED_HEX=$(docker exec zcrypt-validator-cometbft \
-  cat /cometbft/config/priv_validator_key.json \
-  | python3 -c "import sys,json,base64; print(base64.b64decode(json.load(sys.stdin)['priv_key']['value'])[:32].hex())")
-
-cargo run --release -p zcrypt-bridge --bin bond_validator -- sign \
-  --chain-id zcrypt-1 \
-  --reward &lt;reward address hex&gt; \
-  --stake &lt;base units&gt; \
-  --commission-bps &lt;bps&gt; \
-  --node http://127.0.0.1:56657</code></pre>
-            <p>Paste the 128-character hex signature into the wallet and submit. To confirm the validator set afterwards:</p>
-            <pre><code>curl -s 'http://127.0.0.1:56657/abci_query?path="/staking/validators"'</code></pre>
-            <p>For a headless setup, <code>chain/validator-bond.sh</code> reads the key inside the container and bonds to a reward address prepared in the wallet. It takes the RPC and the stake as arguments when the defaults do not apply: <code>./validator-bond.sh http://127.0.0.1:56657 20000</code>.</p>
+            <p>Bond and unbond are the wallet buttons from step 3. They work because the node was started with the wallet's <code>VALIDATOR_KEY</code>, so the wallet already holds the key the chain requires on a bond. If the node was started without that line, it has a different key and the button signs the wrong one. From <code>chain/validator</code>, run <code>docker compose down -v</code>, put the wallet line in <code>.env</code>, start again, and click Bond.</p>
             <h3>Unbonding</h3>
             <p>An unbond sets the validator's voting power to zero on the next block. The stake remains locked for <strong>10 days</strong> and then becomes claimable. If CometBFT reports a double-sign, <strong>5%</strong> of the pledged stake is burned and the key is permanently removed; this applies to stake in the unbonding queue as well, and the remaining 95% still waits out the 10 days.</p>
             <h3>Delegating</h3>
