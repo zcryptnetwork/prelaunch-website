@@ -153,28 +153,24 @@ docker compose -f e2e/docker-compose.3node.yml up --build -d</code></pre>
             <p>The unit and integration tests run with <code>cd impl &amp;&amp; cargo test --workspace</code> using the pinned nightly toolchain. CI runs the same tests on every push, in shards, together with Clippy, cargo audit, cargo deny and the wallet build. The three-node job runs on pushes to main, nightly, and on manual dispatch.</p>
 
             <h2 id="join">Running a validator on the public chain</h2>
-            <p>A validator is a full node with a bond. Any node can sync without a bond; only bonded nodes produce blocks. The whole flow is driven from the wallet and one compose file, <code>chain/docker-compose.validator.yml</code> in the protocol repository, and it has three steps: copy the validator identity from the wallet, start the node, bond it.</p>
+            <p>A validator is a full node with a bond. Any node can sync without a bond; only bonded nodes produce blocks. The whole flow is one compose file, <code>chain/validator/docker-compose.yml</code>, and three steps: copy the validator identity from the wallet, start the node, bond it.</p>
             <h3>1. Copy the identity from the wallet</h3>
-            <p>The wallet holds a validator identity, an ed25519 consensus key derived from the recovery phrase, so it restores with the phrase. In the wallet, open Rewards, then Run a validator, then Node setup, and click Copy the .env line. Paste that one line into a <code>.env</code> file next to the compose file:</p>
+            <p>The wallet holds a validator identity, an ed25519 consensus key derived from the recovery phrase, so it restores with the phrase. In the wallet, open Rewards, then Run a validator, then Node setup, and click Copy the .env line. In <code>chain/validator</code>, copy <code>.env.example</code> to <code>.env</code> and paste that one line into it:</p>
             <pre><code>VALIDATOR_KEY=eyJhZGRyZXNzIjoi…   # one line, from the wallet</code></pre>
-            <p>Do this before the node starts for the first time. The entrypoint installs the line as the node's <code>priv_validator_key.json</code>, and CometBFT keeps an existing key, so the node signs blocks with the wallet's identity from then on. The line is the signing key: keep the file private and treat it like the recovery phrase. If the node has already started and generated its own key, stop it with <code>down -v</code>, add the line, and start again.</p>
+            <p><code>.env</code> is only that key. Chain id <code>zcrypt-1</code>, the seed <code>https://rpc.zcrypt.network</code>, and the ports are already in the compose file. Do this before the node starts for the first time. The entrypoint installs the line as the node's <code>priv_validator_key.json</code>, and CometBFT keeps an existing key, so the node signs blocks with the wallet's identity from then on. The line is the signing key: keep the file private and treat it like the recovery phrase. If the node has already started and generated its own key, stop it with <code>docker compose down -v</code>, add the line, and start again.</p>
             <p>The chain requires every bond and unbond to be signed by the node's consensus key. When the wallet creates that key and the node imports it, staking is a button in the wallet. When the node invents the key instead, every staking action needs a signature produced on the server, which is the fallback described under bonding below.</p>
             <h3>2. Start the node</h3>
-            <pre><code>cd ZCrypt/chain
-docker compose -f docker-compose.validator.yml up -d
+            <pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
+cd ZCrypt
+git checkout testnet
+cd chain/validator
+cp .env.example .env
+# paste VALIDATOR_KEY=... into .env before the first start
+docker compose up -d
 docker logs -f zcrypt-validator-cometbft</code></pre>
-            <p>The compose defaults point at the foundation node. The entrypoint installs the key from <code>.env</code>, downloads the genesis file from the foundation RPC, discovers a seed peer, and syncs. No manual editing of the genesis is needed. Until you bond, the node runs as a syncing full node.</p>
-            <h3>Pinning the genesis hash</h3>
-            <p>The foundation node writes <code>config/genesis.sha256</code> when it first starts. Put that 64-character hex digest in the same <code>.env</code> as <code>GENESIS_SHA256</code>, and the entrypoint will refuse any genesis file whose hash differs. Obtain the digest from a node you already trust or from the foundation operator, not from an unverified source.</p>
-            <h3>Verifying the image</h3>
-            <p>The compose file pins the ABCI image by digest, and the publish workflow signs that digest with keyless cosign. To verify it:</p>
-            <pre><code>IMG=$(grep -o 'ghcr.io/[^ ]*@sha256:[0-9a-f]*' docker-compose.validator.yml | head -1)
-cosign verify "$IMG" \
-  --certificate-identity-regexp '^https://github.com/echelonlabsresearch/ZCrypt/\.github/workflows/image\.yml@refs/tags/v' \
-  --certificate-oidc-issuer https://token.actions.githubusercontent.com</code></pre>
-            <p>The certificate identity is printed in the publish workflow's job summary; if it ever differs from the line above, use the printed one. If verification fails, do not run the image. Because the image is pinned by digest, moving a tag does not change what you run. To build from source instead, set <code>ZCRYPT_ABCI_IMAGE</code> to a local image tag as described in <code>validator.env.example</code>. The Dockerfile uses the same pinned nightly and a <code>--locked</code> build.</p>
-            <p>The validator's RPC binds to <code>127.0.0.1:56657</code> unless <code>VALIDATOR_RPC_BIND</code> says otherwise. The P2P port, <code>56656</code>, must be reachable by peers. Exposing the raw RPC on a public address is optional and not needed for wallets, which should keep using <code>https://rpc.zcrypt.network</code>.</p>
-            <p><code>docker compose -f docker-compose.validator.yml down</code> stops the node and keeps its identity and state. Adding <code>-v</code> deletes both.</p>
+            <p>That is the whole start. The first start compiles the node from this checkout. The entrypoint then installs the key, downloads the genesis from the foundation RPC, discovers a seed peer, and syncs. Until you bond, the node runs as a syncing full node. If this machine has the older <code>docker-compose</code> command and not the <code>docker compose</code> plugin, start the same file with <code>docker-compose up -d</code>.</p>
+            <p>The validator's RPC is on <code>127.0.0.1:56657</code>. The P2P port, <code>56656</code>, must be reachable by peers. Wallets should keep using <code>https://rpc.zcrypt.network</code>.</p>
+            <p>From <code>chain/validator</code>, <code>docker compose down</code> stops the node and keeps its identity and state. Adding <code>-v</code> deletes both.</p>
             <h3>3. Bond it from the wallet</h3>
             <p>Back in Rewards, Run a validator, enter the stake and the commission and click Bond. The wallet signs the bond with the validator key it holds, so there is no step on the host. The card shows whether the node is signing blocks within a few blocks of the bond. Details of the bond, rewards, unbonding and delegation follow.</p>
 
@@ -203,7 +199,7 @@ cargo run --release -p zcrypt-bridge --bin bond_validator -- sign \
             <h3>Delegating</h3>
             <p>To stake without running a node, delegate to an existing validator from Rewards, then Delegate, in the wallet. The coins are pledged in the same way as a bond. Delegation adds to that validator's voting power, earns a share of its rewards after commission, and carries the same slashing risk. Undelegating removes the power immediately and starts the same 10-day wait, and only the key that delegated can undelegate.</p>
             <p>The Rewards tab shows two claimable streams: block rewards in ZCRYPT, and bridge-fee yield denominated in the bridged asset and divided by stake. A claim always withdraws the whole claimable balance of a stream. Balances below 1 ZCRYPT keep accruing until they pass that threshold, because the chain rejects dust claims; this prevents a third party from forcing a tiny coin into your wallet.</p>
-            <p>The full reference, including the exact message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/chain/README-validator.md">chain/README-validator.md</a>. The bond, unbond and delegate transactions are described in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/main/running.md">running.md</a>.</p>
+            <p>The full reference, including the exact message the consensus key signs, is <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/testnet/chain/README-validator.md">chain/README-validator.md</a>. The bond, unbond and delegate transactions are described in <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/testnet/running.md">running.md</a>.</p>
 
             <h2 id="wallet-source">Building the wallet from source</h2>
             <p>The wallet is a Tauri application with a React front end, built for desktop and iPhone. It requires Node.js 20 or newer and Rust. The nightly toolchain is pinned in <code>wallet/rust-toolchain.toml</code>, so cargo selects it automatically in that directory. macOS and Windows use the system webview; Linux needs <code>libwebkit2gtk-4.1-dev</code>, <code>libgtk-3-dev</code>, <code>librsvg2-dev</code> and <code>libayatana-appindicator3-dev</code>.</p>
