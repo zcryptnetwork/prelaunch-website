@@ -12,16 +12,24 @@
   if (!button || !status || !list) return;
 
   var os = detect();
-  var pretty = { mac: "macOS", windows: "Windows", linux: "Linux", other: "this computer" }[os];
+  var pretty = labelOs(os);
 
   status.textContent = "Looking up the latest public installers for " + pretty + ".";
 
-  fetch(API, { headers: { Accept: "application/vnd.github+json" } })
+  var releasesPromise = fetch(API, { headers: { Accept: "application/vnd.github+json" } })
     .then(function (res) {
       if (!res.ok) throw new Error("GitHub returned " + res.status);
       return res.json();
-    })
-    .then(function (releases) {
+    });
+  // Every Mac browser says "MacIntel". Ask which chip this machine is before picking a dmg.
+  var chipPromise = os === "mac" ? macChip() : Promise.resolve("");
+
+  Promise.all([releasesPromise, chipPromise])
+    .then(function (pair) {
+      var releases = pair[0];
+      var chip = pair[1];
+      var which = os === "mac" && chip ? "mac-" + chip : os;
+      pretty = labelOs(which);
       if (!Array.isArray(releases)) throw new Error("unexpected release list");
       var release = releases.find(function (r) {
         return r && !r.draft && Array.isArray(r.assets) && r.assets.some(isInstaller);
@@ -31,8 +39,8 @@
         return;
       }
       var assets = release.assets.filter(function (a) { return a && a.name && a.browser_download_url; });
-      var chosen = best(assets, os);
-      render(release, assets, chosen);
+      var chosen = best(assets, which);
+      render(release, assets, chosen, which === "mac");
     })
     .catch(function () {
       status.textContent = "GitHub could not be reached from this browser. The installers are published on the releases page.";
@@ -51,6 +59,47 @@
     return "other";
   }
 
+  function labelOs(which) {
+    return {
+      "mac-arm": "macOS Apple Silicon",
+      "mac-intel": "macOS Intel",
+      mac: "macOS",
+      windows: "Windows",
+      linux: "Linux",
+      other: "this computer"
+    }[which] || "this computer";
+  }
+
+  // The GPU name is the Mac's chip. The browser's own architecture can be Intel
+  // when Chrome is running under Rosetta on an Apple silicon Mac.
+  function macChip() {
+    var fromGpu = gpuChip();
+    if (fromGpu) return Promise.resolve(fromGpu);
+    var data = navigator.userAgentData;
+    if (data && data.getHighEntropyValues) {
+      return data.getHighEntropyValues(["architecture"]).then(function (ua) {
+        var arch = (ua && ua.architecture) || "";
+        if (arch === "arm") return "arm";
+        if (arch === "x86") return "intel";
+        return "";
+      }).catch(function () { return ""; });
+    }
+    return Promise.resolve("");
+  }
+
+  function gpuChip() {
+    try {
+      var canvas = document.createElement("canvas");
+      var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) return "";
+      var ext = gl.getExtension("WEBGL_debug_renderer_info");
+      var renderer = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) || "") : "";
+      if (/Apple\s+(M\d|GPU)/i.test(renderer)) return "arm";
+      if (/Intel|AMD|Radeon/i.test(renderer)) return "intel";
+    } catch (e) {}
+    return "";
+  }
+
   function isInstaller(asset) {
     var name = (asset.name || "").toLowerCase();
     return name.endsWith(".dmg") || name.endsWith(".appimage") || name.endsWith(".deb") || name.endsWith("-setup.exe") || name.endsWith(".msi");
@@ -58,7 +107,12 @@
 
   function rank(name, which) {
     var n = name.toLowerCase();
-    if (which === "mac" && n.endsWith(".dmg")) return /aarch64|arm64/.test(n) ? 3 : 2;
+    if ((which === "mac-arm" || which === "mac-intel") && n.endsWith(".dmg")) {
+      var arm = /aarch64|arm64/.test(n);
+      var intel = /x64|x86_64|amd64|intel/.test(n);
+      if (which === "mac-arm") return arm ? 3 : 0;
+      return intel ? 3 : 0;
+    }
     if (which === "windows" && (n.endsWith("-setup.exe") || n.endsWith(".msi"))) return 3;
     if (which === "linux" && n.endsWith(".appimage")) return 3;
     if (which === "linux" && n.endsWith(".deb")) return 2;
@@ -88,7 +142,7 @@
     addLink("https://github.com/" + REPO + "/actions/workflows/wallet-release.yml", "Wallet build", "Actions");
   }
 
-  function render(release, assets, chosen) {
+  function render(release, assets, chosen, macChipUnknown) {
     var tag = release.tag_name || "release";
     if (chosen) {
       button.hidden = false;
@@ -99,6 +153,9 @@
         hero.textContent = "Download for " + pretty;
       }
       status.textContent = tag + " · " + labelFor(chosen.name) + ". The file comes from the GitHub release.";
+    } else if (macChipUnknown) {
+      button.hidden = true;
+      status.textContent = tag + " has an Apple Silicon disk image and an Intel disk image. This browser did not say which Mac this is, so pick one below.";
     } else {
       button.hidden = true;
       status.textContent = tag + " is public, and it does not yet include an installer for " + pretty + ". The files that are there are listed below.";

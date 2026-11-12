@@ -27,9 +27,10 @@ https://rpc.zcrypt.network.
 
 Wallet downloads come from the latest public release of
 [echelonlabsresearch/ZCrypt](https://github.com/echelonlabsresearch/ZCrypt/releases),
-including prereleases. Draft releases are invisible to the script. macOS resolves to
-the Apple Silicon disk image, Linux to the AppImage (the deb stays in the list), and
-Windows to the NSIS setup.
+including prereleases. Draft releases are invisible to the script. A Mac resolves
+to the Apple Silicon or Intel disk image for that machine. If the browser will not
+say which chip it is, both files stay in the list and neither is chosen. Linux
+resolves to the AppImage (the deb stays in the list), and Windows to the MSI.
 
 ## Preview
 
