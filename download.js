@@ -14,7 +14,8 @@
   var os = detect();
   var pretty = labelOs(os);
 
-  status.textContent = "Looking up the latest public installers for " + pretty + ".";
+  if (os === "ios") appStore();
+  else status.textContent = "Looking up the latest public installers for " + pretty + ".";
 
   var releasesPromise = fetch(API, { headers: { Accept: "application/vnd.github+json" } })
     .then(function (res) {
@@ -43,8 +44,12 @@
       render(release, assets, chosen, which === "mac");
     })
     .catch(function () {
-      status.textContent = "GitHub could not be reached from this browser. The installers are published on the releases page.";
-      button.hidden = true;
+      if (os === "ios") {
+        appStore();
+      } else {
+        status.textContent = "GitHub could not be reached from this browser. The installers are published on the releases page.";
+        button.hidden = true;
+      }
       list.innerHTML = "";
       addLink(RELEASES, "All releases", "GitHub");
     });
@@ -53,6 +58,8 @@
     var ua = navigator.userAgent || "";
     var platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
     var blob = platform + " " + ua;
+    // An iPhone says "like Mac OS X", and an iPad says it is a Mac with a touch screen.
+    if (/iPhone|iPad|iPod/i.test(ua) || (/Mac/i.test(platform) && navigator.maxTouchPoints > 1)) return "ios";
     if (/Win/i.test(blob)) return "windows";
     if (/Mac/i.test(blob)) return "mac";
     if (/Linux|X11|CrOS/i.test(blob) && !/Android/i.test(blob)) return "linux";
@@ -66,6 +73,7 @@
       mac: "macOS",
       windows: "Windows",
       linux: "Linux",
+      ios: "iPhone",
       other: "this computer"
     }[which] || "this computer";
   }
@@ -132,7 +140,20 @@
     return top;
   }
 
+  // On an iPhone the App Store badge replaces the installer button.
+  function appStore() {
+    button.hidden = true;
+    if (hero) hero.hidden = true;
+    status.textContent = "ZCrypt Wallet for iPhone is on the App Store. The desktop installers are listed below.";
+  }
+
   function unpublished() {
+    if (os === "ios") {
+      appStore();
+      list.innerHTML = "";
+      addLink(RELEASES, "Releases", "GitHub");
+      return;
+    }
     button.hidden = false;
     button.href = RELEASES;
     button.textContent = "View releases";
@@ -144,7 +165,9 @@
 
   function render(release, assets, chosen, macChipUnknown) {
     var tag = release.tag_name || "release";
-    if (chosen) {
+    if (os === "ios") {
+      appStore();
+    } else if (chosen) {
       button.hidden = false;
       button.href = chosen.browser_download_url;
       button.textContent = "Download for " + pretty;

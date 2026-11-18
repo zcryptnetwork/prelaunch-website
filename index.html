@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ZCrypt — Send money like a photo</title>
+  <meta name="apple-itunes-app" content="app-id=6826877444">
   <meta name="description" content="ZCrypt is a private blockchain where a payment is a small file. Send it through any chat and the recipient claims it into their wallet. No addresses to swap, no exchange in the middle, and the chain never shows who paid whom or how much.">
   <meta name="theme-color" content="#06080f">
   <meta property="og:title" content="ZCrypt — Send money like a photo">
@@ -28,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="site.css?v=12">
+  <link rel="stylesheet" href="site.css?v=13">
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
   </script>
@@ -74,6 +75,7 @@
           <p class="lead reveal" style="--d:4">Make a payment file. Send it to anyone, any way you like. They claim it straight into their wallet. No addresses to swap, no exchange in the middle, and the chain never shows who paid, who got paid, how much, or which coin.</p>
           <div class="actions reveal" style="--d:5">
             <a class="btn btn-solid" id="hero-download" href="#wallet">Get the wallet</a>
+            <a class="store-badge" href="https://apps.apple.com/app/id6826877444"><img src="brand/app-store-badge.svg" alt="Download on the App Store" width="138" height="46"></a>
             <a class="btn btn-line" href="#chapters">Why ZCrypt</a>
           </div>
           <a class="hero-proof reveal" style="--d:6" href="security.html"><i>✓</i><span><b>Inflation is impossible, and that is a theorem.</b> The rule that nobody can create coins is machine-checked in Lean 4 against the live circuit. Read how.</span></a>
@@ -321,18 +323,19 @@
       <div class="wrap">
         <div class="wallet-panel">
           <div class="wallet-copy">
-            <p class="section-label"><span>v0.2.7</span> Free · open source · macOS · Windows · Linux</p>
+            <p class="section-label"><span>v0.2.7</span> Free · open source · macOS · Windows · Linux · iPhone</p>
             <h2 class="h-lg">Get the wallet.<br>Two minutes to your first payment.</h2>
-            <p class="dek">This is early software on a young network. The button picks the right download for your computer. Check the file against SHA256SUMS before you open it, the way you'd check any money software.</p>
+            <p class="dek">This is early software on a young network. The button picks the right download for your computer, and the iPhone app is on the App Store. Check a desktop file against SHA256SUMS before you open it, the way you'd check any money software.</p>
             <div class="dl-row">
               <a class="btn btn-solid" id="dl-button" href="https://github.com/echelonlabsresearch/ZCrypt/releases">Download</a>
+              <a class="store-badge" id="ios-button" href="https://apps.apple.com/app/id6826877444"><img src="brand/app-store-badge.svg" alt="Download on the App Store" width="138" height="46"></a>
               <a class="btn btn-line" href="docs/#first-session">Walk me through it</a>
             </div>
             <p id="dl-status" class="mono">Checking the latest release.</p>
             <ul class="asset-list mono" id="dl-others"></ul>
           </div>
           <ol class="steps">
-            <li><span class="mono">1</span><div><b>Install it.</b> Mac: open the disk image. Windows: run the setup. Linux: use the AppImage or the deb.</div></li>
+            <li><span class="mono">1</span><div><b>Install it.</b> Mac: open the disk image. Windows: run the setup. Linux: use the AppImage or the deb. iPhone: get ZCrypt Wallet from the App Store.</div></li>
             <li><span class="mono">2</span><div><b>Connect to the network.</b> Settings → Consensus Node → <code>https://rpc.zcrypt.network</code>.</div></li>
             <li><span class="mono">3</span><div><b>Tor is on by default.</b> If you don't run Tor, switch it off in Settings for your first session.</div></li>
             <li><span class="mono">4</span><div><b>Get paid with nothing in your wallet.</b> Someone sends you coins or a bearer file, you hit Refresh, and it's yours. Each payment you send costs 0.01 ZCRYPT.</div></li>
@@ -382,7 +385,7 @@
 
   <script type="module" src="scene.js"></script>
   <!-- Query string: Cloudflare keeps the previous download.js for a day. Bump this when the picker changes. -->
-  <script src="download.js?v=a566dc0" defer></script>
+  <script src="download.js?v=appstore1" defer></script>
   <script>
   (function () {
     // Header surface, chapter reveals, count-ups, and the live strip.
