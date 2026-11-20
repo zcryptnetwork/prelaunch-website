@@ -39,6 +39,10 @@ var PAGES = {
   "h1": "Any token. <em>Any chain.</em>",
   "tag": "Any token, any chain"
  },
+ "get-zcrypt": {
+  "h1": "How to get <em>ZCRYPT.</em>",
+  "tag": "Your first coins"
+ },
  "brand": {
   "h1": "One mark. <em>Used as it is.</em>",
   "tag": "Brand"

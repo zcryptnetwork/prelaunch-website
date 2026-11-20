@@ -95,6 +95,15 @@
     .receipt div { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--zc-line); color: var(--zc-text-3); letter-spacing: 0.04em; }
     .receipt .bar { color: var(--zc-text); background: var(--zc-text); padding: 1px 6px; letter-spacing: 0.02em; min-width: 9.5em; text-align: right; }
     .receipt .ok { color: var(--zc-ok); }
+    @media (min-width: 981px) {
+      #private > div { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.72fr); column-gap: 5vw; align-items: start; padding-right: 9vw; }
+      #private .zk { justify-self: start; }
+      #private > div > * { grid-column: 1; }
+      #private .receipt { grid-column: 2; grid-row: 2 / span 3; align-self: center; width: 100%; margin-top: 0; font-size: 17px; padding: 8px 26px 4px; border: 1px solid var(--zc-line-strong); border-radius: 18px; background: rgba(8, 12, 20, 0.62); }
+      #private .receipt div { padding: 19px 0; }
+      #private .receipt div:last-child { border-bottom: 0; }
+      #private .fine { grid-column: 1 / -1; }
+    }
 
     /* 21,000,000 */
     .supply {
@@ -246,7 +255,7 @@
 
     <section class="more" id="more">
       <p class="tag">More</p>
-      <h2><span class="ln"><span>Five more <em>reasons.</em></span></span></h2>
+      <h2><span class="ln"><span>More you <em>can do.</em></span></span></h2>
       <div class="four">
         <a class="lead" href="any-chain.html"><b>Any token. Any chain.</b><span>ZCrypt is built to carry any token from any chain. Bitcoin is live. Ethereum, USDT, DAI, Solana and more are on the roadmap, and each becomes a private asset once it is here.</span></a>
         <a href="trade.html"><b>No exchange needed.</b><span>Swap one coin for another directly with someone. Nobody holds your money in the middle. A swap's amounts, coin types and one-time keys are public for now.</span></a>
@@ -283,7 +292,7 @@
 
     <section class="end" id="get">
       <h2 class="huge"><span class="ln"><span>Get the</span></span><span class="ln"><span><em>wallet.</em></span></span></h2>
-      <p class="sub">Free. Two minutes from download to your first payment.</p>
+      <p class="sub">Free. Two minutes from download to your first payment. <a href="get-zcrypt.html">How to get ZCRYPT</a></p>
       <div class="acts center">
         <a class="nx-get big" id="dl-button" href="https://github.com/echelonlabsresearch/ZCrypt/releases">Download</a>
         <a class="store-badge" id="ios-button" href="https://apps.apple.com/app/id6826877444"><img src="../brand/app-store-badge.svg" alt="Download on the App Store" width="180" height="60"></a>

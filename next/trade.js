@@ -3,8 +3,8 @@
   var root = document.getElementById("tx"); if (!root) return;
   var $ = function (id) { return document.getElementById(id); };
   // sample values only, used to derive a sample price for any pair
-  var COINS = [["ZCRYPT", 10, 1], ["zBTC", 100000, 1], ["zUSDT", 1], ["zETH", 3500], ["zSOL", 180], ["zBNB", 650], ["zTON", 5.2], ["zDAI", 1], ["zGOLD", 2700]];
-  var QUICK = [["ZCRYPT", "zUSDT"], ["ZCRYPT", "zBTC"], ["ZCRYPT", "zGOLD"], ["zBTC", "zUSDT"], ["zGOLD", "zUSDT"], ["zETH", "zBTC"]];
+  var COINS = [["ZCRYPT", 0.36, 1], ["zBTC", 60000, 1], ["zUSDT", 1], ["zETH", 3500], ["zSOL", 180], ["zBNB", 650], ["zTON", 5.2], ["zDAI", 1]];
+  var QUICK = [["zBTC", "zUSDT"], ["zBTC", "ZCRYPT"], ["zETH", "zBTC"], ["zETH", "zUSDT"], ["zSOL", "zUSDT"], ["ZCRYPT", "zBTC"]];
   function val(n) { for (var i = 0; i < COINS.length; i++) if (COINS[i][0] === n) return COINS[i][1]; }
   function dec(x) { return Math.max(0, Math.min(8, 4 - Math.floor(Math.log10(x)))); }   // about five significant digits
   var Q = "zUSDT", m = {}, mid = 1, seed = 7, asks = [], bids = [], tape = [], busy = false;
@@ -61,7 +61,7 @@
   $("tx-flip").addEventListener("click", function () { pick(Q, m.b); });
   $("tx-mk").innerHTML = QUICK.map(function (k) { return '<button type="button">' + k[0] + " / " + k[1] + "</button>"; }).join("");
   Array.prototype.forEach.call($("tx-mk").children, function (x, n) { x.addEventListener("click", function () { pick(QUICK[n][0], QUICK[n][1]); }); });
-  pick("ZCRYPT", "zUSDT");
+  pick("zBTC", "zUSDT");
   var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!still) setInterval(function () {
     if (busy || document.hidden) return;

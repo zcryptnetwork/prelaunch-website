@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="brand/fonts.css">
   <link rel="stylesheet" href="brand/tokens.css">
-  <link rel="stylesheet" href="next.css?v=11202105">
+  <link rel="stylesheet" href="next.css?v=11202256">
   <style>
     * { box-sizing: border-box; margin: 0; }
     html { scroll-behavior: smooth; }
@@ -95,6 +95,15 @@
     .receipt div { display: flex; justify-content: space-between; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--zc-line); color: var(--zc-text-3); letter-spacing: 0.04em; }
     .receipt .bar { color: var(--zc-text); background: var(--zc-text); padding: 1px 6px; letter-spacing: 0.02em; min-width: 9.5em; text-align: right; }
     .receipt .ok { color: var(--zc-ok); }
+    @media (min-width: 981px) {
+      #private > div { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.72fr); column-gap: 5vw; align-items: start; padding-right: 9vw; }
+      #private .zk { justify-self: start; }
+      #private > div > * { grid-column: 1; }
+      #private .receipt { grid-column: 2; grid-row: 2 / span 3; align-self: center; width: 100%; margin-top: 0; font-size: 17px; padding: 8px 26px 4px; border: 1px solid var(--zc-line-strong); border-radius: 18px; background: rgba(8, 12, 20, 0.62); }
+      #private .receipt div { padding: 19px 0; }
+      #private .receipt div:last-child { border-bottom: 0; }
+      #private .fine { grid-column: 1 / -1; }
+    }
 
     /* 21,000,000 */
     .supply {
@@ -267,7 +276,7 @@
           <div><span>AMOUNT</span><span class="bar" data-x aria-label="hidden"></span></div>
           <div><span>RULES FOLLOWED</span><span class="ok">VERIFIED</span></div>
         </div>
-        <p class="fine">This is what the public record shows for a payment. Each payment hides among all the coins on the network, <b data-live="commits">1,031</b> today. The network is young, and that crowd grows with every payment. <a href="privacy-model.html">See exactly what is public</a></p>
+        <p class="fine">This is what the public record shows for a payment. Each payment hides among all the coins on the network, <b data-live="commits">1,058</b> today. The network is young, and that crowd grows with every payment. <a href="privacy-model.html">See exactly what is public</a></p>
       </div>
     </section>
 
@@ -277,13 +286,13 @@
         <p class="tag">The supply</p>
         <h2><span class="ln"><span>No one can</span></span><span class="ln"><span><em>print more.</em></span></span></h2>
         <p class="sub"><b>21 million coins. Ever.</b> Every validator enforces the limit in every block. That no payment can create a coin is proven mathematically.</p>
-        <p class="fine"><b data-live="issued">306,171</b> issued so far, <span data-live="pct">1.5</span>% of the total, at block <span data-live="height">1,830,567</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
+        <p class="fine"><b data-live="issued">306,955</b> issued so far, <span data-live="pct">1.5</span>% of the total, at block <span data-live="height">1,836,111</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
       </div>
     </section>
 
     <section class="more" id="more">
       <p class="tag">More</p>
-      <h2><span class="ln"><span>Five more <em>reasons.</em></span></span></h2>
+      <h2><span class="ln"><span>More you <em>can do.</em></span></span></h2>
       <div class="four">
         <a class="lead" href="any-chain.html"><b>Any token. Any chain.</b><span>ZCrypt is built to carry any token from any chain. Bitcoin is live. Ethereum, USDT, DAI, Solana and more are on the roadmap, and each becomes a private asset once it is here.</span></a>
         <a href="trade.html"><b>No exchange needed.</b><span>Swap one coin for another directly with someone. Nobody holds your money in the middle. A swap's amounts, coin types and one-time keys are public for now.</span></a>
@@ -296,9 +305,9 @@
     <section class="deep" id="deeper">
       <p class="tag">The network today</p>
       <div class="net" aria-label="The network today">
-        <div><b data-live="height">1,830,567</b><span>blocks since 28 October 2026</span></div>
+        <div><b data-live="height">1,836,111</b><span>blocks since 28 October 2026</span></div>
         <div><b data-live="vals">2</b><span>validators today</span></div>
-        <div><b data-live="commits">1,031</b><span>coins in the private pool</span></div>
+        <div><b data-live="commits">1,058</b><span>coins in the private pool</span></div>
         <div><b data-live="staked">20,005</b><span>ZCRYPT staked to secure the network</span></div>
       </div>
       <p class="fine netnote" style="opacity:1">Read live from the chain. <a href="https://explorer.zcrypt.network">Open the explorer</a></p>
@@ -320,7 +329,7 @@
 
     <section class="end" id="get">
       <h2 class="huge"><span class="ln"><span>Get the</span></span><span class="ln"><span><em>wallet.</em></span></span></h2>
-      <p class="sub">Free. Two minutes from download to your first payment.</p>
+      <p class="sub">Free. Two minutes from download to your first payment. <a href="get-zcrypt.html">How to get ZCRYPT</a></p>
       <div class="acts center">
         <a class="nx-get big" id="dl-button" href="https://github.com/echelonlabsresearch/ZCrypt/releases">Download</a>
         <a class="store-badge" id="ios-button" href="https://apps.apple.com/app/id6826877444"><img src="brand/app-store-badge.svg" alt="Download on the App Store" width="180" height="60"></a>
@@ -336,7 +345,7 @@
       <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="cols">
-      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="any-chain.html">Any token, any chain</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="get-zcrypt.html">How to get ZCRYPT</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="any-chain.html">Any token, any chain</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
       <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
       <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
       <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
@@ -683,7 +692,7 @@
     requestAnimationFrame(frame);
   })();
   </script>
-  <script src="demo.js?v=11202105"></script>
+  <script src="demo.js?v=11202256"></script>
   <script src="download.js?v=appstore1"></script>
 </body>
 </html>
