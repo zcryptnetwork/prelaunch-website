@@ -33,7 +33,7 @@
     function start() { if (running || still) return; running = true; show(i); next(); }
     function stop() { running = false; clearTimeout(timer); clearTimeout(tapTimer); timer = null; }
     show(0);
-    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { e[0].isIntersecting ? start() : stop(); }, { threshold: 0.4 }).observe(d);
+    if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { e[0].isIntersecting ? start() : stop(); }, { threshold: 0.15 }).observe(d);
     else start();
   });
 })();

@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../brand/fonts.css">
   <link rel="stylesheet" href="../brand/tokens.css">
-  <link rel="stylesheet" href="next.css?v=11201648">
+  <link rel="stylesheet" href="next.css?v=11201704">
   <style>
     * { box-sizing: border-box; margin: 0; }
     html { scroll-behavior: smooth; }
@@ -206,8 +206,6 @@
 
   <nav class="rail" id="rail" aria-label="Sections">
     <a href="#top"><span>Start</span></a>
-    <a href="#file"><span>A file</span></a>
-    <a href="#send"><span>Anywhere</span></a>
     <a href="#private"><span>Private</span></a>
     <a href="#scarce"><span>Scarce</span></a>
     <a href="#more"><span>And more</span></a>
@@ -218,32 +216,15 @@
   <main>
     <section id="top">
       <div>
+        <div class="txt">
         <h1><span class="ln"><span>Send money</span></span><span class="ln"><span><em>as a message.</em></span></span></h1>
-        <p class="sub">Make a payment. Send it in any chat. <b>It's theirs.</b></p>
+        <p class="sub">A payment is a tiny file on your phone. Send it in any chat. They tap it, and <b>it's theirs in seconds.</b></p>
         <div class="acts">
           <a class="nx-get big" id="hero-download" href="wallet.html">Get the wallet</a>
           <a class="store-badge" href="https://apps.apple.com/app/id6826877444"><img src="../brand/app-store-badge.svg" alt="Download on the App Store" width="180" height="60"></a>
           <a class="alt" href="#get">All downloads</a>
         </div>
-      </div>
-    </section>
-
-    <section id="file">
-      <div>
-        <p class="tag">The idea</p>
-        <h2><span class="ln"><span>Money is</span></span><span class="ln"><span><em>a file.</em></span></span></h2>
-        <p class="sub">A payment is a tiny file on your phone. <b>No account numbers. No addresses.</b></p>
-      </div>
-    </section>
-
-    <section id="send">
-      <div>
-        <div class="txt">
-        <p class="tag">How you pay</p>
-        <h2><span class="ln"><span>Send it</span></span><span class="ln"><span><em>anywhere.</em></span></span></h2>
-        <p class="sub">WhatsApp, email, AirDrop. They tap it, and <b>it's in their wallet in seconds.</b></p>
-        <p class="sub also">You can also pay to an address or scan a QR code.</p>
-        <p class="fine">Treat a payment file like cash: whoever claims it first keeps it.</p>
+        <p class="fine">You can also pay to an address or scan a QR code. Treat a payment file like cash: whoever claims it first keeps it.</p>
         </div>
         <figure class="demo" data-demo aria-label="A payment sent as a file, step by step">
         <div class="phone">
@@ -280,7 +261,7 @@
         <p class="tag">The supply</p>
         <h2><span class="ln"><span>No one can</span></span><span class="ln"><span><em>print more.</em></span></span></h2>
         <p class="sub"><b>21 million coins. Ever.</b> Every validator enforces the limit in every block. That no payment can create a coin is proven mathematically.</p>
-        <p class="fine"><b data-live="issued">304,379</b> issued so far, <span data-live="pct">1.4</span>% of the total, at block <span data-live="height">1,817,713</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
+        <p class="fine"><b data-live="issued">304,491</b> issued so far, <span data-live="pct">1.4</span>% of the total, at block <span data-live="height">1,818,503</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
       </div>
     </section>
 
@@ -299,7 +280,7 @@
     <section class="deep" id="deeper">
       <p class="tag">The network today</p>
       <div class="net" aria-label="The network today">
-        <div><b data-live="height">1,817,713</b><span>blocks since 28 October 2026</span></div>
+        <div><b data-live="height">1,818,503</b><span>blocks since 28 October 2026</span></div>
         <div><b data-live="vals">2</b><span>validators today</span></div>
         <div><b data-live="commits">1,031</b><span>coins in the private pool</span></div>
         <div><b data-live="staked">20,005</b><span>ZCRYPT staked to secure the network</span></div>
@@ -397,7 +378,7 @@
 
     const N = narrowQ.matches ? 30000 : 110000;
     const SHAPES = 7;                    // silk, file, flight, crowd, coin, floor (then galaxy again)
-    const STOPS = sections.length - 1;   // scroll positions 0..6
+    const STOPS = sections.length - 1;   // scroll positions 0..5: silk, crowd, coin, lattice, floor, silk again
 
     let seed = 0x9e3779b9;
     function rand() {
@@ -529,10 +510,10 @@
        uniform float uT, uTime, uAspect, uDpr, uScale, uIntro, uGal, uCrowd;
        uniform vec2 uOff, uPtr, uTilt;
        varying float vA, vC, vHot;
-       vec3 pick(float i) { return i < 0.5 ? a0 : i < 1.5 ? a1 : i < 2.5 ? a1 : i < 3.5 ? a3 : i < 4.5 ? a4 : i < 5.5 ? a5 : i < 6.5 ? a6 : a0; }
+       vec3 pick(float i) { return i < 0.5 ? a0 : i < 1.5 ? a3 : i < 2.5 ? a4 : i < 3.5 ? a5 : i < 4.5 ? a6 : a0; }
        vec2 rot(vec2 v, float a) { float c = cos(a), s = sin(a); return vec2(v.x * c - v.y * s, v.x * s + v.y * c); }
        void main() {
-         float t = clamp(uT + (aR - 0.5) * 0.24, 0.0, 6.999);
+         float t = clamp(uT + (aR - 0.5) * 0.24, 0.0, 4.999);
          float s = floor(t);
          float k = smoothstep(0.5, 0.87, t - s);
          vec3 p = mix(pick(s), pick(s + 1.0), k);
@@ -596,11 +577,11 @@
     addEventListener("resize", resize); resize();
 
     // Where the shape sits and how bright it is at each stop (desktop).
-    const OFF = [0.10, 0.44, 0.34, 0.0, 0.36, 0.0, 0.0, 0.0];
-    const SCALE = [1.15, 1.0, 0.78, 1.0, 0.7, 1.25, 1.0, 1.4];
-    const OFFY = [0.04, 0.04, 0.04, 0.04, -0.2, 0.04, 0.04, 0.04];   // the coin sits below the outlined 21,000,000
-    const sendEl = document.querySelector("#send .phone");
-    const FADE = [1.10, 0.72, 0.0, 0.60, 0.74, 0.30, 0.34, 0.5];   // nothing behind the phone on the send section
+    const OFF = [0.10, 0.0, 0.36, 0.0, 0.0, 0.0];
+    const SCALE = [1.15, 1.0, 0.7, 1.25, 1.0, 1.4];
+    const OFFY = [0.04, 0.04, -0.2, 0.04, 0.04, 0.04];   // the coin sits below the outlined 21,000,000
+    const sendEl = document.querySelector("#top .phone");
+    const FADE = [1.10, 0.60, 0.74, 0.30, 0.34, 0.5];   // nothing behind the phone on the send section
     const at = (arr, x) => { const i = Math.min(arr.length - 2, Math.floor(x)), u = Math.min(1, Math.max(0, x - i)); const e = u * u * (3 - 2 * u); return arr[i] + (arr[i + 1] - arr[i]) * e; };
 
     let target = 0, cur = 0, px = 0, py = 0, tx = 0, ty = 0, tops = [], moved = false;
@@ -631,8 +612,8 @@
       // Everything that depends on the stop waits until the section is half scrolled away.
       const fi = Math.min(STOPS - 1, Math.floor(cur)), fu = Math.min(1, Math.max(0, (cur - fi - 0.42) / 0.5));
       const held = fi + fu * fu * (3 - 2 * fu);
-      const gal = Math.max(0, 1 - held) + Math.max(0, held - 6);
-      const crowd = Math.max(0, 1 - Math.abs(held - 3));
+      const gal = Math.max(0, 1 - held) + Math.max(0, held - 4);
+      const crowd = Math.max(0, 1 - Math.abs(held - 1));
 
       gl.disable(gl.BLEND);
       gl.useProgram(bg);
@@ -659,7 +640,7 @@
       // measured on the phone itself, so the neighbouring sections keep their graphic until the phone arrives
       const sr = sendEl.getBoundingClientRect(), vh = innerHeight;
       const seen = Math.max(0, Math.min(sr.bottom, vh) - Math.max(sr.top, 0)) / Math.max(1, sr.height);
-      const clear = 1 - Math.min(1, seen / 0.5);
+      const clear = 1 - 0.3 * Math.min(1, seen / 0.5);   // the silk stays behind the phone, a little dimmer
       gl.uniform1f(U.uFade, at(FADE, held) * (narrow ? 0.85 : 1) * (0.25 + 0.75 * intro) * clear * clear);
       gl.drawArrays(gl.POINTS, 0, N);
       requestAnimationFrame(frame);
@@ -667,7 +648,7 @@
     requestAnimationFrame(frame);
   })();
   </script>
-  <script src="demo.js?v=11201648"></script>
+  <script src="demo.js?v=11201704"></script>
   <script src="../download.js?v=appstore1"></script>
 </body>
 </html>
