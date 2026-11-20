@@ -1,6 +1,6 @@
 var PAGES = {
  "index": {
-  "h1": "Send money like a <em>photo.</em>",
+  "h1": "Send money <em>as a message.</em>",
   "tag": "The idea"
  },
  "how": {

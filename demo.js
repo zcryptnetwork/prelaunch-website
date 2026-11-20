@@ -1,21 +1,37 @@
 /* payment demo: cycle the wallet screens while the phone is on screen */
 (function () {
+  var TAP = { "1.jpg": [50, 73.2], "2.jpg": [50, 93.6], "4.jpg": [33, 68.4] };   // where the finger lands on each wallet screen, in percent
   document.querySelectorAll("[data-demo]").forEach(function (d) {
-    var frames = d.querySelectorAll(".f"), cap = d.querySelector("figcaption b"), dots = d.querySelector(".dots");
-    var i = 0, timer = null, still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var frames = d.querySelectorAll(".f"), cap = d.querySelector("figcaption b"), dots = d.querySelector(".dots"), phone = d.querySelector(".phone");
+    var i = 0, timer = null, tapTimer = null, running = false, still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var tap = document.createElement("i"); tap.className = "tap"; phone.appendChild(tap);
+    var fx = document.createElement("div"); fx.className = "fx"; fx.setAttribute("aria-hidden", "true");
+    var h = '<i class="halo"></i><i class="ring"></i><i class="ring r2"></i><b class="plus">+25 <small>ZCRYPT</small></b>';
+    for (var k = 0; k < 16; k++) h += '<s style="--a:' + (k * 22.5 + (k % 2) * 9) + 'deg;--d:' + (0.66 + ((k * 37) % 34) / 100) + ';--t:' + (k % 4) * 0.05 + 's"></s>';
+    fx.innerHTML = h; d.insertBefore(fx, d.firstChild);
+    function again(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+    function file(f) { var m = /(\d+\.jpg)/.exec(f.getAttribute("src") || ""); return m ? m[1] : ""; }
+    function ms(k) { return k === frames.length - 1 ? 2300 : frames[k].classList.contains("chat") ? 2000 : TAP[file(frames[k])] ? 1150 : 1050; }
     function show(n) {
       i = (n + frames.length) % frames.length;
-      frames.forEach(function (f, k) { f.classList.toggle("on", k === i); });
-      dots.querySelectorAll("button").forEach(function (b, k) { b.classList.toggle("on", k === i); });
-      cap.textContent = frames[i].getAttribute("data-cap");
+      var f = frames[i], t = TAP[file(f)], last = i === frames.length - 1;
+      frames.forEach(function (x, k) { x.classList.toggle("on", k === i); });
+      dots.querySelectorAll("button").forEach(function (b, k) { b.classList.remove("on"); b.classList.toggle("done", k < i); b.style.setProperty("--ms", ms(k) + "ms"); if (k === i) again(b, "on"); });
+      cap.textContent = f.getAttribute("data-cap"); again(cap, "in");
+      d.classList.toggle("hold", !running);
+      clearTimeout(tapTimer); tap.classList.remove("go");
+      if (t && running) { tap.style.left = t[0] + "%"; tap.style.top = t[1] + "%"; tapTimer = setTimeout(function () { again(tap, "go"); }, ms(i) - 520); }
+      d.classList.remove("win"); if (last && !still) again(d, "win");
+      again(phone, "bump");
     }
+    function next() { timer = setTimeout(function () { show(i + 1); next(); }, ms(i)); }
     frames.forEach(function (f, k) {
       var b = document.createElement("button"); b.type = "button"; b.setAttribute("aria-label", "Step " + (k + 1));
       b.addEventListener("click", function () { stop(); show(k); });
       dots.appendChild(b);
     });
-    function start() { if (!timer && !still) timer = setInterval(function () { show(i + 1); }, 2400); }
-    function stop() { clearInterval(timer); timer = null; }
+    function start() { if (running || still) return; running = true; show(i); next(); }
+    function stop() { running = false; clearTimeout(timer); clearTimeout(tapTimer); timer = null; }
     show(0);
     if ("IntersectionObserver" in window) new IntersectionObserver(function (e) { e[0].isIntersecting ? start() : stop(); }, { threshold: 0.4 }).observe(d);
     else start();

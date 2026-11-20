@@ -26,7 +26,7 @@ def top(here):
 
 FOOT = f'''  <footer class="nx-foot">
     <div class="cta">
-      <p>Send money <em>like a photo.</em></p>
+      <p>Send money <em>as a message.</em></p>
       <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="cols">
@@ -137,7 +137,7 @@ def social(name, html):
   <meta name="twitter:image" content="{img}">
 '''
     return html.replace("</head>", tags + "</head>", 1)
-CARD_H1 = {"index": "Send money like a <em>photo.</em>", "explorer": "Every block. <em>Nothing private.</em>"}
+CARD_H1 = {"index": "Send money <em>as a message.</em>", "explorer": "Every block. <em>Nothing private.</em>"}
 
 def write(name, html):
     for f in ('next.css', 'fog.js', 'demo.js', 'trade.js'): html = html.replace(f + '"', f + '?v=' + STAMP + '"')
