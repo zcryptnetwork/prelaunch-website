@@ -30,7 +30,7 @@ FOOT = f'''  <footer class="nx-foot">
       <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <div class="cols">
-      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="any-chain.html">Any token, any chain</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
       <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
       <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="{GH}">Source code</a></div>
       <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
@@ -169,7 +169,7 @@ COPY_JS = """
     pre.appendChild(b);
   });
   </script>"""
-for name, extra in [("how.html", COPY_JS), ("privacy-model.html", COPY_JS), ("security.html", COPY_JS), ("docs.html", COPY_JS), ("tokenomics.html", ""), ("post-quantum.html", COPY_JS), ("make-a-coin.html", ""), ("bitcoin.html", ""), ("brand.html", ""), ("trade.html", '\n  <script src="trade.js"></script>'), ("wallet.html", '\n  <script src="../download.js?v=appstore1"></script>')]:
+for name, extra in [("how.html", COPY_JS), ("privacy-model.html", COPY_JS), ("security.html", COPY_JS), ("docs.html", COPY_JS), ("tokenomics.html", ""), ("post-quantum.html", COPY_JS), ("make-a-coin.html", ""), ("bitcoin.html", ""), ("any-chain.html", ""), ("brand.html", ""), ("trade.html", '\n  <script src="trade.js"></script>'), ("wallet.html", '\n  <script src="../download.js?v=appstore1"></script>')]:
     src = open(os.path.join(HERE, name.replace(".html", ".src.html")), encoding="utf-8").read()
     mm = re.match(r'<!--META title="([^"]*)" desc="([^"]*)"-->\n', src); assert mm, name
     page = shell(mm.group(1), mm.group(2), "nxp", name, src[mm.end():].rstrip(), "", extra)

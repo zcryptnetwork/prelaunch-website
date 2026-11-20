@@ -257,13 +257,11 @@ body.nx::before { display: none; }
 #send > div { display: flex; align-items: flex-start; gap: clamp(48px, 7vw, 120px); }
 #send .demo { flex: none; --dw: min(290px, 32vh); margin-top: 6px; }
 .nxp .sx .demo { margin-top: 40px; --dw: 250px; }
-@media (max-width: 860px) { #send { align-items: flex-end; padding-bottom: 78px; } #send > div { flex-direction: column-reverse; align-items: flex-start; gap: 26px; } #send .demo { --dw: 200px; } .nxp .sx .demo { --dw: 210px; } }
+@media (max-width: 860px) { #send { align-items: flex-end; padding-bottom: 78px; } #send > div { flex-direction: column-reverse; align-items: flex-start; gap: 26px; } #send .demo { --dw: 236px; align-self: center; } .nxp .sx .demo { --dw: 210px; } }
 .nx-foot .by { color: var(--zc-text-2); }
 .demo figcaption b, .demo figcaption span { white-space: nowrap; }
 @media (max-width: 860px) {
   .rail { display: none !important; }
-  #send .demo figcaption { text-align: left; }
-  #send .demo .dots { justify-content: flex-start; }
 }
 
 /* the wallet screens are dark by design: lift them so they read on a dim display */
@@ -428,3 +426,4 @@ body.nx::before { display: none; }
 .nxp .bk-dl b { font-weight: 600; }
 .nxp .bk-dl span { font-family: var(--zc-font-mono); font-size: 12px; letter-spacing: 0.1em; color: var(--zc-text-2); white-space: nowrap; }
 @media (max-width: 860px) { .nxp .bk-sw { grid-template-columns: 1fr 1fr; } .nxp .bk-dl { grid-template-columns: 1fr; } .nxp .body .bk-dl a:nth-child(even) { padding-left: 0; border-left: 0; } .nxp .bk-stages { grid-template-columns: 1fr 1fr; } }
+.nxp .live-yes { color: var(--zc-ok); }

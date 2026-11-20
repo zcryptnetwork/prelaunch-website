@@ -35,6 +35,10 @@ var PAGES = {
   "h1": "Your Bitcoin, <em>made private.</em>",
   "tag": "Bitcoin, in and out"
  },
+ "any-chain": {
+  "h1": "Any token. <em>Any chain.</em>",
+  "tag": "Any token, any chain"
+ },
  "brand": {
   "h1": "One mark. <em>Used as it is.</em>",
   "tag": "Brand"

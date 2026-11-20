@@ -1,0 +1,72 @@
+<!--META title="Any token, any chain: private assets on ZCrypt" desc="ZCrypt is built to carry any token from any chain. Bitcoin is live today. Ethereum, USDT, DAI, Solana and others are on the roadmap, and each becomes a private asset once it is on ZCrypt."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Any token, any chain</p>
+    <h1>Any token. <em>Any chain.</em></h1>
+    <p class="lede">ZCrypt is built to work with any token from any chain. Bitcoin is live today. Ethereum, USDT, DAI, Solana and others are on the roadmap. Once an asset is on ZCrypt, it is private.</p>
+  </div>
+
+  <section class="sx" id="idea"><div class="w">
+    <div><p class="n">01</p><h2>Bring it in. It becomes private.</h2></div>
+    <div class="body">
+      <p>Most chains are public. Every balance and every transfer of ETH, USDT or SOL can be read by anyone, forever. ZCrypt does not ask you to give those assets up. It gives them a private place to live.</p>
+      <p>An asset that comes in from its home chain gets a counterpart on ZCrypt with a z in front: Bitcoin becomes zBTC, Ether becomes zETH, USDT becomes zUSDT. Each one is backed one for one by the original, locked on its own chain, and can be turned back whenever you like.</p>
+      <p class="punch">The same asset, the same value, <em>with nobody watching.</em></p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="roadmap"><div class="w">
+    <div><p class="n">02</p><h2>The roadmap.</h2></div>
+    <div class="body">
+      <div class="scroll"><table>
+        <tr><th>From</th><th>Asset</th><th>On ZCrypt</th><th>Status</th></tr>
+        <tr><td>Bitcoin</td><td>BTC</td><td>zBTC</td><td><b class="live-yes">Live</b> · <a href="bitcoin.html">How it works</a></td></tr>
+        <tr><td>Ethereum</td><td>ETH</td><td>zETH</td><td>Roadmap</td></tr>
+        <tr><td>Ethereum and others</td><td>USDT</td><td>zUSDT</td><td>Roadmap</td></tr>
+        <tr><td>Ethereum</td><td>DAI</td><td>zDAI</td><td>Roadmap</td></tr>
+        <tr><td>Solana</td><td>SOL</td><td>zSOL</td><td>Roadmap</td></tr>
+        <tr><td>BNB Chain</td><td>BNB</td><td>zBNB</td><td>Roadmap</td></tr>
+        <tr><td>TON</td><td>TON</td><td>zTON</td><td>Roadmap</td></tr>
+      </table></div>
+      <p>These names are already set aside in the protocol, so nobody else can register them. The list is a starting point: the design does not depend on which chain an asset comes from, and more can follow.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="how"><div class="w">
+    <div><p class="n">03</p><h2>How a chain is onboarded.</h2></div>
+    <div class="body">
+      <p>Bitcoin shows the pattern. ZCrypt does not trust a committee to say that a deposit happened. It checks the other chain itself.</p>
+      <ol class="steps">
+        <li><b>Lock.</b> You lock the asset on its home chain.</li>
+        <li><b>Prove.</b> ZCrypt's validators verify that deposit against the home chain's own blocks, inside consensus.</li>
+        <li><b>Mint.</b> The same amount is created on ZCrypt, one for one, straight into the private pool.</li>
+        <li><b>Redeem.</b> To leave, you lock the z-asset, receive the original on its home chain, and the z-asset is destroyed.</li>
+      </ol>
+      <p>For Bitcoin this is running now: a Bitcoin light client inside ZCrypt's consensus checks every deposit. Each new chain gets the same treatment, with a verifier for that chain's own rules. That work is what the roadmap is.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="private"><div class="w">
+    <div><p class="n">04</p><h2>What an asset gains on ZCrypt.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>Private payments</h3><p>The sender, the receiver and the amount are hidden, in the same pool as every other coin on the network.</p></div>
+        <div><h3>Sent like a photo</h3><p>Pay with it as a file in any chat, to an address or by QR code, in about a second.</p></div>
+        <div><h3>Swaps without an exchange</h3><p>Trade it for any other asset on ZCrypt directly with someone. Nobody holds the money in the middle. <a href="trade.html">See trading</a></p></div>
+        <div><h3>Post-quantum protection</h3><p>Inside ZCrypt it is protected by STARK proofs, hash-based ownership, ML-KEM and ML-DSA. <a href="post-quantum.html">See how</a></p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="know"><div class="w">
+    <div><p class="n">05</p><h2>What is true today.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>Bitcoin is the one chain connected today.</b> The others in the table are planned and are not available yet.</li>
+        <li><b>Coming in and going out are public.</b> A deposit and a withdrawal happen on the home chain, where they can be seen. What happens in between, on ZCrypt, is private.</li>
+        <li><b>You can already issue your own coin</b> directly on ZCrypt, with no bridge and no code. <a href="make-a-coin.html">Make your own coin</a></li>
+      </ul>
+      <p class="small">More in <a href="bitcoin.html">Bitcoin, in and out</a> and the <a href="privacy-model.html">privacy model</a>.</p>
+    </div>
+  </div></section>
+</main>
