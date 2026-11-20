@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Social card</title>
+<link rel="stylesheet" href="../../brand/fonts.css">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { background: #06080f; color: #f3f5f9; font-family: "Inter Tight", sans-serif; position: relative;
+    background-image: radial-gradient(820px 520px at 96% -6%, rgba(53,224,255,.20), transparent 62%), radial-gradient(700px 460px at 62% 118%, rgba(109,124,255,.20), transparent 64%), radial-gradient(520px 380px at -6% 40%, rgba(53,224,255,.05), transparent 70%); }
+  .brand { position: absolute; left: 68px; top: 56px; display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 32px; letter-spacing: -.03em; }
+  .brand svg { width: 34px; height: 34px; }
+  .tag { position: absolute; right: 68px; top: 68px; font-family: "JetBrains Mono", monospace; font-size: 18px; letter-spacing: .16em; text-transform: uppercase; color: #aeb7c7; display: flex; align-items: center; gap: 14px; }
+  .tag::before { content: ""; width: 34px; height: 1px; background: #aeb7c7; }
+  .mid { position: absolute; left: 68px; right: 68px; top: 150px; bottom: 120px; display: flex; flex-direction: column; justify-content: center; }
+  h1 { margin: 0; font-weight: 700; letter-spacing: -.055em; line-height: .9; text-wrap: balance; }
+  h1 em { font-family: "Instrument Serif", serif; font-style: italic; font-weight: 400; letter-spacing: -.035em; }
+  .foot { position: absolute; left: 68px; right: 68px; bottom: 54px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.16); display: flex; justify-content: space-between; font-family: "JetBrains Mono", monospace; font-size: 18px; letter-spacing: .04em; color: #c5ccd8; }
+  .foot b { color: #35e0ff; font-weight: 500; }
+</style></head><body>
+<div class="brand"><svg viewBox="0 0 40 40" fill="none"><path d="M9 10h22L9 30h22" stroke="#f3f5f9" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>ZCrypt</div>
+<div class="tag" id="tag"></div>
+<div class="mid"><h1 id="h"></h1></div>
+<div class="foot"><b>zcrypt.network</b><span>Private digital cash</span></div>
+<script src="pages.js"></script>
+<script>
+  var p = PAGES[new URLSearchParams(location.search).get("p")] || PAGES["index"];
+  var h = document.getElementById("h"); h.innerHTML = p.h1; document.getElementById("tag").textContent = p.tag;
+  var size = 168; h.style.fontSize = size + "px";
+  while (size > 60 && (h.offsetHeight > 350 || h.scrollWidth > 1064)) { size -= 4; h.style.fontSize = size + "px"; }
+  if (!p.tag) document.getElementById("tag").style.display = "none";
+</script>
+</body></html>

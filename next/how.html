@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How ZCrypt works</title>
+  <meta name="description" content="A coin is a secret. A payment is a file. A proof keeps everyone honest. How ZCrypt works, in plain language.">
+  <meta name="theme-color" content="#06080f">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../brand/fonts.css">
+  <link rel="stylesheet" href="../brand/tokens.css">
+  <link rel="stylesheet" href="next.css?v=11201610">
+  <link rel="canonical" href="https://zcrypt.network/how.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:title" content="How ZCrypt works">
+  <meta property="og:description" content="A coin is a secret. A payment is a file. A proof keeps everyone honest. How ZCrypt works, in plain language.">
+  <meta property="og:url" content="https://zcrypt.network/how.html">
+  <meta property="og:image" content="https://zcrypt.network/og/how.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="How ZCrypt works">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zcryptnetwork">
+  <meta name="twitter:title" content="How ZCrypt works">
+  <meta name="twitter:description" content="A coin is a secret. A payment is a file. A proof keeps everyone honest. How ZCrypt works, in plain language.">
+  <meta name="twitter:image" content="https://zcrypt.network/og/how.png">
+</head>
+<body class="nxp">
+  <canvas id="fog" aria-hidden="true"></canvas>
+  <header class="nx-top" id="top">
+    <a class="nx-brand" href="index.html" aria-label="ZCrypt home"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></a>
+    <nav class="nx-nav" aria-label="Main">
+      <a class="t here" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="nx-get" href="wallet.html">Get the wallet</a>
+      <details class="nx-menu"><summary aria-label="Menu"><i></i></summary><div>
+      <a class="t here" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="t" href="privacy-model.html">Privacy model</a></div></details>
+    </nav>
+  </header>
+<main id="content">
+  <div class="w ph">
+    <p class="tag">How it works</p>
+    <h1>How ZCrypt <em>works.</em></h1>
+    <p class="lede">Five ideas explain the whole system: cash that travels like a message and that nobody can watch.</p>
+  </div>
+
+  <section class="sx" id="coin"><div class="w">
+    <div><p class="n">01</p><h2>A coin is a sealed envelope.</h2></div>
+    <div class="body">
+      <p>Every coin sits on a public ledger as a sealed envelope. Anyone can see that the envelope exists. Only its owner knows what is inside, and only its owner holds the key that opens it.</p>
+      <p>To pay someone, your wallet destroys your envelope and creates a new one that only they can open. The ledger records that this happened.</p>
+      <p class="punch">It does not record who paid, who was paid or how much.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li>The envelope is a <b>commitment</b>: a Poseidon2 hash of the coin's value, its coin type, the owner's key and a random blinding value. The ledger stores only the hash.</li>
+          <li>All commitments are leaves of one <b>Merkle tree</b>, 62 levels deep, with room for more coins than will ever exist.</li>
+          <li>Spending a coin publishes its <b>nullifier</b>, a second hash that only the owner's spend secret can produce. A nullifier can appear once. It cannot be linked back to its commitment.</li>
+          <li>The recipient learns the new coin's details from a note encrypted to them with <b>ML-KEM-768</b>, the NIST post-quantum standard.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="file"><div class="w">
+    <div><p class="n">02</p><h2>So a payment can be a file.</h2>
+      <figure class="demo" data-demo aria-label="A payment sent as a file, step by step">
+        <div class="phone">
+          <img class="f on" src="demo/1.jpg" alt="The wallet's send screen with 25 ZCRYPT entered" data-cap="Choose an amount">
+          <img class="f" src="demo/2.jpg" alt="The review sheet" data-cap="Confirm with Face ID" loading="lazy">
+          <img class="f" src="demo/3.jpg" alt="A progress ring while the proof is built" data-cap="The phone builds the proof" loading="lazy">
+          <img class="f" src="demo/4.jpg" alt="The payment file, ready to share" data-cap="The payment is now a file" loading="lazy">
+          <div class="f chat" data-cap="Send it in any chat"><p class="them">You owe me 25 for dinner</p><div class="file"><i>Z</i><b>zcrypt-bearer.zcrypt</b><span>Payment file · 1 KB</span></div><p class="me">There you go</p></div>
+          <img class="f" src="demo/6.jpg" alt="The recipient's wallet showing 25 ZCRYPT received" data-cap="They open it. It is theirs." loading="lazy">
+        </div>
+        <figcaption><b></b><div class="dots"></div><span>Wallet screens, sample data</span></figcaption>
+      </figure></div>
+    <div class="body">
+      <p>The key to an envelope is just a short piece of text. Put it in a file and <b>whoever holds the file holds the money.</b></p>
+      <p>Send the file in any chat. The other person opens it in their wallet, and the wallet moves the coin to a new envelope that only they can open. From that moment your copy of the file is worthless.</p>
+      <p>You never ask for an address. They do not need an account. They do not even need coins to pay the fee, because the file carries its own.</p>
+      <p>A file is one way to pay, not the only one. You can also send to an address, typed or scanned from a QR code, and the payment arrives in the other wallet on its own.</p>
+      <p class="punch">Money now moves over anything that can carry a file.</p>
+      <p class="small">Until it is claimed, any copy of the file can claim it, and the first claim wins. Hand it over the way you would hand over cash.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li>A payment file is a few lines of text holding the spend secret of a freshly made coin, plus a second small coin that pays the claim fee.</li>
+          <li>Claiming is an ordinary private payment from that coin to a key only the claimer holds. One block later the old secret opens nothing.</li>
+          <li>A normal send works without a file too: the encrypted note goes on the chain and the recipient's wallet finds it by scanning.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="proof"><div class="w">
+    <div><p class="n">03</p><h2>Checked without being seen.</h2></div>
+    <div class="body">
+      <p>If nobody can see the amounts, what stops someone paying out more than they have?</p>
+      <p>Every payment carries a mathematical proof that it followed the rules: the coins spent were real, they had not been spent before, and what came out equals what went in, less the fee. Every validator checks the proof. None of them ever sees the numbers.</p>
+      <p>A payment without a valid proof is rejected by every validator. No setting turns this off.</p>
+      <p class="punch">The network verifies a payment it cannot read.</p>
+      <p>You can watch the checks run on any transaction in the <a href="https://explorer.zcrypt.network">explorer</a>. The rule that nobody can create coins goes one step further: it has been proven with a proof assistant. See <a href="security.html">Security</a>.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <p>The proof is a <b>STARK</b>: a zero-knowledge proof built only from hash functions. There is no trusted setup and no elliptic curve, so there is no secret ceremony to trust and nothing for a quantum computer to break.</p>
+        <div class="scroll"><table>
+          <tr><td>Proof system</td><td>Plonky3 STARK with FRI, over the BabyBear field, Poseidon2 hashing</td></tr>
+          <tr><td>Circuit</td><td>One fixed shape: 2 coins in, 3 coins out. 128 rows by 2,993 columns, 40 constraint sites</td></tr>
+          <tr><td>What it proves</td><td>Values are in range, one coin type, inputs equal outputs plus fee, correct nullifiers, correct new commitments, every input is in the tree</td></tr>
+          <tr><td>Soundness</td><td>132 bits enforced by every node (112 FRI queries, 20 bits of proof of work)</td></tr>
+          <tr><td>Proof size</td><td>About 2 MB, verified by every validator in every block</td></tr>
+          <tr><td>Consensus</td><td>CometBFT 0.38. The state machine is native Rust</td></tr>
+        </table></div>
+        <p>The same statement also exists as a seven-instruction program a person can read. The circuit and the program are run against each other in testing, and the explorer replays the program on every transaction.</p></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="crowd"><div class="w">
+    <div><p class="n">04</p><h2>Every payment hides among all coins.</h2></div>
+    <div class="body">
+      <p>Privacy depends on how many others you could be mistaken for. Some private coins hide each payment among a handful of decoys.</p>
+      <p>Here there is one pool for every coin of every kind, and a payment is hidden among all of them. There is no public mode to forget to switch off, and no smaller pool to end up in by mistake.</p>
+      <p class="punch">Every payment makes everyone else harder to find.</p>
+      <p class="small">The network is young, so the crowd is still small. It grows with every payment.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li>A spend proves that its coin is <b>somewhere in the tree</b> by walking a 62-step Merkle path inside the circuit. The path is never revealed, so the coin could be any leaf.</li>
+          <li>The coin type is hidden inside the commitment. One thing does show: a payment in ZCRYPT is a single proof, and a payment in any other coin carries a second proof for its fee. An observer can tell those two apart, but not which other coin it is.</li>
+          <li>Every payment has the same shape, two inputs and three outputs. A one-coin spend is padded with an empty input, so even the number of coins you spent is hidden.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="more"><div class="w">
+    <div><p class="n">05</p><h2>What else it does.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div id="swap"><h3>Trade without an exchange</h3><p>Two people each lock what they are offering. Both sides complete together or neither does. No company holds the money in between, so no company can freeze it. A swap is not yet as private as a payment: the two locks are public, with their amounts, coin types and the one-time keys of both sides. <a href="trade.html">See a sample trading screen</a></p></div>
+        <div id="own"><h3>Make your own coin</h3><p>Choose a name, a precision and a supply. Your coin is sent as a file and hidden in the same crowd. On the ledger it looks like a payment in any other issued coin. No code is needed. <a href="make-a-coin.html">See how to make one</a></p></div>
+        <div id="bitcoin"><h3>Bitcoin, in and out</h3><p>Lock Bitcoin and receive zBTC, a private coin backed by it. Every validator checks the deposit against Bitcoin's own blocks before any zBTC exists. To get Bitcoin back, you lock zBTC and the reserve pays you. <a href="bitcoin.html">See both directions</a></p></div>
+        <div id="quantum"><h3>Built to resist quantum computers</h3><p>Payments use STARK proofs, hash-based ownership, ML-KEM encryption and ML-DSA signatures, with no elliptic curves. A payment recorded today is built so that a future quantum computer cannot open it. Block signing and the Bitcoin bridge still use today's signatures; neither can be used to forge a coin. <a href="post-quantum.html">Exactly why it is post-quantum</a></p></div>
+      </div>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li><b>Swaps</b> are hash-locked escrows on the chain: each side locks coins under the same secret, and revealing it to collect one side releases the other. A timeout refunds both. The escrows are public today; the wallet uses a fresh key for each swap, so they do not point at your address.</li>
+          <li><b>Your own coin</b> is an entry in an on-chain registry that fixes its ticker, precision and hard cap. Each mint needs an ML-DSA signature from the issuer's key set.</li>
+          <li><b>The Bitcoin bridge</b> has two halves. Coming in, you lock Bitcoin under a hash lock, and a Bitcoin light client inside consensus checks a Merkle inclusion proof of that deposit (SPV) against the block headers validators track. No signer votes on a mint. Going out, you lock zBTC in a burn escrow under a hash lock and the bridge operator pays Bitcoin from the reserve; if the payment never comes, the lock times out and your zBTC returns. The reserve key is being placed under MPC, created in a key ceremony.</li>
+          <li><b>Post-quantum:</b> hashes for commitments and proofs, ML-KEM for notes, ML-DSA for issuers.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+
+  <section class="sx" id="numbers"><div class="w" style="display:block">
+    <p class="n">Numbers</p>
+    <h2>Enforced by every validator.</h2>
+    <div class="facts">
+      <div><b>21,000,000</b><span>coins at most, ever</span></div>
+      <div><b>1 s</b><span>between blocks; a payment is final in one</span></div>
+      <div><b>0.01</b><span>ZCRYPT per payment to an address, destroyed and paid to nobody. A payment file costs 0.03</span></div>
+      <div><b>7</b><span>checks every payment must pass, each one visible in the explorer</span></div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="public"><div class="w">
+    <div><p class="n">Public</p><h2>What is public.</h2></div>
+    <div class="body">
+      <p>Some things are public on purpose:</p>
+      <ul>
+        <li><b>Staking.</b> Who validates, and how much they have staked.</li>
+        <li><b>A trade's escrow.</b> The amount and coin of that one trade, so both sides can see what is locked. The payments before and after it are private.</li>
+        <li><b>The Bitcoin side of the bridge.</b> Deposits and withdrawals are ordinary Bitcoin transactions. The Bitcoin is held in a reserve whose key is being placed under MPC, created in a key ceremony.</li>
+        <li><b>That a payment happened.</b> The chain shows it took place and nothing else about it.</li>
+      </ul>
+      <p>Block signing and the Bitcoin bridge use today's signature schemes, not post-quantum ones. Neither can be used to forge a coin.</p>
+      <p>The full list is in the <a href="privacy-model.html">privacy model</a>. The design is in the <a href="whitepaper.pdf">whitepaper</a>.</p>
+    </div>
+  </div></section>
+  <section class="sx" id="who"><div class="w">
+    <div><p class="n">Who</p><h2>Who builds it.</h2></div>
+    <div class="body">
+      <p>ZCrypt is built by Echelon Labs LLC. All of the code is public under the MIT licence: the chain, the proofs, the wallet and this website.</p>
+      <p>The network has been running since 28 October 2026. It is at block <span data-live="height">1,815,831</span> with <span data-live="valsword">two</span> validators, and <span data-live="issued">304,113</span> of the 21,000,000 ZCRYPT have been issued. These figures are read live from the chain.</p>
+      <p>Contact: <a href="mailto:security@zcrypt.network">security@zcrypt.network</a> for security reports, <a href="https://x.com/zcryptnetwork">@zcryptnetwork</a> for everything else.</p>
+    </div>
+  </div></section>
+</main>
+  <footer class="nx-foot">
+    <div class="cta">
+      <p>Send money <em>like a photo.</em></p>
+      <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="cols">
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
+      <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
+      <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
+    </div>
+    <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
+  </footer>
+  <script src="fog.js?v=11201610"></script>
+  <script src="demo.js?v=11201610"></script>
+  <script>
+  document.querySelectorAll("pre").forEach(function (pre) {
+    var b = document.createElement("button"); b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+    b.addEventListener("click", function () {
+      var t = pre.querySelector("code").innerText.split("\n").map(function (l) { return l.replace(/\s+#.*$/, ""); }).filter(function (l) { return l.trim() && !/^#/.test(l.trim()); }).join("\n");
+      navigator.clipboard.writeText(t).then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1400); });
+    });
+    pre.appendChild(b);
+  });
+  </script>
+</body>
+</html>

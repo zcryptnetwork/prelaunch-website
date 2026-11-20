@@ -1,0 +1,67 @@
+<!--META title="ZCrypt tokenomics: supply, rewards and fees" desc="21,000,000 ZCRYPT at most. 80% is paid out as block rewards, 20% is a foundation allocation vested over four years, and every fee is destroyed."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Tokenomics</p>
+    <h1>21 million. <em>No more.</em></h1>
+    <p class="lede">Where every ZCRYPT comes from, who receives it, and what removes it. Each number on this page is a consensus rule that every validator enforces.</p>
+  </div>
+
+  <section class="sx" id="split"><div class="w" style="display:block">
+    <p class="n">01</p>
+    <h2>The split.</h2>
+    <div class="split" role="img" aria-label="80% block rewards, 20% foundation">
+      <div class="a"><b>80%</b><span>Block rewards · 16,800,000</span></div>
+      <div class="b"><b>20%</b><span>Foundation · 4,200,000</span></div>
+    </div>
+    <div class="facts">
+      <div><b>21,000,000</b><span>ZCRYPT at most, ever</span></div>
+      <div><b data-live="issued"><!--ISSUED--></b><span>exist today, <i data-live="pct"><!--PCT--></i>% of the total</span></div>
+      <div><b>0.14</b><span>new ZCRYPT per block, one block a second</span></div>
+      <div><b>0.01</b><span>ZCRYPT fee for a payment, destroyed</span></div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="rewards"><div class="w">
+    <div><p class="n">02</p><h2>Block rewards.</h2></div>
+    <div class="body">
+      <p>16,800,000 ZCRYPT are paid out over time to the people who secure the network. Each block creates 0.14 ZCRYPT. The reward halves every 60,000,000 blocks, which is about every 1.9 years.</p>
+      <div class="scroll"><table>
+        <tr><th>Blocks</th><th>Reward per block</th><th>Paid out in the period</th></tr>
+        <tr><td>0 to 60,000,000</td><td>0.14</td><td>8,400,000</td></tr>
+        <tr><td>60,000,000 to 120,000,000</td><td>0.07</td><td>4,200,000</td></tr>
+        <tr><td>120,000,000 to 180,000,000</td><td>0.035</td><td>2,100,000</td></tr>
+        <tr><td>After that</td><td>halving each period</td><td>the remaining 2,100,000</td></tr>
+      </table></div>
+      <p>Rewards are paid every 100 blocks to the validators that took part, and shared with anyone who stakes with them. A validator needs a stake of 10,000 ZCRYPT. Unstaking takes 10 days.</p>
+      <p class="punch">Half of all block rewards are paid in the first 1.9 years.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="foundation"><div class="w">
+    <div><p class="n">03</p><h2>The foundation.</h2></div>
+    <div class="body">
+      <p>4,200,000 ZCRYPT are allocated to the foundation, Echelon Labs LLC, which builds ZCrypt. They are released on a schedule that validators enforce. A claim above what has vested is rejected by the network.</p>
+      <div class="scroll"><table>
+        <tr><th>When</th><th>Unlocked in total</th></tr>
+        <tr><td>Launch</td><td>50,000</td></tr>
+        <tr><td>Month 12</td><td>1,050,000 (a quarter of the allocation)</td></tr>
+        <tr><td>Months 13 to 48</td><td>87,500 more each month</td></tr>
+        <tr><td>Month 48</td><td>4,200,000</td></tr>
+      </table></div>
+      <p><b data-live="fclaimed">50,000</b> ZCRYPT have been claimed by the foundation so far. The <a href="https://explorer.zcrypt.network">explorer</a> shows what has vested and what has been claimed.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="fees"><div class="w">
+    <div><p class="n">04</p><h2>Fees and yield.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>Fees are destroyed</h3><p>A payment to an address costs 0.01 ZCRYPT and a payment file 0.03. A swap costs 0.01 or 0.02. Claiming rewards and unstaking are free. Nobody receives a fee: it is removed from the supply for good, so use of the network makes ZCRYPT scarcer.</p></div>
+        <div><h3>One fee coin</h3><p>Payments in any coin on ZCrypt pay their fee in ZCRYPT.</p></div>
+        <div><h3>Bitcoin yield</h3><p>0.1% of every Bitcoin deposit is paid to stakers in zBTC, on top of block rewards.</p></div>
+        <div><h3>Penalties</h3><p>A validator that signs two conflicting blocks loses 5% of its stake, which is destroyed, and is removed for good.</p></div>
+      </div>
+      <p class="small">The network launched on 28 October 2026. The same rules, as a reference table, are in the <a href="docs.html#rules">developer docs</a>.</p>
+    </div>
+  </div></section>
+</main>

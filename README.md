@@ -1,29 +1,28 @@
 # zcrypt.network
 
-Static site for [zcrypt.network](https://zcrypt.network). Plain HTML, CSS, and one
-small script. No build step.
+Static site for [zcrypt.network](https://zcrypt.network). Plain HTML, CSS and a few small
+scripts. The pages at the root are generated: edit the sources in `next/` and publish.
 
 ```
-index.html          Landing page
-site.css            Landing page styles (Inter Tight, Instrument Serif, JetBrains Mono)
-scene.js            Scroll-driven WebGL particle scene (Three.js from jsDelivr, ES module)
+next/*.src.html     Hand-written pages (front page, How it works, Security, Tokenomics, …)
+next/content/*.md   Protocol and VM reference, copied from the protocol repository
+next/build.py       Assembles every page with the shared top bar, footer and link preview tags
+next/next.css       Styles     next/fog.js  background     next/demo.js  phone demo, live chain figures
+next/og/            One 1200x630 link preview card per page, rendered from og/card.html
+brand/              Mark, fonts and colour tokens
 download.js         Detects the OS and downloads the matching public GitHub release
-docs/index.html     How to use the live chain, run a local node, and join as a validator
-style.css           Styles for docs/ (same tokens as the explorer)
-favicon.svg         Tab icon
 ```
 
-The landing page has no build step either. `scene.js` draws one particle field in which
-every point is a coin; as the reader scrolls through the six chapters the same points
-re-form into the pool, the commitment tree, a bearer file, two interlocked escrows, a
-lattice, and the seven-check program. It respects `prefers-reduced-motion`, drops to a
-lighter particle count under 860px, and the page reads fine if WebGL is unavailable.
-The chain strip polls `rpc.zcrypt.network/status` and `/validators` every five seconds
-and shows a dash when the RPC does not answer or does not allow cross-origin reads.
+```bash
+cd next
+python3 build.py                  # rebuild the pages in next/
+python3 build.py cards            # also re-render the link preview cards (needs Chrome)
+python3 build.py cards publish    # also copy everything to the site root, which is what the domain serves
+```
 
-The homepage tells the same story as the protocol README. The reference network is
-chain id `zcrypt-1`. The explorer is https://explorer.zcrypt.network and the RPC is
-https://rpc.zcrypt.network.
+Chain figures on the pages are read from the explorer's public API
+(https://explorer.zcrypt.network/api/) at build time and refreshed in the browser.
+The reference network is chain id `zcrypt-1`.
 
 Wallet downloads come from the latest public release of
 [echelonlabsresearch/ZCrypt](https://github.com/echelonlabsresearch/ZCrypt/releases),

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZCrypt privacy model: what the world can see</title>
+  <meta name="description" content="Exactly what a ZCrypt payment puts on the public record, what is public on purpose, and where the limits are.">
+  <meta name="theme-color" content="#06080f">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../brand/fonts.css">
+  <link rel="stylesheet" href="../brand/tokens.css">
+  <link rel="stylesheet" href="next.css?v=11201610">
+  <link rel="canonical" href="https://zcrypt.network/privacy-model.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:title" content="ZCrypt privacy model: what the world can see">
+  <meta property="og:description" content="Exactly what a ZCrypt payment puts on the public record, what is public on purpose, and where the limits are.">
+  <meta property="og:url" content="https://zcrypt.network/privacy-model.html">
+  <meta property="og:image" content="https://zcrypt.network/og/privacy-model.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ZCrypt privacy model: what the world can see">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zcryptnetwork">
+  <meta name="twitter:title" content="ZCrypt privacy model: what the world can see">
+  <meta name="twitter:description" content="Exactly what a ZCrypt payment puts on the public record, what is public on purpose, and where the limits are.">
+  <meta name="twitter:image" content="https://zcrypt.network/og/privacy-model.png">
+</head>
+<body class="nxp">
+  <canvas id="fog" aria-hidden="true"></canvas>
+  <header class="nx-top" id="top">
+    <a class="nx-brand" href="index.html" aria-label="ZCrypt home"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></a>
+    <nav class="nx-nav" aria-label="Main">
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="nx-get" href="wallet.html">Get the wallet</a>
+      <details class="nx-menu"><summary aria-label="Menu"><i></i></summary><div>
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="t" href="privacy-model.html">Privacy model</a></div></details>
+    </nav>
+  </header>
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Privacy model</p>
+    <h1 class="long">What the world <em>can see.</em></h1>
+    <p class="lede">Exactly what a payment puts on the public record, what is public on purpose, and where the limits are. You can check it: paste any payment into the explorer and it shows every byte.</p>
+  </div>
+
+  <section class="sx" id="record"><div class="w">
+    <div><p class="n">01</p><h2>What a payment publishes.</h2></div>
+    <div class="body">
+      <div class="scroll"><table>
+        <tr><th>On the chain</th><th>What it is</th></tr>
+        <tr><td>2 nullifiers</td><td>Marks that two coins are now spent. They do not say which coins.</td></tr>
+        <tr><td>3 commitments</td><td>Three new sealed coins. Always three, even when fewer are needed.</td></tr>
+        <tr><td>1 tree root</td><td>A recent snapshot of the pool the spent coins belong to.</td></tr>
+        <tr><td>3 encrypted notes</td><td>The details of the new coins, readable only by their owners. Every note is the same size.</td></tr>
+        <tr><td>A fee</td><td>0.01 ZCRYPT per transaction, destroyed, and shown in the open. The wallet pays exactly 0.01 unless it is clearing out a leftover smaller than the fee, in which case the fee is slightly higher and that figure is visible. A payment file takes three transactions in all, 0.03.</td></tr>
+        <tr><td>A proof</td><td>About 2 MB showing the rules were followed.</td></tr>
+      </table></div>
+      <p class="punch">Nothing else is recorded: no sender, no recipient, no amount, no link to any earlier payment.</p>
+      <p>One thing does show: whether the payment was in ZCRYPT or in some other coin. Which other coin stays hidden.</p>
+      <details class="tech"><summary>Under the hood</summary><div>
+        <p>A ZCRYPT transfer (<code>0x6A</code>) is one proof whose first output is the fee burn, opened publicly. A transfer of any other asset (<code>0x55</code>) is a bundle of two proofs: the payment, with a zero fee, and a ZCRYPT fee proof. Notes are ML-KEM-768 ciphertexts with a padded payload, and consensus enforces the size.</p>
+      </div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="crowd"><div class="w">
+    <div><p class="n">02</p><h2>Hidden among every coin.</h2></div>
+    <div class="body">
+      <p>Many private coins pick a handful of decoys for each payment. Over time the decoy sets overlap, and analysis narrows them down.</p>
+      <p>ZCrypt picks no decoys. A spend proves that its coin is somewhere in the whole pool, so it could be any coin ever created. There is no public mode running alongside, so every user adds to every other user's cover.</p>
+      <p>The shape is the same too. A payment that spends one coin is padded to look exactly like one that spends two.</p>
+      <details class="tech"><summary>Under the hood</summary><div>
+        <p>The circuit contains a Merkle membership proof from the spent coin's commitment to the published root, 62 levels deep. A one-input spend carries a value-zero phantom input whose nullifier is real and derived from the real input, so one-input and two-input transfers are byte-identical in shape.</p>
+      </div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="unlinkable"><div class="w">
+    <div><p class="n">03</p><h2>Why a spend cannot be traced back.</h2></div>
+    <div class="body">
+      <p>When a coin is created, the chain stores a hash of it. When the coin is spent, the chain stores a different hash that only the owner's secret can produce. Nobody else can compute the second from the first, so nobody can watch a coin and see it spent.</p>
+      <p>That holds even for a coin whose creation was public, such as a staking reward: the first time it is spent, the trail ends.</p>
+      <details class="tech"><summary>Under the hood</summary><div>
+<pre><code>pk = Poseidon2(spend_secret)
+C  = Poseidon2(value, Poseidon2(pk, blind), asset_id)
+nf = Poseidon2(Poseidon2(spend_secret, blind), value, asset_id)</code></pre>
+        <p>The nullifier is deterministic per coin, so a double-spend collides and is rejected. The blind is eight field limbs, about 248 bits. The asset id is inside the commitment, and the circuit enforces conservation per asset, so hiding the type never lets one coin turn into another.</p>
+      </div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="addresses"><div class="w">
+    <div><p class="n">04</p><h2>Three ways to be paid.</h2></div>
+    <div class="body">
+      <div class="scroll"><table>
+        <tr><th>Kind</th><th>What it is</th><th>Restored by your phrase</th></tr>
+        <tr><td>Normal address</td><td>Your reusable address. The wallet finds payments to it by scanning the chain.</td><td>Yes</td></tr>
+        <tr><td>Shielded address</td><td>A fresh address that is not tied to your normal one. Use it for anything you do not want linked to the address you hand out.</td><td>The address, yes. The wallet moves each coin received there into your phrase-backed balance on its next sync.</td></tr>
+        <tr><td>Payment file</td><td>A text file that is the money. No recipient is named anywhere.</td><td>No. The file is the only copy.</td></tr>
+      </table></div>
+      <p class="small">A payment file can be claimed by anyone holding a copy until the first claim is in a block. Treat it like a banknote that can be photographed.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="view-key"><div class="w">
+    <div><p class="n">05</p><h2>Sharing with an accountant or auditor.</h2></div>
+    <div class="body">
+      <p>You can give someone a view key. It lets them read the payments that arrived at your normal address: the amount and the coin of each one.</p>
+      <ul>
+        <li>They cannot spend anything.</li>
+        <li>They cannot see whether you later spent a coin, or where it went.</li>
+        <li>They cannot see shielded addresses, change, or payment files.</li>
+      </ul>
+      <p class="punch">Only you can hand out a view key. Nobody else holds one.</p>
+      <p class="small">Limits: a view key is permanent for that address, so to stop sharing you move to a new address. There is no key yet that shows only one payment or only a period of time, and none that shows outgoing payments.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="public"><div class="w">
+    <div><p class="n">06</p><h2>Public on purpose.</h2></div>
+    <div class="body">
+      <p>Some things are public so that other people can check them.</p>
+      <div class="scroll"><table>
+        <tr><th>What</th><th>What is visible</th><th>What stays hidden</th></tr>
+        <tr><td>Staking</td><td>Stakes, delegations, reward payouts, and the key that claims them</td><td>Which coins funded the stake. A reward is private again once it is spent.</td></tr>
+        <tr><td>Foundation vesting</td><td>Every claim against the schedule</td><td>Where the coins go afterwards</td></tr>
+        <tr><td>A swap or bridge escrow</td><td>The amount, the coin, and both parties' keys for that one escrow</td><td>Which coins funded it, and the later spend of what it pays out</td></tr>
+        <tr><td>The Bitcoin reserve</td><td>Every deposit and withdrawal, on Bitcoin, to one known reserve key</td><td>What the zBTC does inside the pool</td></tr>
+      </table></div>
+      <div class="note"><p><b>Two things to do.</b> A coin keeps its exact amount until a payment splits it, so Bitcoin brought in and taken straight back out can be matched by its amount: make an ordinary payment in between. And every public action above names the key it acts for, so use a shielded address for anything you do not want tied to the address you give people.</p></div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="network"><div class="w">
+    <div><p class="n">07</p><h2>The network around the chain.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>Tor is on by default in the desktop wallet.</b> If the Tor proxy is missing, the wallet refuses to connect; it does not fall back to a direct connection.</li>
+        <li><b>The wallet never asks a node about your coins.</b> It downloads blocks and works out what is yours, and what you have spent, on your own device.</li>
+        <li><b>Use an HTTPS node.</b> The wallet refuses plain HTTP to a remote node. The public node at <code>https://rpc.zcrypt.network</code> is HTTPS.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section class="sx" id="limits"><div class="w">
+    <div><p class="n">08</p><h2>Where the limits are.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>The crowd is as big as the pool.</b> On a young chain the mathematics is the same but the crowd is small. It grows with use.</li>
+        <li><b>Timing can identify you.</b> If you are the only one active in a quiet hour, your payments stand out.</li>
+        <li><b>A payment file is a copyable secret.</b> Anyone with a copy can claim it until the first claim lands.</li>
+        <li><b>Notes use post-quantum encryption.</b> ML-KEM-768 is used so that data recorded today cannot be opened by a future quantum computer.</li>
+      </ul>
+      <p>For the cryptography behind this, see <a href="security.html">Security</a>. For exact transaction formats, see the <a href="protocol.html">protocol reference</a>.</p>
+    </div>
+  </div></section>
+</main>
+  <footer class="nx-foot">
+    <div class="cta">
+      <p>Send money <em>like a photo.</em></p>
+      <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="cols">
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
+      <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
+      <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
+    </div>
+    <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
+  </footer>
+  <script src="fog.js?v=11201610"></script>
+  <script src="demo.js?v=11201610"></script>
+  <script>
+  document.querySelectorAll("pre").forEach(function (pre) {
+    var b = document.createElement("button"); b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+    b.addEventListener("click", function () {
+      var t = pre.querySelector("code").innerText.split("\n").map(function (l) { return l.replace(/\s+#.*$/, ""); }).filter(function (l) { return l.trim() && !/^#/.test(l.trim()); }).join("\n");
+      navigator.clipboard.writeText(t).then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1400); });
+    });
+    pre.appendChild(b);
+  });
+  </script>
+</body>
+</html>

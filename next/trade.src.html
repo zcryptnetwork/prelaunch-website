@@ -1,0 +1,97 @@
+<!--META title="ZCrypt trading: the chain settles the trade" desc="A sample order book, and how ZCrypt settles a trade between two people with no exchange holding the money: both sides lock, both sides are paid, or neither is."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Trading</p>
+    <h1>No exchange <em>holds your money.</em></h1>
+    <p class="lede">An exchange does two jobs: it matches buyers with sellers, and it holds everyone's money while they trade. ZCrypt does the second job itself. A trade settles on the chain, directly between the two people, in a few seconds.</p>
+  </div>
+
+  <section class="sx" id="engine"><div class="w" style="display:block">
+    <p class="n">Sample</p>
+    <h2>What a trading screen on ZCrypt looks like.</h2>
+    <p class="small tx-note">This is a demonstration with made-up orders and prices. Any asset can trade against any other. Choose the From and To assets, then press Buy or Sell to watch a trade settle.</p>
+    <p class="tx-status"><b>The chain is live, with swaps enabled.</b> The trading platform arrives in Q2 2027.</p>
+
+    <div class="tx-pick">
+      <label>From<select id="tx-base" aria-label="From asset"></select></label>
+      <button type="button" id="tx-flip" aria-label="Swap the two coins">⇄</button>
+      <label>To<select id="tx-quote" aria-label="To asset"></select></label>
+      <div class="tx-mk" id="tx-mk" aria-label="Popular markets"></div>
+    </div>
+    <div class="tx" id="tx" aria-label="Sample trading screen">
+      <div class="tx-book">
+        <div class="tx-head"><b id="tx-pair">zBTC / zUSDT</b><span>Order book · sample</span></div>
+        <div class="tx-cols"><span>Price (<i data-quote>zUSDT</i>)</span><span>Amount (<i data-base>zBTC</i>)</span><span>Total</span></div>
+        <div class="tx-rows asks" id="tx-asks"></div>
+        <div class="tx-mid"><b id="tx-last"></b><span>last price</span></div>
+        <div class="tx-rows bids" id="tx-bids"></div>
+      </div>
+
+      <div class="tx-side">
+        <div class="tx-ticket">
+          <div class="tx-head"><b>Place an order</b><span>sample</span></div>
+          <label>Amount<span><input id="tx-amt" type="number" min="0" step="any" value="1" inputmode="decimal"> <i data-base>zBTC</i></span></label>
+          <div class="tx-line"><span>Price</span><b id="tx-px"></b></div>
+          <div class="tx-line"><span>You pay or receive</span><b id="tx-tot"></b></div>
+          <div class="tx-line"><span>Network fee</span><b>0.01 ZCRYPT</b></div>
+          <div class="tx-btns"><button type="button" class="buy" id="tx-buy">Buy</button><button type="button" class="sell" id="tx-sell">Sell</button></div>
+        </div>
+
+        <ol class="tx-steps" id="tx-steps" aria-live="polite">
+          <li><b>Matched</b><span>The engine pairs your order with another. Nothing has moved yet.</span></li>
+          <li><b>You lock</b><span>Your coins go into a lock on the chain that only the other side can open.</span></li>
+          <li><b>They lock</b><span>Their coins go into a matching lock that only you can open.</span></li>
+          <li><b>Settled</b><span>Opening one lock opens the other. Both sides are paid.</span></li>
+        </ol>
+        <p class="tx-done" id="tx-done" hidden></p>
+      </div>
+
+      <div class="tx-tape">
+        <div class="tx-head"><b>Recent trades</b><span>sample</span></div>
+        <div class="tx-rows" id="tx-tape"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="settle"><div class="w">
+    <div><p class="n">01</p><h2>The chain settles the trade.</h2></div>
+    <div class="body">
+      <p>On an ordinary exchange you deposit first. From then on the exchange holds your coins, and a trade is a change in its private records. If it is hacked, frozen or goes bankrupt, your coins go with it.</p>
+      <p>On ZCrypt nobody takes a deposit. When two orders match, each person locks what they are selling on the chain. The locks are tied together: collecting one side releases the other. Either both people are paid or both get their coins back.</p>
+      <p class="punch">The trading engine only introduces buyer and seller. It never touches the money.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li>Each side opens a <b>hash-locked escrow</b> under the same SHA-256 hash. Only one side knows the secret behind it.</li>
+          <li>Each escrow names the other one exactly, with its coin, amount and keys, so a lock cannot be paired with anything else.</li>
+          <li>Claiming one escrow publishes the secret, which is what lets the other side claim theirs.</li>
+          <li>If the secret is never revealed, both escrows expire and each side is refunded.</li>
+          <li>A block takes one second and is final, so a trade is two locks and a claim: about two to three seconds.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="build"><div class="w">
+    <div><p class="n">02</p><h2>What that makes possible.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>An engine with no vault</h3><p>Anyone can run an order book like the one above. It needs no custody, no hot wallet and no withdrawal queue, because it never holds a coin.</p></div>
+        <div><h3>Any coin, one rule</h3><p>ZCRYPT, zBTC and every coin issued on ZCrypt trade the same way. A new coin can be traded the moment it exists.</p></div>
+        <div><h3>Bitcoin too</h3><p>The same lock works across to Bitcoin, which is how Bitcoin comes in and out as zBTC.</p></div>
+        <div><h3>In the wallet today</h3><p>The wallet can already swap one coin for another with someone directly. You agree a price, and the wallet does the locking and claiming.</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="limits"><div class="w">
+    <div><p class="n">03</p><h2>What is true today.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>There is no order book on the chain.</b> Prices are agreed off the chain, between two people or by an engine someone runs. ZCrypt does the settlement.</li>
+        <li><b>The chain is already launched, with swaps enabled.</b> The trading platform itself arrives in Q2 2027. The screen above is a sample of it.</li>
+        <li><b>A trade is less private than a payment.</b> The two locks are public: the amounts, the coin types and a one-time key for each side. The wallet uses a fresh key for every trade, so the locks do not point at your address. Hiding the amounts is planned.</li>
+        <li><b>A trade costs 0.01 or 0.02 ZCRYPT</b> in network fees, destroyed like every other fee. Nobody takes a cut.</li>
+      </ul>
+      <p class="small">The details are on the <a href="protocol.html#the-bitcoin-bridge">Protocol</a> page and in <a href="how.html#swap">How it works</a>.</p>
+    </div>
+  </div></section>
+</main>

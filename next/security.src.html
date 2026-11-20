@@ -1,0 +1,105 @@
+<!--META title="ZCrypt security: money that cannot be printed" desc="The rule that nobody can create ZCrypt coins is a machine-checked theorem about the live circuit. What is proven, what is tested, and what is not."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Security</p>
+    <h1>Money that <em>cannot be printed.</em></h1>
+    <p class="lede">The rule that nobody can create coins has been proven mathematically and checked by a computer, against the circuit that runs on the network.</p>
+  </div>
+
+  <section class="sx" id="problem"><div class="w">
+    <div><p class="n">The problem</p><h2>Hidden amounts can hide counterfeiting.</h2></div>
+    <div class="body">
+      <p>When amounts are hidden, nobody can add them up. So if the rule-checker has a bug, someone could create coins and no one would ever see it happen.</p>
+      <p>It has happened to private ledgers before, and it is the reason many people do not trust them.</p>
+      <p class="punch">Hidden money cannot be audited by adding it up. The rules have to be proven.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="proof"><div class="w">
+    <div><p class="n">The proof</p><h2>The rules are proven in Lean.</h2></div>
+    <div class="body">
+      <p>We wrote the live payment circuit down in Lean 4, a proof assistant: every one of the 40 places where the circuit asserts something. Then we proved that any payment the circuit accepts creates nothing and loses nothing.</p>
+      <p>Lean checks every logical step. If a single step were missing, the proof would not compile. It compiles, with nothing missing, and it is checked again on every change to the code.</p>
+      <div class="facts" style="grid-template-columns:repeat(2,1fr);margin-top:30px">
+        <div><b>40 / 40</b><span>constraints of the live circuit in the model</span></div>
+        <div><b>82</b><span>theorems, checked by machine</span></div>
+        <div><b>0</b><span>steps left unproven</span></div>
+        <div><b>Every change</b><span>re-runs the proofs and an audit of their axioms</span></div>
+      </div>
+      <h3>What the theorem says</h3>
+      <p>For any payment the network accepts:</p>
+      <ul>
+        <li>The coins going in equal the coins coming out plus the fee, as whole numbers, with no wrap-around trick.</li>
+        <li>Every coin spent really existed in the pool.</li>
+        <li>Every coin spent is marked spent, in exactly one way, so it cannot be spent twice.</li>
+        <li>Each new coin is locked to its value, its coin type and its owner.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <div class="w say"><p>Anyone can <em>run the proofs.</em></p><span>They are public and take about fifteen seconds on a laptop.</span></div>
+
+  <section class="sx" id="check"><div class="w">
+    <div><p class="n">Verify</p><h2>Check it yourself.</h2></div>
+    <div class="body">
+      <p>Install <a href="https://lean-lang.org/install/">Lean</a>, then:</p>
+<pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
+cd ZCrypt/formal
+lake build                  <span class="c"># checks every proof</span>
+lake env lean Axioms.lean   <span class="c"># fails on any unfinished proof or added assumption</span></code></pre>
+      <p>You can also watch the rules run on live payments. Open any transaction in the <a href="https://explorer.zcrypt.network">explorer</a> and it shows the seven checks that payment had to pass.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="layers"><div class="w">
+    <div><p class="n">Testing and review</p><h2>Tested and reviewed.</h2></div>
+    <div class="body">
+      <h3>Tested</h3>
+      <p>The payment rules exist twice: once as the circuit, and once as a short program a person can read. They are run against each other on valid and hostile inputs, so a difference between what the rules say and what the circuit enforces cannot hide.</p>
+      <p>Every change is also run on a real three-validator network that exercises each feature end to end, including the Bitcoin bridge.</p>
+      <h3>Reviewed</h3>
+      <p>Since July 2026 the full source has been through eight rounds of adversarial review: each one assumes the system is broken and tries to prove it.</p>
+      <div class="scroll"><table>
+        <tr><th>Date</th><th>Scope</th><th>Outcome</th></tr>
+        <tr><td>31 Jul 2026</td><td>Full system</td><td>Core cryptography found sound. A replayable unbond and an unsafe default build fixed.</td></tr>
+        <tr><td>3 Aug 2026</td><td>Full system, source only</td><td>No way found to mint, double-spend or fake membership. A front-runnable bridge mint fixed.</td></tr>
+        <tr><td>7 Sep 2026</td><td>After the bridge and asset registry</td><td>Five critical findings, all fixed the same day with tests.</td></tr>
+        <tr><td>9 Sep 2026</td><td>Fresh-eyes review</td><td>A stake front-run fixed. Protections against header floods and stale Bitcoin tips added.</td></tr>
+        <tr><td>14 Sep 2026</td><td>Full system</td><td>Escrow identity, wallet persistence and the bridge watcher hardened.</td></tr>
+        <tr><td>17 Oct 2026</td><td>Bridge and swaps</td><td>A chain-halt path and a wallet loss path fixed.</td></tr>
+        <tr><td>26 Oct 2026</td><td>The circuit, constraint by constraint</td><td>No soundness break. One linkage issue fixed, and the fix is now a theorem.</td></tr>
+        <tr><td>15 Nov 2026</td><td>Full system</td><td>A critical flaw in the bridge watcher and several wallet issues fixed. Further hardening is in progress.</td></tr>
+      </table></div>
+      <p>These reviews were carried out by the team that builds ZCrypt. An independent external audit is planned. The proofs and this history exist so that an auditor starts from a precise statement of what is claimed.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="not-proven"><div class="w">
+    <div><p class="n">Limits</p><h2>What is not proven.</h2></div>
+    <div class="body">
+      <p>The proofs cover one specific claim. These are the things they do not cover.</p>
+      <ul>
+        <li><b>The building blocks are assumptions.</b> The hash function, the proof system and the <a href="post-quantum.html">post-quantum encryption</a> are assumed secure, as they are in every deployed system. The theorems prove the rules and the arithmetic, not the primitives.</li>
+        <li><b>The model is written by hand.</b> It was transcribed from the code by reading it. A test fails if the circuit's layout drifts from the model, but the circuit model is not yet generated from the code automatically. Only a small core of the readable rule program, its range and balance checks, is extracted from the Rust by tools, and the no-inflation theorem is proved against that extract as well.</li>
+        <li><b>The proofs cover the money rules.</b> Consensus, networking, the wallet and the bridge are tested and reviewed, not proven.</li>
+        <li><b>The proofs are about counterfeiting, not privacy.</b> Privacy rests on the proof system's zero-knowledge property and on the size of the crowd.</li>
+        <li><b>The network is young.</b> It runs on <span data-live="valsword"><!--VALS--></span> validators today, with <span data-live="staked"><!--STAKED--></span> ZCRYPT staked between them (the largest stake is <span data-live="topstake"><!--TOPSHARE--></span>% of the total). While the set is this small, the foundation's validator carries extra voting weight so the chain keeps running if another validator goes offline. That weight is removed automatically once other validators have staked 1,000,000 ZCRYPT between them with none holding more than a third. Anyone with 10,000 ZCRYPT can <a href="docs.html#validator">run one</a>.</li>
+      </ul>
+    </div>
+  </div></section>
+
+  <section class="sx" id="bounty"><div class="w">
+    <div><p class="n">Bug bounty</p><h2>Rewards for finding flaws.</h2></div>
+    <div class="body">
+      <p>Valid reports are rewarded in ZCRYPT. The amounts are maximums.</p>
+      <div class="scroll"><table>
+        <tr><th>Severity</th><th>Examples</th><th>Up to</th></tr>
+        <tr><td>Critical</td><td>Creating coins, spending twice, taking someone's funds, unbacked zBTC, linking a private payment to a person or amount</td><td>25,000</td></tr>
+        <tr><td>High</td><td>Halting the chain, destroying or freezing someone's funds or rewards</td><td>5,000</td></tr>
+        <tr><td>Medium</td><td>Leaking wallet secrets from a device, losses that need unusual conditions</td><td>1,000</td></tr>
+        <tr><td>Low</td><td>A real weakness with limited impact</td><td>100</td></tr>
+      </table></div>
+      <p>Report privately to <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>. Test on your own network, not on mainnet.</p>
+    </div>
+  </div></section>
+</main>

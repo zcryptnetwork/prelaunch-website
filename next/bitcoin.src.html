@@ -1,0 +1,88 @@
+<!--META title="Bitcoin on ZCrypt: bring it in, take it back out" desc="Lock Bitcoin and receive zBTC, a private coin backed one for one. The network checks every deposit against Bitcoin's own blocks. Redeem it for Bitcoin whenever you like."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Bitcoin, in and out</p>
+    <h1>Your Bitcoin, <em>made private.</em></h1>
+    <p class="lede">Bring Bitcoin into ZCrypt and it becomes zBTC: one for one, backed by the Bitcoin you locked. Send it like a photo, with the sender, receiver and amount hidden. Turn it back into Bitcoin whenever you like.</p>
+  </div>
+
+  <section class="sx" id="what"><div class="w">
+    <div><p class="n">01</p><h2>Bitcoin is public. zBTC is not.</h2></div>
+    <div class="body">
+      <p>Every Bitcoin payment is visible to everyone, forever: who paid, who was paid, and how much. That is how Bitcoin stays honest, and it is also why your balance and your history can be followed by anyone who learns one of your addresses.</p>
+      <p>zBTC is Bitcoin's value inside ZCrypt's private pool. One zBTC is backed by one Bitcoin held in the reserve. While it is zBTC, it moves the way ZCRYPT does: as a file, to an address or by QR code, in about a second, with nothing about the payment on show.</p>
+      <div class="facts">
+        <div><b>1 : 1</b><span>one zBTC for every Bitcoin locked</span></div>
+        <div><b>0.1%</b><span>taken when Bitcoin comes in, paid to stakers</span></div>
+        <div><b>0</b><span>ZCRYPT needed to bring Bitcoin in</span></div>
+        <div><b>21M</b><span>zBTC at most, the same limit as Bitcoin</span></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="in"><div class="w" style="display:block">
+    <p class="n">02</p>
+    <h2>Bitcoin in.</h2>
+    <div class="shots two">
+      <figure>
+        <img src="btc/in.jpg" alt="The wallet's Bridge tab showing 0.25 BTC, with 0.05 entered to shield" loading="lazy" width="1296" height="1339">
+        <figcaption><b>1. Enter an amount.</b> Open the Bridge tab, type how much Bitcoin to bring in and press Shield. The wallet locks that Bitcoin on the Bitcoin network. You do not copy addresses or sign anything by hand.</figcaption>
+      </figure>
+      <figure>
+        <img src="btc/maturing.jpg" alt="The wallet showing 0.05 zBTC maturing after the deposit" loading="lazy" width="1296" height="1657">
+        <figcaption><b>2. The network checks it.</b> Every ZCrypt validator checks your deposit against Bitcoin's own blocks before any zBTC is created. The new zBTC then waits until the deposit is buried deep enough in Bitcoin that it cannot be undone, which can take a few hours.</figcaption>
+      </figure>
+    </div>
+    <p>After that the zBTC is in your wallet and spendable. If anything stalls before the zBTC is created, the lock on your Bitcoin expires and the wallet takes it back for you.</p>
+  </div></section>
+
+  <section class="sx" id="out"><div class="w" style="display:block">
+    <p class="n">03</p>
+    <h2>Bitcoin out.</h2>
+    <div class="shots two">
+      <figure>
+        <img src="btc/out.jpg" alt="The wallet's Redeem tab with 0.05 zBTC entered" loading="lazy" width="1296" height="1375">
+        <figcaption><b>1. Enter an amount.</b> Switch to Redeem, type how much zBTC to turn back into Bitcoin and press Redeem. The wallet locks that zBTC on ZCrypt.</figcaption>
+      </figure>
+      <figure>
+        <img src="btc/done.jpg" alt="The wallet after the redeem, showing 0.25 BTC and 0 zBTC" loading="lazy" width="1296" height="1375">
+        <figcaption><b>2. Bitcoin arrives.</b> The reserve pays the same amount of Bitcoin to your wallet, and the zBTC is destroyed so the two always match. If the Bitcoin never comes, the lock expires and your zBTC returns.</figcaption>
+      </figure>
+    </div>
+    <p class="small">Screens from the desktop wallet, with sample data.</p>
+  </div></section>
+
+  <section class="sx" id="safe"><div class="w">
+    <div><p class="n">04</p><h2>Why you can rely on it.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>Bitcoin decides, not a committee</h3><p>No signer votes on whether your deposit happened. ZCrypt runs a Bitcoin light client inside consensus, and a mint is accepted only with proof that the deposit is in a Bitcoin block.</p></div>
+        <div><h3>Both sides or neither</h3><p>Each direction is an atomic swap. The Bitcoin lock and the ZCrypt lock open with the same secret, so one cannot complete without the other.</p></div>
+        <div><h3>Always backed</h3><p>zBTC is created only against locked Bitcoin and destroyed when Bitcoin is paid out. The chain counts the supply in the open, and it can never pass 21 million.</p></div>
+        <div><h3>The reserve key</h3><p>The Bitcoin reserve is being placed under an MPC key, created in a key ceremony, so that no single person or machine ever holds the whole key.</p></div>
+      </div>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li><b>In:</b> the wallet funds a P2WSH hash time-locked contract on Bitcoin. Anyone can relay Bitcoin block headers to ZCrypt; validators check the proof of work and the chain linkage, then verify a Merkle inclusion proof (SPV) of the deposit.</li>
+          <li>A signature from the depositor's own Bitcoin key names the ZCrypt recipient, so nobody who sees the public deposit can claim the zBTC for themselves.</li>
+          <li>New zBTC is held out of the spendable pool until the deposit matures, so a Bitcoin reorganisation cannot leave unbacked zBTC in circulation.</li>
+          <li><b>Out:</b> the wallet locks zBTC in a burn escrow under a SHA-256 hash lock. The reserve funds a Bitcoin payment under the same lock. Claiming the Bitcoin reveals the secret that finalises the burn.</li>
+          <li>Both locks carry timeouts. An unfinished swap refunds each side on its own chain.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="know"><div class="w">
+    <div><p class="n">05</p><h2>What to know first.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>The bridge is in the desktop wallet,</b> under the Bridge tab. zBTC can be held and sent from the phone wallet too.</li>
+        <li><b>Coming in and going out are public moments.</b> A deposit and a withdrawal are ordinary Bitcoin transactions, and the amount entering or leaving the pool is visible. What you do with zBTC in between is private.</li>
+        <li><b>Use a fresh Bitcoin address</b> for deposits and withdrawals if you do not want them tied to your other Bitcoin history.</li>
+        <li><b>Fees.</b> Bringing Bitcoin in costs Bitcoin's own network fee plus 0.1% of the amount, which is paid to ZCRYPT stakers in zBTC. Taking it out costs Bitcoin's network fee and 0.01 ZCRYPT.</li>
+        <li><b>Bitcoin's own signatures are not post-quantum.</b> zBTC inside the pool is protected the same way as every ZCrypt coin. <a href="post-quantum.html">How ZCrypt is post-quantum</a></li>
+      </ul>
+      <p class="small">More in <a href="protocol.html#the-bitcoin-bridge">Protocol</a> and the <a href="privacy-model.html">privacy model</a>. <a href="wallet.html">Get the wallet</a></p>
+    </div>
+  </div></section>
+</main>

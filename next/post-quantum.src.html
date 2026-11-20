@@ -1,0 +1,89 @@
+<!--META title="ZCrypt and quantum computers: why the coins are post-quantum" desc="What a quantum computer breaks, and why owning, spending, proving and encrypting a ZCrypt coin use none of it: hash-based proofs and ownership, ML-KEM notes, ML-DSA issuance. With the exact security figures and the parts that are not post-quantum."-->
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Post-quantum</p>
+    <h1>Post-quantum <em>from the first block.</em></h1>
+    <p class="lede">ZCrypt payments use STARK proofs, hash-based ownership, ML-KEM encryption and ML-DSA signatures. There is no elliptic curve anywhere in a payment, so there is nothing in one for a quantum computer to break.</p>
+  </div>
+
+  <section class="sx" id="stack"><div class="w" style="display:block">
+    <p class="n">The stack</p>
+    <h2>Four post-quantum parts. No elliptic curves.</h2>
+    <div class="pq">
+      <div><b>STARK</b><i>Proofs</i><span>Every payment is proven with a hash-based zero-knowledge proof. No trusted setup, no pairing, no curve.</span></div>
+      <div><b>Poseidon2</b><i>Ownership and coins</i><span>You own a coin by knowing a hash preimage. Coins, spends and the tree are hashes. A payment carries no signature.</span></div>
+      <div><b>ML-KEM-768</b><i>Encryption</i><span>Payment details are encrypted with the NIST post-quantum standard, FIPS 203.</span></div>
+      <div><b>ML-DSA-65</b><i>Signatures</i><span>Coin issuers sign with the NIST post-quantum standard, FIPS 204.</span></div>
+    </div>
+    <p class="punch">Bitcoin, Ethereum, Zcash and Monero rest on elliptic curves. A large quantum computer breaks elliptic curves. ZCrypt payments do not use them.</p>
+  </div></section>
+
+  <section class="sx" id="threat"><div class="w">
+    <div><p class="n">01</p><h2>What a quantum computer breaks.</h2></div>
+    <div class="body">
+      <p>Two quantum algorithms matter for money.</p>
+      <ul>
+        <li><b>Shor's algorithm</b> solves the mathematics behind elliptic-curve and RSA cryptography outright. With a large enough machine, a public key gives up its private key. Bitcoin, Ethereum, Zcash and Monero all rest on elliptic curves: for signatures, and in the private ones for hiding amounts and building proofs.</li>
+        <li><b>Grover's algorithm</b> speeds up brute-force search. It does not break a hash function; it halves its strength in bits. A hash that is wide enough stays safe.</li>
+      </ul>
+      <p class="punch">So the rule is simple: use hashes that are wide enough, and nothing built on elliptic curves.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="parts"><div class="w">
+    <div><p class="n">02</p><h2>What ZCrypt uses instead.</h2></div>
+    <div class="body">
+      <div class="scroll"><table class="even">
+        <tr><th>What</th><th>How ZCrypt does it</th><th>Why a quantum computer does not help</th></tr>
+        <tr><td>Owning a coin</td><td>You know a secret whose hash is inside the coin. Spending proves you know it. There is no signature anywhere in a payment.</td><td>Finding the secret means inverting a hash. Grover leaves about 124 bits of work.</td></tr>
+        <tr><td>Hiding a coin</td><td>A coin on the ledger is a Poseidon2 hash of its amount, type, owner and a random 248-bit blind.</td><td>No elliptic-curve commitment to break. Guessing the blind is a 124-bit search even with Grover.</td></tr>
+        <tr><td>Proving the rules</td><td>A STARK: a zero-knowledge proof built only from hash functions, with no trusted setup.</td><td>There is no curve, no pairing and no setup secret in it for Shor's algorithm to attack.</td></tr>
+        <tr><td>Telling the recipient</td><td>The coin's details are encrypted to the recipient with ML-KEM-768, the NIST standard FIPS 203.</td><td>ML-KEM is a lattice scheme, chosen by NIST to withstand quantum attack.</td></tr>
+        <tr><td>Issuing a coin</td><td>A coin's issuers sign each mint with ML-DSA-65, the NIST standard FIPS 204, as an M-of-N group.</td><td>ML-DSA is the lattice signature that goes with ML-KEM.</td></tr>
+      </table></div>
+      <p>None of this was added later. The chain started this way on 28 October 2026. Every coin that has ever existed on ZCrypt is post-quantum, and there is no migration to wait for.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="later"><div class="w">
+    <div><p class="n">03</p><h2>Record now, decrypt later.</h2></div>
+    <div class="body">
+      <p>A blockchain is public and permanent. Anyone can copy it today and keep the copy until better machines exist. On a chain that hides payments with elliptic curves, that copy becomes readable the day a large quantum computer runs: past amounts and past recipients, for every payment ever made.</p>
+      <p>This is why the encryption has to be post-quantum from the first block, not from some later upgrade. A payment recorded on ZCrypt today is encrypted with ML-KEM and committed with hashes, so the copy stays closed.</p>
+    </div>
+  </div></section>
+
+  <section class="sx" id="figures"><div class="w">
+    <div><p class="n">04</p><h2>The exact figures.</h2></div>
+    <div class="body">
+      <div class="scroll"><table class="even">
+        <tr><th>Part</th><th>Today's computers</th><th>Quantum computers</th></tr>
+        <tr><td>Hash output</td><td colspan="2">8 field elements, about 247 bits</td></tr>
+        <tr><td>Inverting a hash (taking a coin, opening a commitment)</td><td>about 2<sup>247</sup> steps</td><td>about 2<sup>124</sup> steps (Grover)</td></tr>
+        <tr><td>Finding two inputs with the same hash</td><td>about 2<sup>124</sup> steps</td><td>about 2<sup>82</sup> steps in theory, and only with quantum memory of the same size. Under most cost models the practical figure stays near 2<sup>124</sup></td></tr>
+        <tr><td>Forging a proof</td><td>132 bits proven, 244 bits conjectured</td><td>No quantum analysis of these bounds exists yet. The proof uses only hashes</td></tr>
+        <tr><td>Note encryption</td><td colspan="2">ML-KEM-768, NIST security category 3 (comparable to AES-192)</td></tr>
+        <tr><td>Issuer signatures</td><td colspan="2">ML-DSA-65, NIST security category 3</td></tr>
+      </table></div>
+      <p>We claim about 124 bits against a quantum attacker trying to invert a hash, which is the attack that would take a coin. We do not claim 128-bit post-quantum collision resistance. These figures treat the hash function as ideal; they are not a proven lower bound on Poseidon2 itself.</p>
+      <details class="tech" open><summary>Check the figures yourself</summary><div>
+        <p>The node prints every one of these numbers from its compiled constants:</p>
+<pre><code>zcrypt --proof-params</code></pre>
+        <p>Proofs use FRI with 112 queries and 20 bits of proof of work over the BabyBear field, with Poseidon2 as the only hash.</p>
+      </div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="not"><div class="w">
+    <div><p class="n">05</p><h2>What is not post-quantum.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>Block signing.</b> Validators sign blocks with ed25519, as every CometBFT chain does. A quantum attacker who broke it could disrupt or stall block production. It could not forge a coin, spend someone else's, or read a payment, because none of those depend on a signature.</li>
+        <li><b>Bitcoin itself.</b> Bitcoin held in the bridge reserve is protected by Bitcoin's own secp256k1 signatures, like all Bitcoin.</li>
+        <li><b>Two bridge signatures.</b> When Bitcoin comes in, a secp256k1 signature from the depositor chooses who receives the zBTC, and another kind rotates the reserve key. A quantum forgery of those keys could redirect a deposit being minted or rotate the reserve. It could not create zBTC without a real Bitcoin deposit.</li>
+        <li><b>The building blocks are assumptions.</b> Poseidon2, ML-KEM and ML-DSA are believed secure against quantum attack. Nobody can prove that about any cryptography, classical or post-quantum.</li>
+      </ul>
+      <p class="small">More in <a href="security.html">Security</a>, the <a href="privacy-model.html">privacy model</a> and the <a href="whitepaper.pdf">whitepaper</a>.</p>
+    </div>
+  </div></section>
+</main>

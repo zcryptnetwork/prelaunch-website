@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitcoin on ZCrypt: bring it in, take it back out</title>
+  <meta name="description" content="Lock Bitcoin and receive zBTC, a private coin backed one for one. The network checks every deposit against Bitcoin's own blocks. Redeem it for Bitcoin whenever you like.">
+  <meta name="theme-color" content="#06080f">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="brand/fonts.css">
+  <link rel="stylesheet" href="brand/tokens.css">
+  <link rel="stylesheet" href="next.css?v=11201610">
+  <link rel="canonical" href="https://zcrypt.network/bitcoin.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:title" content="Bitcoin on ZCrypt: bring it in, take it back out">
+  <meta property="og:description" content="Lock Bitcoin and receive zBTC, a private coin backed one for one. The network checks every deposit against Bitcoin's own blocks. Redeem it for Bitcoin whenever you like.">
+  <meta property="og:url" content="https://zcrypt.network/bitcoin.html">
+  <meta property="og:image" content="https://zcrypt.network/og/bitcoin.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Bitcoin on ZCrypt: bring it in, take it back out">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zcryptnetwork">
+  <meta name="twitter:title" content="Bitcoin on ZCrypt: bring it in, take it back out">
+  <meta name="twitter:description" content="Lock Bitcoin and receive zBTC, a private coin backed one for one. The network checks every deposit against Bitcoin's own blocks. Redeem it for Bitcoin whenever you like.">
+  <meta name="twitter:image" content="https://zcrypt.network/og/bitcoin.png">
+</head>
+<body class="nxp">
+  <canvas id="fog" aria-hidden="true"></canvas>
+  <header class="nx-top" id="top">
+    <a class="nx-brand" href="index.html" aria-label="ZCrypt home"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></a>
+    <nav class="nx-nav" aria-label="Main">
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="nx-get" href="wallet.html">Get the wallet</a>
+      <details class="nx-menu"><summary aria-label="Menu"><i></i></summary><div>
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="t" href="privacy-model.html">Privacy model</a></div></details>
+    </nav>
+  </header>
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Bitcoin, in and out</p>
+    <h1>Your Bitcoin, <em>made private.</em></h1>
+    <p class="lede">Bring Bitcoin into ZCrypt and it becomes zBTC: one for one, backed by the Bitcoin you locked. Send it like a photo, with the sender, receiver and amount hidden. Turn it back into Bitcoin whenever you like.</p>
+  </div>
+
+  <section class="sx" id="what"><div class="w">
+    <div><p class="n">01</p><h2>Bitcoin is public. zBTC is not.</h2></div>
+    <div class="body">
+      <p>Every Bitcoin payment is visible to everyone, forever: who paid, who was paid, and how much. That is how Bitcoin stays honest, and it is also why your balance and your history can be followed by anyone who learns one of your addresses.</p>
+      <p>zBTC is Bitcoin's value inside ZCrypt's private pool. One zBTC is backed by one Bitcoin held in the reserve. While it is zBTC, it moves the way ZCRYPT does: as a file, to an address or by QR code, in about a second, with nothing about the payment on show.</p>
+      <div class="facts">
+        <div><b>1 : 1</b><span>one zBTC for every Bitcoin locked</span></div>
+        <div><b>0.1%</b><span>taken when Bitcoin comes in, paid to stakers</span></div>
+        <div><b>0</b><span>ZCRYPT needed to bring Bitcoin in</span></div>
+        <div><b>21M</b><span>zBTC at most, the same limit as Bitcoin</span></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="in"><div class="w" style="display:block">
+    <p class="n">02</p>
+    <h2>Bitcoin in.</h2>
+    <div class="shots two">
+      <figure>
+        <img src="btc/in.jpg" alt="The wallet's Bridge tab showing 0.25 BTC, with 0.05 entered to shield" loading="lazy" width="1296" height="1339">
+        <figcaption><b>1. Enter an amount.</b> Open the Bridge tab, type how much Bitcoin to bring in and press Shield. The wallet locks that Bitcoin on the Bitcoin network. You do not copy addresses or sign anything by hand.</figcaption>
+      </figure>
+      <figure>
+        <img src="btc/maturing.jpg" alt="The wallet showing 0.05 zBTC maturing after the deposit" loading="lazy" width="1296" height="1657">
+        <figcaption><b>2. The network checks it.</b> Every ZCrypt validator checks your deposit against Bitcoin's own blocks before any zBTC is created. The new zBTC then waits until the deposit is buried deep enough in Bitcoin that it cannot be undone, which can take a few hours.</figcaption>
+      </figure>
+    </div>
+    <p>After that the zBTC is in your wallet and spendable. If anything stalls before the zBTC is created, the lock on your Bitcoin expires and the wallet takes it back for you.</p>
+  </div></section>
+
+  <section class="sx" id="out"><div class="w" style="display:block">
+    <p class="n">03</p>
+    <h2>Bitcoin out.</h2>
+    <div class="shots two">
+      <figure>
+        <img src="btc/out.jpg" alt="The wallet's Redeem tab with 0.05 zBTC entered" loading="lazy" width="1296" height="1375">
+        <figcaption><b>1. Enter an amount.</b> Switch to Redeem, type how much zBTC to turn back into Bitcoin and press Redeem. The wallet locks that zBTC on ZCrypt.</figcaption>
+      </figure>
+      <figure>
+        <img src="btc/done.jpg" alt="The wallet after the redeem, showing 0.25 BTC and 0 zBTC" loading="lazy" width="1296" height="1375">
+        <figcaption><b>2. Bitcoin arrives.</b> The reserve pays the same amount of Bitcoin to your wallet, and the zBTC is destroyed so the two always match. If the Bitcoin never comes, the lock expires and your zBTC returns.</figcaption>
+      </figure>
+    </div>
+    <p class="small">Screens from the desktop wallet, with sample data.</p>
+  </div></section>
+
+  <section class="sx" id="safe"><div class="w">
+    <div><p class="n">04</p><h2>Why you can rely on it.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>Bitcoin decides, not a committee</h3><p>No signer votes on whether your deposit happened. ZCrypt runs a Bitcoin light client inside consensus, and a mint is accepted only with proof that the deposit is in a Bitcoin block.</p></div>
+        <div><h3>Both sides or neither</h3><p>Each direction is an atomic swap. The Bitcoin lock and the ZCrypt lock open with the same secret, so one cannot complete without the other.</p></div>
+        <div><h3>Always backed</h3><p>zBTC is created only against locked Bitcoin and destroyed when Bitcoin is paid out. The chain counts the supply in the open, and it can never pass 21 million.</p></div>
+        <div><h3>The reserve key</h3><p>The Bitcoin reserve is being placed under an MPC key, created in a key ceremony, so that no single person or machine ever holds the whole key.</p></div>
+      </div>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li><b>In:</b> the wallet funds a P2WSH hash time-locked contract on Bitcoin. Anyone can relay Bitcoin block headers to ZCrypt; validators check the proof of work and the chain linkage, then verify a Merkle inclusion proof (SPV) of the deposit.</li>
+          <li>A signature from the depositor's own Bitcoin key names the ZCrypt recipient, so nobody who sees the public deposit can claim the zBTC for themselves.</li>
+          <li>New zBTC is held out of the spendable pool until the deposit matures, so a Bitcoin reorganisation cannot leave unbacked zBTC in circulation.</li>
+          <li><b>Out:</b> the wallet locks zBTC in a burn escrow under a SHA-256 hash lock. The reserve funds a Bitcoin payment under the same lock. Claiming the Bitcoin reveals the secret that finalises the burn.</li>
+          <li>Both locks carry timeouts. An unfinished swap refunds each side on its own chain.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="know"><div class="w">
+    <div><p class="n">05</p><h2>What to know first.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>The bridge is in the desktop wallet,</b> under the Bridge tab. zBTC can be held and sent from the phone wallet too.</li>
+        <li><b>Coming in and going out are public moments.</b> A deposit and a withdrawal are ordinary Bitcoin transactions, and the amount entering or leaving the pool is visible. What you do with zBTC in between is private.</li>
+        <li><b>Use a fresh Bitcoin address</b> for deposits and withdrawals if you do not want them tied to your other Bitcoin history.</li>
+        <li><b>Fees.</b> Bringing Bitcoin in costs Bitcoin's own network fee plus 0.1% of the amount, which is paid to ZCRYPT stakers in zBTC. Taking it out costs Bitcoin's network fee and 0.01 ZCRYPT.</li>
+        <li><b>Bitcoin's own signatures are not post-quantum.</b> zBTC inside the pool is protected the same way as every ZCrypt coin. <a href="post-quantum.html">How ZCrypt is post-quantum</a></li>
+      </ul>
+      <p class="small">More in <a href="protocol.html#the-bitcoin-bridge">Protocol</a> and the <a href="privacy-model.html">privacy model</a>. <a href="wallet.html">Get the wallet</a></p>
+    </div>
+  </div></section>
+</main>
+  <footer class="nx-foot">
+    <div class="cta">
+      <p>Send money <em>like a photo.</em></p>
+      <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="cols">
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
+      <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
+      <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
+    </div>
+    <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
+  </footer>
+  <script src="fog.js?v=11201610"></script>
+  <script src="demo.js?v=11201610"></script>
+</body>
+</html>

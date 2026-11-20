@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZCrypt trading: the chain settles the trade</title>
+  <meta name="description" content="A sample order book, and how ZCrypt settles a trade between two people with no exchange holding the money: both sides lock, both sides are paid, or neither is.">
+  <meta name="theme-color" content="#06080f">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="brand/fonts.css">
+  <link rel="stylesheet" href="brand/tokens.css">
+  <link rel="stylesheet" href="next.css?v=11201610">
+  <link rel="canonical" href="https://zcrypt.network/trade.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:title" content="ZCrypt trading: the chain settles the trade">
+  <meta property="og:description" content="A sample order book, and how ZCrypt settles a trade between two people with no exchange holding the money: both sides lock, both sides are paid, or neither is.">
+  <meta property="og:url" content="https://zcrypt.network/trade.html">
+  <meta property="og:image" content="https://zcrypt.network/og/trade.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ZCrypt trading: the chain settles the trade">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zcryptnetwork">
+  <meta name="twitter:title" content="ZCrypt trading: the chain settles the trade">
+  <meta name="twitter:description" content="A sample order book, and how ZCrypt settles a trade between two people with no exchange holding the money: both sides lock, both sides are paid, or neither is.">
+  <meta name="twitter:image" content="https://zcrypt.network/og/trade.png">
+</head>
+<body class="nxp">
+  <canvas id="fog" aria-hidden="true"></canvas>
+  <header class="nx-top" id="top">
+    <a class="nx-brand" href="index.html" aria-label="ZCrypt home"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></a>
+    <nav class="nx-nav" aria-label="Main">
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="nx-get" href="wallet.html">Get the wallet</a>
+      <details class="nx-menu"><summary aria-label="Menu"><i></i></summary><div>
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="t" href="privacy-model.html">Privacy model</a></div></details>
+    </nav>
+  </header>
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Trading</p>
+    <h1>No exchange <em>holds your money.</em></h1>
+    <p class="lede">An exchange does two jobs: it matches buyers with sellers, and it holds everyone's money while they trade. ZCrypt does the second job itself. A trade settles on the chain, directly between the two people, in a few seconds.</p>
+  </div>
+
+  <section class="sx" id="engine"><div class="w" style="display:block">
+    <p class="n">Sample</p>
+    <h2>What a trading screen on ZCrypt looks like.</h2>
+    <p class="small tx-note">This is a demonstration with made-up orders and prices. Any asset can trade against any other. Choose the From and To assets, then press Buy or Sell to watch a trade settle.</p>
+    <p class="tx-status"><b>The chain is live, with swaps enabled.</b> The trading platform arrives in Q2 2027.</p>
+
+    <div class="tx-pick">
+      <label>From<select id="tx-base" aria-label="From asset"></select></label>
+      <button type="button" id="tx-flip" aria-label="Swap the two coins">⇄</button>
+      <label>To<select id="tx-quote" aria-label="To asset"></select></label>
+      <div class="tx-mk" id="tx-mk" aria-label="Popular markets"></div>
+    </div>
+    <div class="tx" id="tx" aria-label="Sample trading screen">
+      <div class="tx-book">
+        <div class="tx-head"><b id="tx-pair">zBTC / zUSDT</b><span>Order book · sample</span></div>
+        <div class="tx-cols"><span>Price (<i data-quote>zUSDT</i>)</span><span>Amount (<i data-base>zBTC</i>)</span><span>Total</span></div>
+        <div class="tx-rows asks" id="tx-asks"></div>
+        <div class="tx-mid"><b id="tx-last"></b><span>last price</span></div>
+        <div class="tx-rows bids" id="tx-bids"></div>
+      </div>
+
+      <div class="tx-side">
+        <div class="tx-ticket">
+          <div class="tx-head"><b>Place an order</b><span>sample</span></div>
+          <label>Amount<span><input id="tx-amt" type="number" min="0" step="any" value="1" inputmode="decimal"> <i data-base>zBTC</i></span></label>
+          <div class="tx-line"><span>Price</span><b id="tx-px"></b></div>
+          <div class="tx-line"><span>You pay or receive</span><b id="tx-tot"></b></div>
+          <div class="tx-line"><span>Network fee</span><b>0.01 ZCRYPT</b></div>
+          <div class="tx-btns"><button type="button" class="buy" id="tx-buy">Buy</button><button type="button" class="sell" id="tx-sell">Sell</button></div>
+        </div>
+
+        <ol class="tx-steps" id="tx-steps" aria-live="polite">
+          <li><b>Matched</b><span>The engine pairs your order with another. Nothing has moved yet.</span></li>
+          <li><b>You lock</b><span>Your coins go into a lock on the chain that only the other side can open.</span></li>
+          <li><b>They lock</b><span>Their coins go into a matching lock that only you can open.</span></li>
+          <li><b>Settled</b><span>Opening one lock opens the other. Both sides are paid.</span></li>
+        </ol>
+        <p class="tx-done" id="tx-done" hidden></p>
+      </div>
+
+      <div class="tx-tape">
+        <div class="tx-head"><b>Recent trades</b><span>sample</span></div>
+        <div class="tx-rows" id="tx-tape"></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="settle"><div class="w">
+    <div><p class="n">01</p><h2>The chain settles the trade.</h2></div>
+    <div class="body">
+      <p>On an ordinary exchange you deposit first. From then on the exchange holds your coins, and a trade is a change in its private records. If it is hacked, frozen or goes bankrupt, your coins go with it.</p>
+      <p>On ZCrypt nobody takes a deposit. When two orders match, each person locks what they are selling on the chain. The locks are tied together: collecting one side releases the other. Either both people are paid or both get their coins back.</p>
+      <p class="punch">The trading engine only introduces buyer and seller. It never touches the money.</p>
+      <details class="tech" open><summary>Under the hood</summary><div>
+        <ul>
+          <li>Each side opens a <b>hash-locked escrow</b> under the same SHA-256 hash. Only one side knows the secret behind it.</li>
+          <li>Each escrow names the other one exactly, with its coin, amount and keys, so a lock cannot be paired with anything else.</li>
+          <li>Claiming one escrow publishes the secret, which is what lets the other side claim theirs.</li>
+          <li>If the secret is never revealed, both escrows expire and each side is refunded.</li>
+          <li>A block takes one second and is final, so a trade is two locks and a claim: about two to three seconds.</li>
+        </ul></div></details>
+    </div>
+  </div></section>
+
+  <section class="sx" id="build"><div class="w">
+    <div><p class="n">02</p><h2>What that makes possible.</h2></div>
+    <div class="body">
+      <div class="cards">
+        <div><h3>An engine with no vault</h3><p>Anyone can run an order book like the one above. It needs no custody, no hot wallet and no withdrawal queue, because it never holds a coin.</p></div>
+        <div><h3>Any coin, one rule</h3><p>ZCRYPT, zBTC and every coin issued on ZCrypt trade the same way. A new coin can be traded the moment it exists.</p></div>
+        <div><h3>Bitcoin too</h3><p>The same lock works across to Bitcoin, which is how Bitcoin comes in and out as zBTC.</p></div>
+        <div><h3>In the wallet today</h3><p>The wallet can already swap one coin for another with someone directly. You agree a price, and the wallet does the locking and claiming.</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="sx" id="limits"><div class="w">
+    <div><p class="n">03</p><h2>What is true today.</h2></div>
+    <div class="body">
+      <ul>
+        <li><b>There is no order book on the chain.</b> Prices are agreed off the chain, between two people or by an engine someone runs. ZCrypt does the settlement.</li>
+        <li><b>The chain is already launched, with swaps enabled.</b> The trading platform itself arrives in Q2 2027. The screen above is a sample of it.</li>
+        <li><b>A trade is less private than a payment.</b> The two locks are public: the amounts, the coin types and a one-time key for each side. The wallet uses a fresh key for every trade, so the locks do not point at your address. Hiding the amounts is planned.</li>
+        <li><b>A trade costs 0.01 or 0.02 ZCRYPT</b> in network fees, destroyed like every other fee. Nobody takes a cut.</li>
+      </ul>
+      <p class="small">The details are on the <a href="protocol.html#the-bitcoin-bridge">Protocol</a> page and in <a href="how.html#swap">How it works</a>.</p>
+    </div>
+  </div></section>
+</main>
+  <footer class="nx-foot">
+    <div class="cta">
+      <p>Send money <em>like a photo.</em></p>
+      <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="cols">
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
+      <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
+      <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
+    </div>
+    <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
+  </footer>
+  <script src="fog.js?v=11201610"></script>
+  <script src="demo.js?v=11201610"></script>
+  <script src="trade.js?v=11201610"></script>
+</body>
+</html>

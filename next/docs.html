@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZCrypt developer docs</title>
+  <meta name="description" content="Query the chain, run a validator, start a local network and build the wallet. Step by step.">
+  <meta name="theme-color" content="#06080f">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../brand/fonts.css">
+  <link rel="stylesheet" href="../brand/tokens.css">
+  <link rel="stylesheet" href="next.css?v=11201610">
+  <link rel="canonical" href="https://zcrypt.network/docs.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ZCrypt">
+  <meta property="og:title" content="ZCrypt developer docs">
+  <meta property="og:description" content="Query the chain, run a validator, start a local network and build the wallet. Step by step.">
+  <meta property="og:url" content="https://zcrypt.network/docs.html">
+  <meta property="og:image" content="https://zcrypt.network/og/docs.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ZCrypt developer docs">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@zcryptnetwork">
+  <meta name="twitter:title" content="ZCrypt developer docs">
+  <meta name="twitter:description" content="Query the chain, run a validator, start a local network and build the wallet. Step by step.">
+  <meta name="twitter:image" content="https://zcrypt.network/og/docs.png">
+</head>
+<body class="nxp">
+  <canvas id="fog" aria-hidden="true"></canvas>
+  <header class="nx-top" id="top">
+    <a class="nx-brand" href="index.html" aria-label="ZCrypt home"><svg width="22" height="22" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 10h22L9 30h22" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ZCrypt</span></a>
+    <nav class="nx-nav" aria-label="Main">
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t here" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="nx-get" href="wallet.html">Get the wallet</a>
+      <details class="nx-menu"><summary aria-label="Menu"><i></i></summary><div>
+      <a class="t" href="how.html">How it works</a>
+      <a class="t" href="security.html">Security</a>
+      <a class="t" href="tokenomics.html">Tokenomics</a>
+      <a class="t here" href="docs.html">Docs</a>
+      <a class="t" href="whitepaper.pdf">Whitepaper</a>
+      <a class="t" href="https://explorer.zcrypt.network">Explorer</a>
+      <a class="t" href="https://github.com/echelonlabsresearch/ZCrypt">GitHub</a>
+      <a class="t" href="privacy-model.html">Privacy model</a></div></details>
+    </nav>
+  </header>
+<main id="content">
+  <div class="w ph">
+    <p class="tag">Developer docs</p>
+    <h1 class="long">Run a node. <em>Build on it.</em></h1>
+    <p class="lede">Everything here is copy and paste. The public network is <code>zcrypt-1</code>. A local chain is separate: its coins have nothing to do with real ones.</p>
+  </div>
+
+  <div class="w docs">
+    <nav class="toc" aria-label="On this page">
+      <b>On this page</b>
+      <a href="#reference">Quick reference</a>
+      <a href="#query">Query the chain</a>
+      <a href="#validator">Run a validator</a>
+      <a href="#delegate">Stake without a node</a>
+      <a href="#local">Run a local chain</a>
+      <a href="#test">Test network and tests</a>
+      <a href="#wallet-source">Build the wallet</a>
+      <a href="#rules">Supply and fees</a>
+      <a href="#limits">Limits</a>
+      <a href="#reading">Further reading</a>
+    </nav>
+
+    <div class="doc body">
+      <section id="reference">
+        <p class="k">Start here</p>
+        <h2>Quick reference</h2>
+        <div class="scroll"><table>
+          <tr><th>What</th><th>Where</th></tr>
+          <tr><td>Chain id</td><td><code>zcrypt-1</code></td></tr>
+          <tr><td>RPC</td><td><a href="https://rpc.zcrypt.network/status">https://rpc.zcrypt.network</a></td></tr>
+          <tr><td>Explorer</td><td><a href="https://explorer.zcrypt.network">https://explorer.zcrypt.network</a></td></tr>
+          <tr><td>P2P seed</td><td><code>rpc.zcrypt.network:26656</code> (the validator setup finds it for you)</td></tr>
+          <tr><td>Source</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt">github.com/echelonlabsresearch/ZCrypt</a>, branch <code>mainnet</code></td></tr>
+          <tr><td>Consensus</td><td>CometBFT 0.38, one-second blocks</td></tr>
+        </table></div>
+      </section>
+
+      <section id="query">
+        <p class="k">One minute</p>
+        <h2>Query the chain</h2>
+        <p>Is it up, and how high is it?</p>
+<pre><code>curl -s https://rpc.zcrypt.network/status</code></pre>
+        <p><code>result.node_info.network</code> is the chain id. <code>result.sync_info.latest_block_height</code> is the current block.</p>
+        <p>Who is validating?</p>
+<pre><code>curl -s 'https://rpc.zcrypt.network/abci_query?path="/staking/validators"'</code></pre>
+        <p>The explorer shows every transaction's rule program and re-checks whatever can be checked from public data. For a private payment that leaves out the sender, the recipient and the amount, because none of them are on the chain. Of the coin, only one thing shows: whether it was ZCRYPT or some other coin.</p>
+      </section>
+
+      <section id="validator">
+        <p class="k">About 30 minutes, mostly waiting</p>
+        <h2>Run a validator</h2>
+        <p>A validator is a node with a stake behind it. Any node can follow the chain. Only staked nodes produce blocks and earn rewards.</p>
+        <div class="scroll"><table>
+          <tr><th>You need</th><th>Detail</th></tr>
+          <tr><td>A server</td><td>Linux with Docker and the Compose plugin, online all the time</td></tr>
+          <tr><td>An open port</td><td><code>56656</code> reachable from the internet (peer-to-peer)</td></tr>
+          <tr><td>The wallet</td><td>The desktop wallet, holding at least 10,000 ZCRYPT to stake</td></tr>
+        </table></div>
+
+        <ol class="steps">
+          <li>
+            <h3>Copy your validator key from the wallet</h3>
+            <p>In the wallet, open <b>Rewards</b>, then <b>Run a validator</b>, then <b>Node setup</b>, and click <b>Copy the .env line</b>. It looks like this:</p>
+<pre><code>VALIDATOR_KEY=eyJhZGRyZXNzIjoi...</code></pre>
+            <p>The key comes from your recovery phrase, so it restores with the phrase.</p>
+            <div class="note warn"><p><b>This line is the node's signing key.</b> Keep it as private as your recovery phrase.</p></div>
+          </li>
+          <li>
+            <h3>Start the node</h3>
+            <p>On the server:</p>
+<pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
+cd ZCrypt
+git checkout mainnet
+cd chain/validator
+cp .env.example .env</code></pre>
+            <p>Open <code>.env</code> and paste your <code>VALIDATOR_KEY=...</code> line into it. Do this <b>before</b> the first start. Then:</p>
+<pre><code>docker compose up -d
+docker logs -f zcrypt-validator-cometbft</code></pre>
+            <p>The first start compiles the node, which takes several minutes. It then downloads the genesis, finds a peer and syncs. Nothing else needs configuring: the chain id, the seed and the ports are already in the compose file.</p>
+            <p>Check progress:</p>
+<pre><code>curl -s http://127.0.0.1:56657/status</code></pre>
+            <p>The node has caught up when <code>result.sync_info.catching_up</code> is <code>false</code>.</p>
+          </li>
+          <li>
+            <h3>Stake from the wallet</h3>
+            <p>Back in the wallet, open <b>Rewards</b>, then <b>Run a validator</b>. Tick that the node is running with this key and has synced. Enter the stake (at least 10,000 ZCRYPT) and your commission, and click <b>Bond</b>.</p>
+            <p>The stake leaves your balance and is locked. On the next block your node joins the validator set and starts producing blocks. The same screen shows whether it is signing.</p>
+          </li>
+        </ol>
+
+        <h3>If the node started without your key</h3>
+        <p>It generated a key of its own, and the wallet's Bond button will sign for the wrong one. Wipe it and start again:</p>
+<pre><code>docker compose down -v       <span class="c"># deletes the node's key and state</span>
+<span class="c"># paste VALIDATOR_KEY=... into .env</span>
+docker compose up -d</code></pre>
+
+        <h3>Day to day</h3>
+        <div class="scroll"><table>
+          <tr><th>To</th><th>Do</th></tr>
+          <tr><td>Stop the node</td><td><code>docker compose down</code> (keeps key and state)</td></tr>
+          <tr><td>Update it</td><td><code>git pull</code>, then <code>docker compose up -d --build</code></td></tr>
+          <tr><td>See the validator set</td><td><code>curl -s 'http://127.0.0.1:56657/abci_query?path="/staking/validators"'</code></td></tr>
+          <tr><td>Claim rewards</td><td>Wallet, Rewards tab. Rewards are added every 100 blocks.</td></tr>
+          <tr><td>Stop validating</td><td>Wallet, <b>Unbond</b>. Your stake is locked for 10 more days, then you can claim it.</td></tr>
+        </table></div>
+
+        <div class="note warn"><p><b>Never run two nodes with the same key.</b> If your key signs two different blocks at the same height, 5% of the stake is destroyed and the key is removed for good. This also applies during the 10-day unbonding wait.</p></div>
+        <p>Wallets should keep using <code>https://rpc.zcrypt.network</code>. Your node's own RPC listens on <code>127.0.0.1:56657</code> only.</p>
+      </section>
+
+      <section id="delegate">
+        <p class="k">No server needed</p>
+        <h2>Stake without a node</h2>
+        <p>In the wallet, open <b>Rewards</b>, then <b>Delegate</b>, and choose a validator. Your coins add to that validator's voting power and earn a share of its rewards, less its commission.</p>
+        <ul>
+          <li>Delegated coins carry the same 5% penalty if that validator double-signs.</li>
+          <li>Undelegating starts the same 10-day wait. Only the key that delegated can undelegate.</li>
+          <li>Two kinds of reward appear on the Rewards tab: block rewards in ZCRYPT, and a share of bridge fees paid in zBTC.</li>
+          <li>A claim withdraws the whole balance of one kind. Balances under 1 ZCRYPT keep building until they pass it.</li>
+        </ul>
+      </section>
+
+      <section id="local">
+        <p class="k">For development</p>
+        <h2>Run a local chain</h2>
+        <p>A private chain on your own machine, with a faucet. You need Docker and the Compose plugin. The first build takes several minutes.</p>
+<pre><code>git clone https://github.com/echelonlabsresearch/ZCrypt.git
+cd ZCrypt/chain
+cp .env.example .env</code></pre>
+        <p>In <code>.env</code>, set these two lines:</p>
+<pre><code>ABCI_FEATURES=devnet
+ZCRYPT_BTC_NET=regtest</code></pre>
+        <p>Then start it:</p>
+<pre><code>docker compose up --build -d
+curl -s http://127.0.0.1:36657/status</code></pre>
+        <p>Point a wallet at <code>http://127.0.0.1:36657</code> with Tor switched off. On a devnet build the wallet's <b>Fund</b> button mints test coins.</p>
+        <div class="note warn"><p><b>Use a separate wallet for local chains.</b> A local chain reports the same chain id, <code>zcrypt-1</code>, so a wallet cannot tell it from the real one. Never point one wallet at both.</p></div>
+        <div class="scroll"><table>
+          <tr><th>To</th><th>Do</th></tr>
+          <tr><td>Add a test Bitcoin node</td><td><code>docker compose --profile dev up -d</code> (regtest, on <code>127.0.0.1:18443</code>)</td></tr>
+          <tr><td>Stop, keep the chain</td><td><code>docker compose down</code></td></tr>
+          <tr><td>Stop, delete the chain</td><td><code>docker compose down -v</code></td></tr>
+        </table></div>
+        <p class="small">Leaving <code>ABCI_FEATURES</code> empty makes a production build: no faucet, a foundation address is required, and it refuses to run against regtest. The bridge watcher (<code>--profile bridge</code>) needs a reserve key; read <code>chain/.env.example</code> first.</p>
+      </section>
+
+      <section id="test">
+        <p class="k">What CI runs</p>
+        <h2>Test network and tests</h2>
+        <p>Three validators and a regtest Bitcoin, with every real flow driven against them: payments, payment files, staking, swaps, and Bitcoin in and out. It needs Docker and takes about 50 minutes.</p>
+<pre><code>KEEP=0 ./chain/e2e/run-all.sh</code></pre>
+        <p>To keep the network running and poke at it, leave out <code>KEEP=0</code>. The three nodes answer on <code>127.0.0.1:46657</code>, <code>46667</code> and <code>46677</code>.</p>
+        <p>The unit and integration tests generate real proofs, so they take minutes. Run them in three parts, as CI does:</p>
+<pre><code>cd impl
+cargo test --locked -p zcrypt-shield -p zcrypt-core --lib
+cargo test --locked -p zcrypt-core --test '*' --examples
+cargo test --locked -p zcrypt-abci-node
+cargo test --locked -p zcrypt-bridge -p zcrypt-explorer -p zcrypt-cli</code></pre>
+        <p>The Rust toolchain is pinned in <code>impl/rust-toolchain.toml</code>; cargo installs it on first use. The Lean proofs:</p>
+<pre><code>cd formal
+lake build && lake env lean Axioms.lean</code></pre>
+      </section>
+
+      <section id="wallet-source">
+        <p class="k">Tauri and React</p>
+        <h2>Build the wallet</h2>
+        <p>You need Node.js 20 or newer and Rust. On Linux, also install <code>libwebkit2gtk-4.1-dev</code>, <code>libgtk-3-dev</code>, <code>librsvg2-dev</code> and <code>libayatana-appindicator3-dev</code>.</p>
+<pre><code>cd ZCrypt/wallet
+npm ci
+npm run tauri:dev      <span class="c"># run it; the first launch compiles the prover</span>
+npm run tauri:build    <span class="c"># make an installer</span></code></pre>
+        <p>Installers land in <code>wallet/src-tauri/target/release/bundle/</code>. To work on the interface alone, with a simulated backend:</p>
+<pre><code>npm run dev            <span class="c"># then open http://localhost:1420/?mock=1</span></code></pre>
+      </section>
+
+      <section id="rules">
+        <p class="k">Enforced by consensus</p>
+        <h2>Supply and fees</h2>
+        <div class="scroll"><table>
+          <tr><th>Rule</th><th>Value</th></tr>
+          <tr><td>Maximum supply</td><td>21,000,000 ZCRYPT</td></tr>
+          <tr><td>Block reward</td><td>0.14 ZCRYPT per block, halving every 60,000,000 blocks, paid out every 100 blocks</td></tr>
+          <tr><td>Foundation</td><td>20% (4,200,000). 50,000 liquid at genesis, 25% at month 12, the rest monthly to month 48</td></tr>
+          <tr><td>Fee per transaction</td><td>0.01 ZCRYPT at least, destroyed. A swap costs 0.01 or 0.02. Claiming rewards and unstaking are free</td></tr>
+          <tr><td>Making a payment file</td><td>0.03 ZCRYPT on top of the amount: 0.02 to create it, 0.01 inside it for the recipient's fee</td></tr>
+          <tr><td>Bitcoin in</td><td>0.1% of the deposit, paid to stakers in zBTC. No ZCRYPT needed</td></tr>
+          <tr><td>Minimum stake</td><td>10,000 ZCRYPT</td></tr>
+          <tr><td>Unbonding wait</td><td>10 days</td></tr>
+          <tr><td>Double-sign penalty</td><td>5% of stake destroyed, key removed</td></tr>
+        </table></div>
+        <p>A payment in ZCRYPT is one proof: the fee comes out of the coin being sent. A payment in any other coin is two proofs, the payment and a separate ZCRYPT fee. That difference is visible, so an observer can tell a ZCRYPT payment from a payment in another coin, but not which other coin. Within each kind every payment has the same shape, two inputs and three outputs.</p>
+        <p>The foundation's vesting schedule is checked by every validator, and the explorer shows what has vested and what has been claimed.</p>
+      </section>
+
+      <section id="limits">
+        <p class="k">Known limits</p>
+        <h2>Limits</h2>
+        <ul>
+          <li><b>Post-quantum covers the coins.</b> Block signing is CometBFT's, and the Bitcoin reserve uses Bitcoin's signatures. Breaking either would not let anyone forge a private coin.</li>
+          <li><b>The Lean proofs are a hand-written model</b> of the circuit's rules. They do not cover the hash function, the proof system or the encryption, and they are not generated from the Rust code.</li>
+          <li><b>The crowd is every coin the pool has held,</b> which is small while the chain is young. The chain shows that spends happen, not which coins were spent.</li>
+          <li><b>Some actions name a key:</b> staking, reward claims, mints, bridge escrows and swaps.</li>
+          <li><b>A node sees the IP address</b> of whoever submits a transaction, unless they use Tor.</li>
+          <li><b>Proof soundness enforced by the node is 132 bits.</b></li>
+          <li><b>An independent external audit is planned.</b> Weigh that when deciding how much value to commit.</li>
+        </ul>
+      </section>
+
+      <section id="reading" style="border-bottom:0">
+        <p class="k">Go deeper</p>
+        <h2>Further reading</h2>
+        <div class="scroll"><table>
+          <tr><th>Topic</th><th>Document</th></tr>
+          <tr><td>The design</td><td><a href="whitepaper.pdf">Whitepaper</a></td></tr>
+          <tr><td>What a stranger can see</td><td><a href="privacy-model.html">Privacy model</a></td></tr>
+          <tr><td>Assumptions and proofs</td><td><a href="security.html#bounty">Security and bounty</a>, <a href="security.html#check">checking the proofs</a></td></tr>
+          <tr><td>Transactions, fees, the bridge</td><td><a href="protocol.html">Protocol</a></td></tr>
+          <tr><td>The rule programs</td><td><a href="vm.html">The rules as a program</a></td></tr>
+          <tr><td>Operating a node</td><td><a href="docs.html">this page</a></td></tr>
+        </table></div>
+        <p class="small">The implementation is MIT licensed. Security reports: <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>.</p>
+      </section>
+    </div>
+  </div>
+</main>
+  <footer class="nx-foot">
+    <div class="cta">
+      <p>Send money <em>like a photo.</em></p>
+      <a class="nx-get big" href="wallet.html">Get the wallet <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="cols">
+      <div><b>Use it</b><a href="wallet.html">Get the wallet</a><a href="how.html">How it works</a><a href="tokenomics.html">Tokenomics</a><a href="trade.html">Trading</a><a href="make-a-coin.html">Make a coin</a><a href="bitcoin.html">Bitcoin in and out</a><a href="https://explorer.zcrypt.network">Explorer</a><a href="https://apps.apple.com/app/id6826877444">iPhone app</a></div>
+      <div><b>Trust it</b><a href="security.html">Security and proofs</a><a href="privacy-model.html">Privacy model</a><a href="post-quantum.html">Post-quantum</a><a href="whitepaper.pdf">Whitepaper</a><a href="security.html#bounty">Bug bounty</a></div>
+      <div><b>Build on it</b><a href="docs.html">Developer docs</a><a href="protocol.html">Protocol</a><a href="vm.html">The VM</a><a href="https://github.com/echelonlabsresearch/ZCrypt">Source code</a></div>
+      <div><b>ZCrypt</b><a href="brand.html">Brand</a><a href="privacy.html">Wallet privacy policy</a><a href="https://x.com/zcryptnetwork">X</a><a href="mailto:security@zcrypt.network">security@zcrypt.network</a></div>
+    </div>
+    <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
+  </footer>
+  <script src="fog.js?v=11201610"></script>
+  <script src="demo.js?v=11201610"></script>
+  <script>
+  document.querySelectorAll("pre").forEach(function (pre) {
+    var b = document.createElement("button"); b.className = "copy"; b.type = "button"; b.textContent = "Copy";
+    b.addEventListener("click", function () {
+      var t = pre.querySelector("code").innerText.split("\n").map(function (l) { return l.replace(/\s+#.*$/, ""); }).filter(function (l) { return l.trim() && !/^#/.test(l.trim()); }).join("\n");
+      navigator.clipboard.writeText(t).then(function () { b.textContent = "Copied"; setTimeout(function () { b.textContent = "Copy"; }, 1400); });
+    });
+    pre.appendChild(b);
+  });
+  </script>
+</body>
+</html>
