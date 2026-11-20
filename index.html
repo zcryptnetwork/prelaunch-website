@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="brand/fonts.css">
   <link rel="stylesheet" href="brand/tokens.css">
-  <link rel="stylesheet" href="next.css?v=11201704">
+  <link rel="stylesheet" href="next.css?v=11202105">
   <style>
     * { box-sizing: border-box; margin: 0; }
     html { scroll-behavior: smooth; }
@@ -55,6 +55,15 @@
     h2 { font-size: clamp(56px, 10vw, 176px); }
     h1 em, h2 em { font-family: var(--zc-font-serif); font-style: italic; font-weight: 400; letter-spacing: -0.035em; }
     .ln { display: block; overflow: hidden; padding: 0.06em 0.04em 0.12em 0; margin-bottom: -0.12em; }
+    /* the word that changes: letters roll in one by one */
+    .slot { display: inline-block; position: relative; height: 1.1em; line-height: 1.1; margin: -0.12em 0; overflow: hidden; vertical-align: top; perspective: 700px; transition: width .32s var(--zc-ease); }
+    .slot .w { position: absolute; left: 0; top: 0; display: inline-flex; white-space: nowrap; color: var(--zc-cyan-soft); }
+    .slot .w.plain { color: inherit; }
+    .slot .w i { display: inline-block; font-style: normal; transform-origin: 50% 55% -0.35em; animation: slotin .46s cubic-bezier(.2, 1.5, .4, 1) both; animation-delay: calc(var(--i) * 34ms); }
+    .slot .w.still i { animation: none; }
+    .slot .w.out i { animation: slotout .24s ease-in both; animation-delay: calc(var(--i) * 18ms); }
+    @keyframes slotin { 0% { opacity: 0; transform: translateY(75%) rotateX(-95deg) scale(0.8); filter: blur(7px); color: #fff; text-shadow: 0 0 0.5em var(--zc-cyan); } 55% { opacity: 1; color: #fff; text-shadow: 0 0 0.35em var(--zc-cyan); } 100% { opacity: 1; transform: none; filter: none; text-shadow: none; } }
+    @keyframes slotout { 100% { opacity: 0; transform: translateY(-75%) rotateX(95deg) scale(0.8); filter: blur(7px); } }
     .ln > span { display: block; transform: translateY(108%); transition: transform 1.1s var(--zc-ease); }
     .sub.also { margin-top: 10px; font-size: clamp(16px, 1.35vw, 20px); color: var(--zc-text); }
     .in .ln > span { transform: none; }
@@ -66,6 +75,12 @@
     }
     .sub b { color: var(--zc-text); font-weight: 500; }
     .in .sub, .in .fine, .in .acts, .in .receipt { opacity: 1; }
+    .zk { display: inline-flex; align-items: center; gap: 10px; margin: 18px 0 0; padding: 9px 16px 9px 14px; border: 1px solid rgba(142, 233, 243, 0.45); border-radius: 999px; background: rgba(53, 224, 255, 0.08); font-size: clamp(15px, 1.2vw, 18px); font-weight: 600; letter-spacing: -0.01em; color: var(--zc-text); opacity: 0; transition: opacity 1s .45s; }
+    .zk i { width: 8px; height: 8px; border-radius: 50%; background: var(--zc-cyan); box-shadow: 0 0 12px var(--zc-cyan); }
+    .zk span { font-family: var(--zc-font-mono); font-size: 0.72em; font-weight: 500; letter-spacing: 0.12em; color: var(--zc-cyan-soft); padding-left: 10px; border-left: 1px solid rgba(255,255,255,0.25); }
+    .in .zk { opacity: 1; }
+    .zk, .zk span { white-space: nowrap; }
+    @media (max-width: 520px) { .zk { font-size: 13.5px; gap: 8px; padding: 8px 13px 8px 12px; } .zk span { padding-left: 8px; letter-spacing: 0.08em; } }
     .fine { margin-top: 16px; font-size: 14px; color: var(--zc-text-3); opacity: 0; transition: opacity 1s .5s; }
     .fine a { color: var(--zc-text-2); border-bottom: 1px solid var(--zc-line-strong); padding-bottom: 2px; }
     .fine a:hover { color: var(--zc-cyan); border-color: var(--zc-cyan); }
@@ -157,7 +172,7 @@
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .ln > span { transform: none; transition: none; }
-      .sub, .fine, .acts, .receipt, .plat, .supply { opacity: 1; transition: none; }
+      .sub, .fine, .zk, .acts, .receipt, .plat, .supply { opacity: 1; transition: none; }
     }
   </style>
   <link rel="canonical" href="https://zcrypt.network/">
@@ -217,7 +232,7 @@
     <section id="top">
       <div>
         <div class="txt">
-        <h1><span class="ln"><span>Send money</span></span><span class="ln"><span><em>as a message.</em></span></span></h1>
+        <h1 aria-label="Send money as a message."><span class="ln"><span>Send <span class="slot" id="slot" aria-hidden="true">money</span></span></span><span class="ln"><span><em>as a message.</em></span></span></h1>
         <p class="sub">A payment is a tiny file on your phone. Send it in any chat. They tap it, and <b>it's theirs in seconds.</b></p>
         <div class="acts">
           <a class="nx-get big" id="hero-download" href="wallet.html">Get the wallet</a>
@@ -242,16 +257,17 @@
 
     <section id="private">
       <div>
-        <p class="tag">What the world sees</p>
-        <h2><span class="ln"><span>Nobody</span></span><span class="ln"><span><em>is watching.</em></span></span></h2>
-        <p class="sub">Your payment hides in a crowd of every coin ever made.</p>
+        <p class="tag">Privacy</p>
+        <h2><span class="ln"><span>Private</span></span><span class="ln"><span><em>by default.</em></span></span></h2>
+        <p class="sub">Who paid, who got paid and how much: <b>hidden from everyone else.</b> The network still checks that every payment is real.</p>
+        <p class="zk"><i></i>Secured by zero-knowledge proofs <span>ZK-STARK</span></p>
         <div class="receipt" id="receipt" aria-label="What is public about a payment">
           <div><span>FROM</span><span class="bar" data-x aria-label="hidden"></span></div>
           <div><span>TO</span><span class="bar" data-x aria-label="hidden"></span></div>
           <div><span>AMOUNT</span><span class="bar" data-x aria-label="hidden"></span></div>
           <div><span>RULES FOLLOWED</span><span class="ok">VERIFIED</span></div>
         </div>
-        <p class="fine">The crowd today: <b data-live="commits">1,031</b> coins. The network is young, and the crowd grows with every payment. <a href="privacy-model.html">See exactly what is public</a></p>
+        <p class="fine">This is what the public record shows for a payment. Each payment hides among all the coins on the network, <b data-live="commits">1,031</b> today. The network is young, and that crowd grows with every payment. <a href="privacy-model.html">See exactly what is public</a></p>
       </div>
     </section>
 
@@ -261,7 +277,7 @@
         <p class="tag">The supply</p>
         <h2><span class="ln"><span>No one can</span></span><span class="ln"><span><em>print more.</em></span></span></h2>
         <p class="sub"><b>21 million coins. Ever.</b> Every validator enforces the limit in every block. That no payment can create a coin is proven mathematically.</p>
-        <p class="fine"><b data-live="issued">304,491</b> issued so far, <span data-live="pct">1.4</span>% of the total, at block <span data-live="height">1,818,503</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
+        <p class="fine"><b data-live="issued">306,171</b> issued so far, <span data-live="pct">1.5</span>% of the total, at block <span data-live="height">1,830,567</span><span data-live="asof"> on 20 Nov 2026</span>. <a href="tokenomics.html">Tokenomics</a> · <a href="security.html">See what is proven</a></p>
       </div>
     </section>
 
@@ -280,7 +296,7 @@
     <section class="deep" id="deeper">
       <p class="tag">The network today</p>
       <div class="net" aria-label="The network today">
-        <div><b data-live="height">1,818,503</b><span>blocks since 28 October 2026</span></div>
+        <div><b data-live="height">1,830,567</b><span>blocks since 28 October 2026</span></div>
         <div><b data-live="vals">2</b><span>validators today</span></div>
         <div><b data-live="commits">1,031</b><span>coins in the private pool</span></div>
         <div><b data-live="staked">20,005</b><span>ZCRYPT staked to secure the network</span></div>
@@ -334,6 +350,25 @@
     const narrowQ = matchMedia("(max-width: 860px)");
     const sections = Array.from(document.querySelectorAll("main section"));
     const railLinks = Array.from(document.querySelectorAll("#rail a"));
+
+    // ---------- the headline's changing word: it names whatever the phone is sending ----------
+    (function () {
+      const slot = document.getElementById("slot"); if (!slot) return;
+      let now = "money", cur = null;
+      function layer(word, still) {
+        const w = document.createElement("span"); w.className = "w" + (word === "money" ? " plain" : "") + (still ? " still" : "");
+        Array.from(word).forEach((ch, i) => { const c = document.createElement("i"); c.textContent = ch; c.style.setProperty("--i", i); w.appendChild(c); });
+        slot.appendChild(w); return w;
+      }
+      const fit = () => { if (cur) slot.style.width = (cur.offsetWidth + 0.06 * parseFloat(getComputedStyle(slot).fontSize)) + "px"; };
+      slot.textContent = ""; cur = layer(now, true);
+      (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(fit); addEventListener("resize", fit); fit();
+      document.addEventListener("demo-asset", e => {
+        if (reduced || e.detail === now) return;
+        now = e.detail; const old = cur; old.classList.remove("still"); old.classList.add("out"); setTimeout(() => old.remove(), 420);
+        cur = layer(now, false); fit();
+      });
+    })();
 
     // ---------- page behaviour ----------
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); }), { threshold: 0.3 });
@@ -648,7 +683,7 @@
     requestAnimationFrame(frame);
   })();
   </script>
-  <script src="demo.js?v=11201704"></script>
+  <script src="demo.js?v=11202105"></script>
   <script src="download.js?v=appstore1"></script>
 </body>
 </html>
