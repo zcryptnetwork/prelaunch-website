@@ -16,7 +16,7 @@ var PAGES = {
   "tag": "Security"
  },
  "docs": {
-  "h1": "Run a node. <em>Build on it.</em>",
+  "h1": "Run a node. <em>Query the chain.</em>",
   "tag": "Developer docs"
  },
  "tokenomics": {

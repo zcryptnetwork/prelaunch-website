@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="brand/fonts.css">
   <link rel="stylesheet" href="brand/tokens.css">
-  <link rel="stylesheet" href="next.css?v=11211824">
+  <link rel="stylesheet" href="next.css?v=11231522">
   <link rel="canonical" href="https://zcrypt.network/docs.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ZCrypt">
@@ -54,8 +54,9 @@
 <main id="content">
   <div class="w ph">
     <p class="tag">Developer docs</p>
-    <h1 class="long">Run a node. <em>Build on it.</em></h1>
+    <h1 class="long">Run a node. <em>Query the chain.</em></h1>
     <p class="lede">Everything here is copy and paste. The public network is <code>zcrypt-1</code>. A local chain is separate: its coins have nothing to do with real ones.</p>
+    <p class="small">Last updated 23 November 2026.</p>
   </div>
 
   <div class="w docs">
@@ -63,6 +64,7 @@
       <b>On this page</b>
       <a href="#reference">Quick reference</a>
       <a href="#query">Query the chain</a>
+      <a href="#integrate">Build an integration</a>
       <a href="#validator">Run a validator</a>
       <a href="#delegate">Stake without a node</a>
       <a href="#local">Run a local chain</a>
@@ -80,7 +82,9 @@
         <div class="scroll"><table>
           <tr><th>What</th><th>Where</th></tr>
           <tr><td>Chain id</td><td><code>zcrypt-1</code></td></tr>
-          <tr><td>RPC</td><td><a href="https://rpc.zcrypt.network/status">https://rpc.zcrypt.network</a></td></tr>
+          <tr><td>RPC</td><td><a href="https://rpc.zcrypt.network/status">https://rpc.zcrypt.network</a>. HTTP only, no WebSocket. Call it from a server: a web page in a browser cannot.</td></tr>
+          <tr><td>RPC routes</td><td>The standard CometBFT ones: <code>/status</code>, <code>/health</code>, <code>/block?height=N</code>, <code>/tx_search</code>. See the <a href="https://docs.cometbft.com/v0.38/rpc/">CometBFT RPC reference</a>.</td></tr>
+          <tr><td>Transaction types</td><td><a href="protocol.html">Protocol</a></td></tr>
           <tr><td>Explorer</td><td><a href="https://explorer.zcrypt.network">https://explorer.zcrypt.network</a></td></tr>
           <tr><td>P2P seed</td><td><code>rpc.zcrypt.network:26656</code> (the validator setup finds it for you)</td></tr>
           <tr><td>Source</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt">github.com/echelonlabsresearch/ZCrypt</a>, branch <code>mainnet</code></td></tr>
@@ -95,8 +99,30 @@
 <pre><code>curl -s https://rpc.zcrypt.network/status</code></pre>
         <p><code>result.node_info.network</code> is the chain id. <code>result.sync_info.latest_block_height</code> is the current block.</p>
         <p>Who is validating?</p>
-<pre><code>curl -s 'https://rpc.zcrypt.network/abci_query?path="/staking/validators"'</code></pre>
+<pre><code>curl -s 'https://rpc.zcrypt.network/abci_query?path="/staking/validators_json"' | jq -r .result.response.value | base64 -d | jq</code></pre>
+        <p>Every <code>abci_query</code> answer is in <code>result.response.value</code>, base64 encoded. The line above decodes it. You need <code>jq</code>.</p>
+        <p>Amounts are whole numbers with six decimal places: <code>10000000000</code> is 10,000 ZCRYPT.</p>
+        <p>More queries. Put any of these in <code>path</code>:</p>
+        <div class="scroll"><table>
+          <tr><th>Path</th><th>Returns</th></tr>
+          <tr><td><code>/staking/validators_json</code></td><td>The validators, their stakes and the reward period</td></tr>
+          <tr><td><code>/staking/emitted</code></td><td>ZCRYPT issued in block rewards so far</td></tr>
+          <tr><td><code>/asset/list</code></td><td>Every other coin on the chain, as <code>ticker:id:minted:decimals</code></td></tr>
+          <tr><td><code>/commit/count</code></td><td>How many coins the pool has ever held</td></tr>
+          <tr><td><code>/spv/tip</code></td><td>The newest Bitcoin block the chain has seen, as <code>height:hash</code></td></tr>
+          <tr><td><code>/app/hash</code></td><td>The current state hash</td></tr>
+        </table></div>
+        <p>These answers are plain text, so leave off the last <code>| jq</code>:</p>
+<pre><code>curl -s 'https://rpc.zcrypt.network/abci_query?path="/staking/emitted"' | jq -r .result.response.value | base64 -d</code></pre>
         <p>The explorer shows every transaction's rule program and re-checks whatever can be checked from public data. For a private payment that leaves out the sender, the recipient and the amount, because none of them are on the chain. Of the coin, only one thing shows: whether it was ZCRYPT or some other coin.</p>
+      </section>
+
+      <section id="integrate">
+        <p class="k">What exists today</p>
+        <h2>Build an integration</h2>
+        <p>Payments are made by the wallet. There is no SDK and no command-line send yet.</p>
+        <p>Until there is, the code to read is in Rust: <a href="https://github.com/echelonlabsresearch/ZCrypt/blob/mainnet/impl/bridge/src/zcrypt.rs"><code>impl/bridge/src/zcrypt.rs</code></a> is the RPC client, and <a href="https://github.com/echelonlabsresearch/ZCrypt/tree/mainnet/impl/core/src"><code>impl/core</code></a> holds addresses, coins and the transaction rules. <a href="protocol.html">Protocol</a> lists every transaction type.</p>
+        <p>Questions: open an issue on <a href="https://github.com/echelonlabsresearch/ZCrypt/issues">GitHub</a>.</p>
       </section>
 
       <section id="validator">
@@ -269,7 +295,7 @@ npm run tauri:build    <span class="c"># make an installer</span></code></pre>
           <tr><td>Assumptions and proofs</td><td><a href="security.html#bounty">Security and bounty</a>, <a href="security.html#check">checking the proofs</a></td></tr>
           <tr><td>Transactions, fees, the bridge</td><td><a href="protocol.html">Protocol</a></td></tr>
           <tr><td>The rule programs</td><td><a href="vm.html">The rules as a program</a></td></tr>
-          <tr><td>Operating a node</td><td><a href="docs.html">this page</a></td></tr>
+          <tr><td>Operating a node</td><td><a href="https://github.com/echelonlabsresearch/ZCrypt/blob/mainnet/running.md">running.md</a></td></tr>
         </table></div>
         <p class="small">The implementation is MIT licensed. Security reports: <a href="mailto:security@zcrypt.network">security@zcrypt.network</a>.</p>
       </section>
@@ -289,8 +315,8 @@ npm run tauri:build    <span class="c"># make an installer</span></code></pre>
     </div>
     <div class="base"><span class="by">ZCrypt · private digital cash · built by Echelon Labs LLC · open source, MIT</span><span class="nx-live" id="nx-live" hidden><i></i><span>zcrypt-1 live · block <b id="nx-height"></b></span></span></div>
   </footer>
-  <script src="fog.js?v=11211824"></script>
-  <script src="demo.js?v=11211824"></script>
+  <script src="fog.js?v=11231522"></script>
+  <script src="demo.js?v=11231522"></script>
   <script>
   document.querySelectorAll("pre").forEach(function (pre) {
     var b = document.createElement("button"); b.className = "copy"; b.type = "button"; b.textContent = "Copy";
